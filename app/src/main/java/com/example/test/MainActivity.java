@@ -28,11 +28,11 @@ import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
     private int timePassed = 0;
-    private Date currentDate = new Date();
+    private Date currentDate;
     private SharedPreferences timePassedsp;
     private SharedPreferences.Editor editor;
     private DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss",Locale.getDefault());
-    private String timeText = timeFormat.format(currentDate);
+    private String timeText;
     private MediaPlayer mediaPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
+        currentDate = new Date();
         timeText = timeFormat.format(currentDate);
         timePassed = ((timeText.indexOf(0)*10+timeText.indexOf(1))*3600)+((timeText.indexOf(3)*10+timeText.indexOf(4))*60)+((timeText.indexOf(6)*10+timeText.indexOf(7)));
         timePassedsp = getApplicationContext().getSharedPreferences("TIMEPASSED", MODE_PRIVATE);
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        currentDate = new Date();
         timeText = timeFormat.format(currentDate);
         timePassed = ((timeText.indexOf(0)*10+timeText.indexOf(1))*3600)+((timeText.indexOf(3)*10+timeText.indexOf(4))*60)+((timeText.indexOf(6)*10+timeText.indexOf(7)));
         editor.putInt("TIMEPASSED",timePassed);
@@ -61,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        currentDate = new Date();
         timeText = timeFormat.format(currentDate);
         timePassed = ((timeText.indexOf(0)*10+timeText.indexOf(1))*3600)+((timeText.indexOf(3)*10+timeText.indexOf(4))*60)+((timeText.indexOf(6)*10+timeText.indexOf(7)));
         editor.putInt("TIMEPASSED",timePassed);
