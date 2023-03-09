@@ -167,7 +167,7 @@ public class DrawThread extends Thread {
     private SharedPreferences.Editor editor;
     private int timePassed;
     private float levelRight3;
-    private MediaPlayer mediaPlayerHappy;
+    private MediaPlayer mediaPlayerHappy, mediaPlayerHit;
     public DrawThread(Context context, SurfaceHolder surfaceHolder, MyDraw myDraw, int timePassed) {
         this.view = view;
         this.timePassed = timePassed;
@@ -175,6 +175,7 @@ public class DrawThread extends Thread {
         this.surfaceHolder = surfaceHolder;
         this.context = context;
         mediaPlayerHappy = MediaPlayer.create(context, R.raw.happysong);
+        mediaPlayerHit = MediaPlayer.create(context, R.raw.hitsong);
         sharedPreferences = ((Activity)context).getPreferences(Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         foin = sharedPreferences.getInt("FOIN", 0);
@@ -1595,7 +1596,7 @@ public class DrawThread extends Thread {
                         gettingFoin = true;
                         isSinging = true;
                     }
-                    if(isSinging) {
+                    if(isSinging && pl) {
                         mediaPlayerHappy.start();
                         isSinging = false;
                     }
@@ -1608,13 +1609,11 @@ public class DrawThread extends Thread {
                         smile *= (happyRight2 - happyLeft);
                         if (happyRight + smile > happyRight2) {
                             happyRight = happyRight2;
-                            editor.putFloat("HAPPY",happyRight);
-                            editor.apply();
                         } else {
                             happyRight += smile;
-                            editor.putFloat("HAPPY",happyRight);
-                            editor.apply();
                         }
+                        editor.putFloat("HAPPY",happyRight);
+                        editor.apply();
                         smile /= (happyRight2 - happyLeft);
                         if(bitmap1 == bitmapDT1 || bitmap1 == bitmapDTH1 || bitmap1 == bitmapDTS1 || bitmap1 == bitmapDTSH1) bitmap = playBitmapDT[play];
                         else if(bitmap1 == bitmapD1 || bitmap1 == bitmapDH1 || bitmap1 == bitmapDS1 || bitmap1 == bitmapDSH1) bitmap = playBitmapD[play];
@@ -1834,20 +1833,20 @@ public class DrawThread extends Thread {
                     // tprtal
                     for (int i = 1; i < 15; i++) {
                         hitBitmap[i] = Bitmap.createScaledBitmap(hitBitmap[i],(int)(canvas.getWidth() * birdWidth),(int)(canvas.getHeight()*birdHeight),true);
-                    }
-                    for (int i = 1; i < 15; i++) {
                         hitBitmapD[i] = Bitmap.createScaledBitmap(hitBitmapD[i],(int)(canvas.getWidth() * birdWidth),(int)(canvas.getHeight()*birdHeight),true);
-                    }
-                    for (int i = 1; i < 15; i++) {
                         hitBitmapH[i] = Bitmap.createScaledBitmap(hitBitmapH[i],(int)(canvas.getWidth() * birdWidth),(int)(canvas.getHeight()*birdHeight),true);
-                    }
-                    for (int i = 1; i < 15; i++) {
                         hitBitmapDH[i] = Bitmap.createScaledBitmap(hitBitmapDH[i],(int)(canvas.getWidth() * birdWidth),(int)(canvas.getHeight()*birdHeight),true);
                     }
                     if(lastTouchX >= (birdX * canvas.getWidth()) && lastTouchX <= (birdX + birdWidth)*(canvas.getWidth()) && lastTouchY >= (birdY*canvas.getHeight()) && lastTouchY <= (birdY + birdHeight)*(canvas.getHeight()) && !eating && !playing && !flying && !sleeping && !laying && !flyingBack && !washing && !pooping && !flyPoop && !disgusting && !flyBackPoop && !hi) {
                         hi = true;
                         gettingFoin = true;
-                    }if(m6 == 1 && lastTouchX >= (birdX * canvas.getWidth()) && lastTouchX <= (birdX + birdWidth)*(canvas.getWidth()) && lastTouchY >= (birdY*canvas.getHeight()) && lastTouchY <= (birdY + birdHeight)*(canvas.getHeight()) && !eating && !playing && !flying && !sleeping && !laying && !flyingBack && !washing && !pooping && !flyPoop && !disgusting && !flyBackPoop) {
+                        isSinging = true;
+                    }
+                    if(isSinging && hi) {
+                        mediaPlayerHit.start();
+                        isSinging = false;
+                    }
+                    if(m6 == 1 && lastTouchX >= (birdX * canvas.getWidth()) && lastTouchX <= (birdX + birdWidth)*(canvas.getWidth()) && lastTouchY >= (birdY*canvas.getHeight()) && lastTouchY <= (birdY + birdHeight)*(canvas.getHeight()) && !eating && !playing && !flying && !sleeping && !laying && !flyingBack && !washing && !pooping && !flyPoop && !disgusting && !flyBackPoop) {
                         sendScreen();
                     }
                     if(!hitTimeIsPassed && hi) {
@@ -1866,6 +1865,8 @@ public class DrawThread extends Thread {
                             hi = false;
                             lastTouchY = 0;
                             lastTouchX = 0;
+                            mediaPlayerHit.stop();
+                            mediaPlayerHit.prepare();
                         }
                     }
                     // screenshot
