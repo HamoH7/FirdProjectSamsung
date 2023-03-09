@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         currentDate = new Date();
+        editor = timePassedsp.edit();
         timeText = timeFormat.format(currentDate);
         timePassed = ((timeText.indexOf(0)*10+timeText.indexOf(1))*3600)+((timeText.indexOf(3)*10+timeText.indexOf(4))*60)+((timeText.indexOf(6)*10+timeText.indexOf(7)));
         editor.putInt("TIMEPASSED",timePassed);
@@ -64,10 +65,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         currentDate = new Date();
+        editor = timePassedsp.edit();
         timeText = timeFormat.format(currentDate);
         timePassed = ((timeText.indexOf(0)*10+timeText.indexOf(1))*3600)+((timeText.indexOf(3)*10+timeText.indexOf(4))*60)+((timeText.indexOf(6)*10+timeText.indexOf(7)));
         editor.putInt("TIMEPASSED",timePassed);
         editor.apply();
         mediaPlayer.stop();
     }
+
 }
