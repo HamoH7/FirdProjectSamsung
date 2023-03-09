@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Window;
@@ -32,14 +33,19 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences.Editor editor;
     private DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss",Locale.getDefault());
     private String timeText = timeFormat.format(currentDate);
+    private MediaPlayer mediaPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
         timeText = timeFormat.format(currentDate);
         timePassed = ((timeText.indexOf(0)*10+timeText.indexOf(1))*3600)+((timeText.indexOf(3)*10+timeText.indexOf(4))*60)+((timeText.indexOf(6)*10+timeText.indexOf(7)));
         timePassedsp = getApplicationContext().getSharedPreferences("TIMEPASSED", MODE_PRIVATE);
         editor = timePassedsp.edit();
+        mediaPlayer = MediaPlayer.create(this, R.raw.songfon);
+        mediaPlayer.start();
         setContentView(new MyDraw(this, timePassed - timePassedsp.getInt("TIMEPASSED",timePassed)));
         //setContentView(R.layout.shopskin);
     }
@@ -50,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         timePassed = ((timeText.indexOf(0)*10+timeText.indexOf(1))*3600)+((timeText.indexOf(3)*10+timeText.indexOf(4))*60)+((timeText.indexOf(6)*10+timeText.indexOf(7)));
         editor.putInt("TIMEPASSED",timePassed);
         editor.apply();
+        mediaPlayer.stop();
     }
     @Override
     protected void onStop() {
@@ -58,5 +65,6 @@ public class MainActivity extends AppCompatActivity {
         timePassed = ((timeText.indexOf(0)*10+timeText.indexOf(1))*3600)+((timeText.indexOf(3)*10+timeText.indexOf(4))*60)+((timeText.indexOf(6)*10+timeText.indexOf(7)));
         editor.putInt("TIMEPASSED",timePassed);
         editor.apply();
+        mediaPlayer.stop();
     }
 }
