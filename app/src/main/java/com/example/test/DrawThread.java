@@ -2480,9 +2480,14 @@ public class DrawThread extends Thread {
         @Override
         public void run() {
             if(play<20) {
-                play++;
-                playingTimeIsPassed = false;
-                playingNeedToDrawNow = true;
+                try {
+                    sleep(100);
+                    play++;
+                    playingTimeIsPassed = false;
+                    playingNeedToDrawNow = true;
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
     }
@@ -2576,10 +2581,10 @@ public class DrawThread extends Thread {
         public void run() {
                     try {
                         if(hit < 14) {
-                            sleep(400);
+                            hit++;
+                            sleep(150);
                             hitTimeIsPassed = false;
                             hitNeedToDrawNow = true;
-                            hit++;
                         }
                     } catch (InterruptedException ex) {
                         ex.printStackTrace();
@@ -2659,10 +2664,15 @@ public class DrawThread extends Thread {
     class GetFoinThread extends Thread{
         @Override
         public void run() {
+            try{
             if(foinTime<7) {
+                sleep(100);
                 foinTime++;
                 getFoinTimeIsPassed = false;
                 getFoinNeedToDrawNow = true;
+            }
+            }catch (InterruptedException e){
+                e.printStackTrace();
             }
         }
     }
