@@ -88,10 +88,10 @@ public class DrawThread extends Thread {
     private float poopWidth = (float)  94 / 1050;
     private float poopHeight = (float)  94 / 54;
     private int disgust = 1, eatScore = 0, wash = 1,foinTime = 0, hit = 1,poop1=1,poop2=1,poop3=0, m = 0,m1 = 1,m2 = 1, m6 = 0, eat = 1, e = 0, eatTimer = 10, m5 = 0, p = 0, playTimer = 15, sleepTimer = 60, play = 0, sleep = 0, r1 = 0, flyBack = 0;
-    private double h = (float)1/1000;
-    private double s = (float) 1 / 1000;
-    private double q = (float) 1 / 1000;
-    private double k = (float) 1 / 1000;
+    private double h = (float)1/1000; // Sovi timeri hamar
+    private double s = (float) 1 / 1000; // Uraxutyan timeri hamar
+    private double q = (float) 1 / 1000; // Qni timeri hamar
+    private double k = (float) 1 / 1; // kextotutyan timeri hamar
     private double food = (float) 1;//food = (float) 1 / 10;
     private double smile = (float) 1;//smile = (float) 1 / 60;
     private double qun = (float) 1 / 1;//qun = (float) 1 / 40;
@@ -191,7 +191,7 @@ public class DrawThread extends Thread {
     private Bitmap eatBitmap[] = new Bitmap[11],eatBitmapD[] = new Bitmap[11], eatBitmapS[] = new Bitmap[11], eatBitmapT[] = new Bitmap[11], eatBitmapTS[] = new Bitmap[11], eatBitmapDS[] = new Bitmap[11], eatBitmapDT[] = new Bitmap[11], eatBitmapDTS[] = new Bitmap[11], eatBitmapSmile[] = new Bitmap[11];
     private Bitmap playBitmap[] = new Bitmap[21],playBitmapD[] = new Bitmap[21],playBitmapT[] = new Bitmap[21],playBitmapDT[] = new Bitmap[21];
     private Bitmap flyBitmapUsual[] = new Bitmap[5], flyBitmapDH[] = new Bitmap[5],flyBitmapDS[] = new Bitmap[5],flyBitmapD[] = new Bitmap[5], flyBitmapH[] = new Bitmap[5],flyBitmapSmile[] = new Bitmap[5], flyBitmapSDH[] = new Bitmap[5], flyBitmapSH[] = new Bitmap[5], flyBitmapS[] = new Bitmap[5], flyBitmapTDH[] = new Bitmap[5], flyBitmapTDSH[] = new Bitmap[5], flyBitmapTDS[] = new Bitmap[5], flyBitmapTD[] = new Bitmap[5], flyBitmapTH[] = new Bitmap[5], flyBitmapTSH[] = new Bitmap[5], flyBitmapTS[] = new Bitmap[5], flyBitmapT[] = new Bitmap[5];
-    private Bitmap washBitmap[] = new Bitmap[26];
+    private Bitmap washBitmap[] = new Bitmap[50];
     private Bitmap getFoinBitmap[] = new Bitmap[8];
     private Bitmap levelBitmap[] = new Bitmap[51];
     private Bitmap foinBitmap;
@@ -498,6 +498,29 @@ public class DrawThread extends Thread {
         washBitmap[23] =  BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvox23);
         washBitmap[24] =  BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvox24);
         washBitmap[25] =  BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvox25);
+        washBitmap[26] =  BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvox26);
+        washBitmap[27] =  BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvox27);
+        washBitmap[28] =  BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvox28);
+        washBitmap[29] =  BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvox29);
+        washBitmap[30] =  BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvox30);
+        washBitmap[31] =  BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvox31);
+        washBitmap[32] =  BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvox32);
+        washBitmap[33] =  BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvox33);
+        washBitmap[34] =  BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvox34);
+        washBitmap[35] =  BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvox35);
+        washBitmap[36] =  BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvox36);
+        washBitmap[37] =  BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvox37);
+        washBitmap[38] =  BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvox38);
+        washBitmap[39] =  BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvox39);
+        washBitmap[40] =  BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvox40);
+        washBitmap[41] =  BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvox41);
+        washBitmap[42] =  BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvox42);
+        washBitmap[43] =  BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvox43);
+        washBitmap[44] =  BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvox44);
+        washBitmap[45] =  BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvox45);
+        washBitmap[46] =  BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvox46);
+        washBitmap[47] =  BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvox47);
+        washBitmap[48] =  BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvox48);
         sleepUsual1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.qnac1);
         sleepUsual2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.qnac2);
         sleepDH1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d_h1);
@@ -1054,7 +1077,7 @@ public class DrawThread extends Thread {
         sleepSH2 = Bitmap.createScaledBitmap(sleepSH2, canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
         sleepS1 = Bitmap.createScaledBitmap(sleepS1, canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
         sleepS2 = Bitmap.createScaledBitmap(sleepS2, canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        for (int i = 1; i < 26; i++) washBitmap[i] = Bitmap.createScaledBitmap(washBitmap[i], canvas.getWidth() * 341 / 1050, canvas.getHeight() * 378 / 540, true);
+        for (int i = 1; i < 48; i++) washBitmap[i] = Bitmap.createScaledBitmap(washBitmap[i], canvas.getWidth() * 341 / 1050, canvas.getHeight() * 378 / 540, true);
         for (int i = 0; i < 8; i++) getFoinBitmap[i] = Bitmap.createScaledBitmap(getFoinBitmap[i],  canvas.getWidth(), canvas.getHeight(), true);
         foinBitmap = Bitmap.createScaledBitmap(foinBitmap, canvas.getWidth(), canvas.getHeight(), true);
         shopButton = Bitmap.createScaledBitmap(shopButton,canvas.getWidth()*75/1050, canvas.getHeight()*75/540,true);
@@ -2189,14 +2212,14 @@ public class DrawThread extends Thread {
                             washing = true;
                             washingTimeIsPassed = true;
                         }
-                        if (washingNeedToDrawNow && washing && wash <= 25) {
+                        if (washingNeedToDrawNow && washing && wash <= 48) {
                             birdX = (float) 414 / 1050;
                             birdY = (float) 31 / 540;
                             bitmap = washBitmap[wash];
-                            if (wash == 10) dirtRight = dirtRight2;
+                            if (wash == 31) dirtRight = dirtRight2;
                             editor.putFloat("DIRT", dirtRight);
                             editor.apply();
-                            if (wash == 25) {
+                            if (wash == 48) {
                                 washing = false;
                                 wash = 1;
                                 washingTimeIsPassed = false;
@@ -2481,7 +2504,7 @@ public class DrawThread extends Thread {
         public void run() {
             if(play<20) {
                 try {
-                    sleep(100);
+                    sleep(200);
                     play++;
                     playingTimeIsPassed = false;
                     playingNeedToDrawNow = true;
@@ -2524,10 +2547,21 @@ public class DrawThread extends Thread {
     class WashingThread extends Thread{
         @Override
         public void run() {
-            if(wash<25) {
-                wash++;
-                washingTimeIsPassed = false;
-                washingNeedToDrawNow = true;
+            try {
+                if (wash <= 30) {
+                    sleep(100);
+                    wash++;
+                    washingTimeIsPassed = false;
+                    washingNeedToDrawNow = true;
+                }
+                if(wash >= 31 && wash <= 49) {
+                    sleep(300);
+                    wash++;
+                    washingTimeIsPassed = false;
+                    washingNeedToDrawNow = true;
+                }
+            }catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -2666,7 +2700,7 @@ public class DrawThread extends Thread {
         public void run() {
             try{
             if(foinTime<7) {
-                sleep(100);
+                sleep(200);
                 foinTime++;
                 getFoinTimeIsPassed = false;
                 getFoinNeedToDrawNow = true;
