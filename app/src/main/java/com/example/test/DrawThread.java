@@ -212,7 +212,7 @@ public class DrawThread extends Thread {
     private SharedPreferences.Editor editor;
     private int timePassed;
     private float levelRight3;
-    private MediaPlayer mediaPlayerHappy, mediaPlayerHit;
+    private MediaPlayer mediaPlayerHappy, mediaPlayerHit, mediaPlayerWash;
     public DrawThread(Context context, SurfaceHolder surfaceHolder, MyDraw myDraw, int timePassed) {
         this.view = view;
         this.timePassed = timePassed;
