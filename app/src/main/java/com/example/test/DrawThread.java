@@ -221,6 +221,7 @@ public class DrawThread extends Thread {
         this.context = context;
         mediaPlayerHappy = MediaPlayer.create(context, R.raw.happysong);
         mediaPlayerHit = MediaPlayer.create(context, R.raw.hitsong);
+        mediaPlayerWash = MediaPlayer.create(context,R.raw.washsong);
         sharedPreferences = ((Activity)context).getPreferences(Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         foin = sharedPreferences.getInt("FOIN", 0);
@@ -2206,6 +2207,11 @@ public class DrawThread extends Thread {
                         if (lastTouchX >= dirtButtonLeft * canvas.getWidth() && lastTouchX <= (dirtButtonLeft + ButtonWidth) * canvas.getWidth() && lastTouchY >= dirtButtonTop * canvas.getHeight() && lastTouchY <= (dirtButtonTop + ButtonHeight) * canvas.getHeight() && (dirtRight - dirtLeft <= dirtWeight / 2.) && !playing && !eating && !sleeping && !laying && !flying && !flyingBack && !hitting && !pooping && !flyPoop && !disgusting && !flyBackPoop && !wa) {
                             wa = true;
                             gettingFoin = true;
+                            isSinging = true;
+                        }
+                        if(isSinging && wa) {
+                            mediaPlayerWash.start();
+                            isSinging = false;
                         }
                         if (!washingTimeIsPassed && wa) {
                             new WashingThread().start();
@@ -2229,6 +2235,8 @@ public class DrawThread extends Thread {
                                 bitmap = bitmap1;
                                 birdX = (float) 419 / 1050;
                                 birdY = (float) 232 / 540;
+                                mediaPlayerWash.stop();
+                                mediaPlayerWash.prepare();
                             }
                         }
 
