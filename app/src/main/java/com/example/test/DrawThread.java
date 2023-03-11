@@ -10,13 +10,16 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.View;
 
 import androidx.core.content.res.ResourcesCompat;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -977,8 +980,8 @@ public class DrawThread extends Thread {
             Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_STREAM, b);
-            sendIntent.setType("image/jpeg");
+            sendIntent.setType("image/*");
+            sendIntent.putExtra(Intent.EXTRA_STREAM, getImageUri(context, b));
             context.startActivity(Intent.createChooser(sendIntent," "));
             m6 = 0;
         }
@@ -986,6 +989,14 @@ public class DrawThread extends Thread {
         {
             e.printStackTrace();
         }
+    }
+    private Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        int rand = (int) (Math.random() * 10000);
+        String str = rand + "";
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, str, null);
+        return Uri.parse(path);
     }
     public void setTouch(int x, int y){
         lastTouchX = x;
