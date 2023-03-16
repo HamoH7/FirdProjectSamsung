@@ -877,8 +877,8 @@ public class DrawThread extends Thread {
         poopingBitmapT[8] = BitmapFactory.decodeResource(context.getResources(), R.drawable.p_t8);
         poopingBitmapT[9] = BitmapFactory.decodeResource(context.getResources(), R.drawable.p_t9);
         poopingBitmapT[10] =BitmapFactory.decodeResource(context.getResources(), R.drawable.p_t10);
-        getFoinBitmap[0] = BitmapFactory.decodeResource(context.getResources(), R.drawable.foin_sandxak);
-        foinBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.foin_sandxak);
+        getFoinBitmap[0] = BitmapFactory.decodeResource(context.getResources(), R.drawable.foin7);
+        foinBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.foin7);
         //getFoinBitmap[1] = BitmapFactory.decodeResource(context.getResources(), R.drawable.foin_bac1);
         //getFoinBitmap[2] = BitmapFactory.decodeResource(context.getResources(), R.drawable.foin_bac2);
         //getFoinBitmap[3] = BitmapFactory.decodeResource(context.getResources(), R.drawable.foin_bac3);
@@ -1089,8 +1089,8 @@ public class DrawThread extends Thread {
         sleepS1 = Bitmap.createScaledBitmap(sleepS1, canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
         sleepS2 = Bitmap.createScaledBitmap(sleepS2, canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
         for (int i = 1; i < 48; i++) washBitmap[i] = Bitmap.createScaledBitmap(washBitmap[i], canvas.getWidth() * 341 / 1050, canvas.getHeight() * 378 / 540, true);
-        for (int i = 0; i < 8; i++) getFoinBitmap[i] = Bitmap.createScaledBitmap(getFoinBitmap[i],  canvas.getWidth(), canvas.getHeight(), true);
-        foinBitmap = Bitmap.createScaledBitmap(foinBitmap, canvas.getWidth(), canvas.getHeight(), true);
+        for (int i = 0; i < 8; i++) getFoinBitmap[i] = Bitmap.createScaledBitmap(getFoinBitmap[i],  canvas.getWidth() * 137 / 1050, canvas.getHeight()* 134 / 540, true);
+        foinBitmap = Bitmap.createScaledBitmap(foinBitmap, canvas.getWidth() * 137 / 1050, canvas.getHeight()* 134 / 540, true);
         shopButton = Bitmap.createScaledBitmap(shopButton,canvas.getWidth()*75/1050, canvas.getHeight()*75/540,true);
         paintFoin.setTextSize((float) canvas.getWidth() * 20/1050);
         for (int i = 0; i < 11; i++) {
@@ -1369,7 +1369,7 @@ public class DrawThread extends Thread {
                                 editor.apply();
                             }
                         }
-                        canvas.drawBitmap(foinBitmap, 0, 0, paint);
+                        canvas.drawBitmap(foinBitmap, (float) canvas.getWidth() * 19 / 1050, (float) canvas.getHeight() * 19 / 540, paint);
                         if (foin >= 0 && foin <= 9)
                             canvas.drawText(foin + " ", (float) canvas.getWidth() * 101 / 1050, (float) canvas.getHeight() * 49 / 540, paintFoin);
                         if (foin >= 10 && foin <= 99)
