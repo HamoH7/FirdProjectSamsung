@@ -930,7 +930,6 @@ public class DrawThread extends Thread {
         eatButtonBitmapPoop =  BitmapFactory.decodeResource(context.getResources(), R.drawable.utelu_knopkaa);
         playButtonBitmapPoop =  BitmapFactory.decodeResource(context.getResources(), R.drawable.xaxalu_knopkaa);
         sleepButtonBitmapPoop =  BitmapFactory.decodeResource(context.getResources(), R.drawable.qnelu_knopkaa);
-        highScoreBitmap =  BitmapFactory.decodeResource(context.getResources(),R.drawable.highscore);
         scoreBitmap =  BitmapFactory.decodeResource(context.getResources(),R.drawable.score);
         screenshotBitmap =  BitmapFactory.decodeResource(context.getResources(),R.drawable.screenshot);
         shopButton =  BitmapFactory.decodeResource(context.getResources(),R.drawable.xanut);
