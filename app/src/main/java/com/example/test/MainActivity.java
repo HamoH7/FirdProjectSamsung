@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private MediaPlayer mediaPlayer;
     private View loadingView;
     private MediaPlayer MediaPlayerArray[] = new MediaPlayer[4];
-    private Bitmap LoadingBitmapArray[] = new Bitmap[703];
+    public Bitmap LoadingBitmapArray[] = new Bitmap[703];
     private int i = 0;
     private Context context;
     @Override
