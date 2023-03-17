@@ -3,7 +3,6 @@ package com.example.test;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -24,19 +23,15 @@ import java.util.concurrent.TimeUnit;
 
 public class MyDraw extends SurfaceView implements SurfaceHolder.Callback{
     private final int timepassed;
-    private Bitmap LoadingBitmapArray[] = new Bitmap[709];
-    public MyDraw(Context context, int timepassed, Bitmap [] array) {
+    public MyDraw(Context context, int timepassed) {
         super(context);
-        for (int i = 0; i < array.length; i++) {
-            LoadingBitmapArray[i] = array[i];
-        };
         this.timepassed = timepassed;
         getHolder().addCallback(this);
     }
     private DrawThread drawThread;
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder holder) {
-        drawThread = new DrawThread(getContext(), getHolder(), this, timepassed, LoadingBitmapArray);
+        drawThread = new DrawThread(getContext(), getHolder(), this, timepassed);
         drawThread.start();
     }
 
