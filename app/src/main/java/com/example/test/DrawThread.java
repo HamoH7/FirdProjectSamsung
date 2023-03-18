@@ -33,7 +33,6 @@ public class DrawThread extends Thread {
     private String IMAGE_NAME = "testImage.jpg";
     public MainActivity mainActivity = new MainActivity();
     public MyDraw myDraw;
-    public Screenshot screenshot = new Screenshot();
     private Context context;
     private Resources res;
     private Bitmap bitmapScreen;
