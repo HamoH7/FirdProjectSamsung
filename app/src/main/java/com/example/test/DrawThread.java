@@ -1010,41 +1010,7 @@ public class DrawThread extends Thread {
     public void requestStop() {
         running = false;
     }
-    public static int calculateInSampleSize(
-            BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        // Raw height and width of image
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int inSampleSize = 1;
 
-        if (height > reqHeight || width > reqWidth) {
-
-            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
-            // height and width larger than the requested height and width.
-            while ((height / inSampleSize) > reqHeight
-                    && (width / inSampleSize) > reqWidth) {
-                inSampleSize *= 2;
-            }
-        }
-
-        return inSampleSize / 2;
-    }
-    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
-                                                         int reqWidth, int reqHeight) {
-
-        // First decode with inJustDecodeBounds=true to check dimensions
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(res, resId, options);
-        options.inScaled = true;
-        options.inSampleSize = calculateInSampleSize(options,reqWidth,reqHeight);
-        options.inDensity = reqWidth;
-        options.inTargetDensity =  reqWidth * options.inSampleSize;
-
-        // Decode bitmap with inSampleSize set
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeResource(res, resId, options);
-    }
     private void giveSize(Canvas canvas) {
         paintBlack.setColor(Color.BLACK);
         paintBlack.setStyle(Paint.Style.STROKE);
@@ -1057,7 +1023,7 @@ public class DrawThread extends Thread {
         paintBlack.setSubpixelText(true);
         paintBlack.setAntiAlias(true);
         paintFoin.setColor(Color.BLACK);
-        bitmapbg = decodeSampledBitmapFromResource(res, R.drawable.background1, canvas.getWidth(), canvas.getHeight());
+        bitmapbg = Bitmap.createScaledBitmap(bitmapbg, canvas.getWidth(), canvas.getHeight(), true);
         bitmapDarkbg = Bitmap.createScaledBitmap(bitmapDarkbg, canvas.getWidth(), canvas.getHeight(), true);
         bitmapkust = Bitmap.createScaledBitmap(bitmapkust, canvas.getWidth() * 245 / 1050, canvas.getHeight() * 180 / 540, true);
         bitmapDarkkust = Bitmap.createScaledBitmap(bitmapDarkkust, canvas.getWidth() * 245 / 1050, canvas.getHeight() * 180 / 540, true);
