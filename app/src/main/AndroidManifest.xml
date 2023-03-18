@@ -16,11 +16,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Test"
         tools:targetApi="32">
-        <activity
-            android:name=".SplashActivity"
-            android:exported="true"
-            android:screenOrientation="landscape" >
-        </activity>
         <activity android:name=".MainActivity"
             android:exported="true"
             android:screenOrientation="landscape"  >
@@ -28,16 +23,6 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".IntroActivity"
-            android:label="IntroActivity"
-        android:screenOrientation="landscape">
-        </activity>
-        <activity
-            android:name=".Screenshot"
-            android:label="Screenshot"
-            android:screenOrientation="landscape">
         </activity>
         <activity
         android:name=".ShopSkin"
