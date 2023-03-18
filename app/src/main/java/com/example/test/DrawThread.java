@@ -17,6 +17,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.core.content.res.ResourcesCompat;
 
@@ -971,7 +972,7 @@ public class DrawThread extends Thread {
             bitmapScreen.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
             outputStream.flush();
             outputStream.close();
-            m6 = 1;
+            sendScreen();
         } catch (Throwable e) {
             // Several error may come out with file handling or DOM
             e.printStackTrace();
@@ -987,7 +988,6 @@ public class DrawThread extends Thread {
             sendIntent.setType("image/*");
             sendIntent.putExtra(Intent.EXTRA_STREAM, getImageUri(context, b));
             context.startActivity(Intent.createChooser(sendIntent," "));
-            m6 = 0;
         }
         catch (FileNotFoundException e)
         {
