@@ -181,6 +181,10 @@ public class DrawThread extends Thread {
     private Bitmap playButtonBitmap,playButtonBitmap2, playButtonBitmapPoop;
     private Bitmap sleepButtonBitmap,sleepButtonBitmap2, sleepButtonBitmapPoop;
     private Bitmap washButtonBitmap, washButtonBitmap2,washButtonBitmap3, washButtonBitmapPoop;
+    // T = Tired
+    // D = Dirty
+    // S = Sad
+    // H = Hungry
     private Bitmap bitmapbg,bitmapkust,bitmapHeart, bitmapDirt, bitmapHungry,bitmapSleep, bitmapHappy, eatButtonBitmap,eatButtonBitmap2, eatButtonBitmapPoop, highScoreBitmap, scoreBitmap;
     private Bitmap bitmap, bitmapDTSH1, bitmapDTSH2, bitmapDTS1, bitmapDTS2, bitmapDTH1, bitmapDTH2, bitmapDSH1, bitmapDSH2, bitmapTSH1, bitmapTSH2,
             bitmapDH1, bitmapDH2, bitmapDS1, bitmapDS2, bitmapDT1, bitmapDT2, bitmapSH1, bitmapSH2, bitmapTH1,bitmapTH2,bitmapTS1,bitmapTS2
