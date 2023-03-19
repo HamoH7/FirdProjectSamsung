@@ -42,7 +42,9 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         currentDate = new Date();
         timeText = timeFormat.format(currentDate);
-        timePassed = ((timeText.indexOf(0)*10+timeText.indexOf(1))*3600)+((timeText.indexOf(3)*10+timeText.indexOf(4))*60)+((timeText.indexOf(6)*10+timeText.indexOf(7)));
+        char a = timeText.charAt(0);
+        timePassed = (Integer.parseInt(timeText.charAt(0) + "")*10+(Integer.parseInt(timeText.charAt(1) + ""))*3600)+(((Integer.parseInt(timeText.charAt(3)+ ""))*10+
+                (Integer.parseInt(timeText.charAt(4) + ""))*60)+((Integer.parseInt(timeText.charAt(6)+""))*10+(Integer.parseInt(timeText.charAt(7)+""))));
         timePassedsp = getApplicationContext().getSharedPreferences("TIMEPASSED", MODE_PRIVATE);
         editor = timePassedsp.edit();
         mediaPlayer = MediaPlayer.create(this, R.raw.songfon);
@@ -56,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
         currentDate = new Date();
         editor = timePassedsp.edit();
         timeText = timeFormat.format(currentDate);
-        timePassed = ((timeText.indexOf(0)*10+timeText.indexOf(1))*3600)+((timeText.indexOf(3)*10+timeText.indexOf(4))*60)+((timeText.indexOf(6)*10+timeText.indexOf(7)));
+        timePassed = (Integer.parseInt(timeText.charAt(0) + "")*10+(Integer.parseInt(timeText.charAt(1) + ""))*3600)+(((Integer.parseInt(timeText.charAt(3)+ ""))*10+
+                (Integer.parseInt(timeText.charAt(4) + ""))*60)+((Integer.parseInt(timeText.charAt(6)+""))*10+(Integer.parseInt(timeText.charAt(7)+""))));
         editor.putInt("TIMEPASSED",timePassed);
         editor.apply();
         mediaPlayer.stop();
@@ -67,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
         currentDate = new Date();
         editor = timePassedsp.edit();
         timeText = timeFormat.format(currentDate);
-        timePassed = ((timeText.indexOf(0)*10+timeText.indexOf(1))*3600)+((timeText.indexOf(3)*10+timeText.indexOf(4))*60)+((timeText.indexOf(6)*10+timeText.indexOf(7)));
+        timePassed = (Integer.parseInt(timeText.charAt(0) + "")*10+(Integer.parseInt(timeText.charAt(1) + ""))*3600)+(((Integer.parseInt(timeText.charAt(3)+ ""))*10+
+                (Integer.parseInt(timeText.charAt(4) + ""))*60)+((Integer.parseInt(timeText.charAt(6)+""))*10+(Integer.parseInt(timeText.charAt(7)+""))));
         editor.putInt("TIMEPASSED",timePassed);
         editor.apply();
         mediaPlayer.stop();

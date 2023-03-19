@@ -2370,7 +2370,8 @@ public class DrawThread extends Thread {
                         //  }
                         // cit
                         canvas.drawBitmap(bitmap, (float) canvas.getWidth() * birdX, (float) canvas.getHeight() * birdY, paint);
-                        canvas.drawText(hit + "", 500, 500, paintDirt);
+                        paintDirt.setTextSize(50);
+                        canvas.drawText(timePassed + "", 500, 500, paintDirt);
                     }
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
