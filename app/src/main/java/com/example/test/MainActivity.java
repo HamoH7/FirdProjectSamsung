@@ -42,16 +42,55 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         currentDate = new Date();
         timeText = timeFormat.format(currentDate);
-        char a = timeText.charAt(0);
         timePassed = (Integer.parseInt(timeText.charAt(0) + "")*10+(Integer.parseInt(timeText.charAt(1) + ""))*3600)+(((Integer.parseInt(timeText.charAt(3)+ ""))*10+
                 (Integer.parseInt(timeText.charAt(4) + ""))*60)+((Integer.parseInt(timeText.charAt(6)+""))*10+(Integer.parseInt(timeText.charAt(7)+""))));
         timePassedsp = getApplicationContext().getSharedPreferences("TIMEPASSED", MODE_PRIVATE);
         editor = timePassedsp.edit();
+        editor.putInt("timePassed1",timePassed);
         mediaPlayer = MediaPlayer.create(this, R.raw.songfon);
         mediaPlayer.start();
-        setContentView(new MyDraw(this, timePassed - timePassedsp.getInt("TIMEPASSED",timePassed)));
+        setContentView(new MyDraw(this, timePassedsp.getInt("timePassed2",timePassed)- timePassedsp.getInt("timePassed1",timePassed)));
         //setContentView(R.layout.shopskin);
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        currentDate = new Date();
+        editor = timePassedsp.edit();
+        timeText = timeFormat.format(currentDate);
+        timePassed = (Integer.parseInt(timeText.charAt(0) + "")*10+(Integer.parseInt(timeText.charAt(1) + ""))*3600)+(((Integer.parseInt(timeText.charAt(3)+ ""))*10+
+                (Integer.parseInt(timeText.charAt(4) + ""))*60)+((Integer.parseInt(timeText.charAt(6)+""))*10+(Integer.parseInt(timeText.charAt(7)+""))));
+        editor.putInt("timePassed1",timePassed);
+        editor.apply();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        currentDate = new Date();
+        editor = timePassedsp.edit();
+        timeText = timeFormat.format(currentDate);
+        timePassed = (Integer.parseInt(timeText.charAt(0) + "")*10+(Integer.parseInt(timeText.charAt(1) + ""))*3600)+(((Integer.parseInt(timeText.charAt(3)+ ""))*10+
+                (Integer.parseInt(timeText.charAt(4) + ""))*60)+((Integer.parseInt(timeText.charAt(6)+""))*10+(Integer.parseInt(timeText.charAt(7)+""))));
+        editor.putInt("timePassed2",timePassed);
+        editor.apply();
+        mediaPlayer.stop();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        currentDate = new Date();
+        editor = timePassedsp.edit();
+        timeText = timeFormat.format(currentDate);
+        timePassed = (Integer.parseInt(timeText.charAt(0) + "")*10+(Integer.parseInt(timeText.charAt(1) + ""))*3600)+(((Integer.parseInt(timeText.charAt(3)+ ""))*10+
+                (Integer.parseInt(timeText.charAt(4) + ""))*60)+((Integer.parseInt(timeText.charAt(6)+""))*10+(Integer.parseInt(timeText.charAt(7)+""))));
+        editor.putInt("timePassed2",timePassed);
+        editor.apply();
+        mediaPlayer.stop();
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -60,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         timeText = timeFormat.format(currentDate);
         timePassed = (Integer.parseInt(timeText.charAt(0) + "")*10+(Integer.parseInt(timeText.charAt(1) + ""))*3600)+(((Integer.parseInt(timeText.charAt(3)+ ""))*10+
                 (Integer.parseInt(timeText.charAt(4) + ""))*60)+((Integer.parseInt(timeText.charAt(6)+""))*10+(Integer.parseInt(timeText.charAt(7)+""))));
-        editor.putInt("TIMEPASSED",timePassed);
+        editor.putInt("timePassed2",timePassed);
         editor.apply();
         mediaPlayer.stop();
     }
@@ -72,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         timeText = timeFormat.format(currentDate);
         timePassed = (Integer.parseInt(timeText.charAt(0) + "")*10+(Integer.parseInt(timeText.charAt(1) + ""))*3600)+(((Integer.parseInt(timeText.charAt(3)+ ""))*10+
                 (Integer.parseInt(timeText.charAt(4) + ""))*60)+((Integer.parseInt(timeText.charAt(6)+""))*10+(Integer.parseInt(timeText.charAt(7)+""))));
-        editor.putInt("TIMEPASSED",timePassed);
+        editor.putInt("timePassed2",timePassed);
         editor.apply();
         mediaPlayer.stop();
     }
@@ -82,5 +121,12 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         mediaPlayer = MediaPlayer.create(this, R.raw.songfon);
         mediaPlayer.start();
+        currentDate = new Date();
+        editor = timePassedsp.edit();
+        timeText = timeFormat.format(currentDate);
+        timePassed = (Integer.parseInt(timeText.charAt(0) + "")*10+(Integer.parseInt(timeText.charAt(1) + ""))*3600)+(((Integer.parseInt(timeText.charAt(3)+ ""))*10+
+                (Integer.parseInt(timeText.charAt(4) + ""))*60)+((Integer.parseInt(timeText.charAt(6)+""))*10+(Integer.parseInt(timeText.charAt(7)+""))));
+        editor.putInt("timePassed1",timePassed);
+        editor.apply();
     }
 }
