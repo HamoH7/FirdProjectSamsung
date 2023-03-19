@@ -1389,6 +1389,10 @@ public class DrawThread extends Thread {
                             canvas.drawText(foin + " ", (float) canvas.getWidth() * 101 / 1050, (float) canvas.getHeight() * 49 / 540, paintFoin);
                         if (foin >= 10 && foin <= 99)
                             canvas.drawText(foin + " ", (float) canvas.getWidth() * 95 / 1050, (float) canvas.getHeight() * 49 / 540, paintFoin);
+                        if (foin >= 100 && foin <= 999)
+                            canvas.drawText(foin + " ", (float) canvas.getWidth() * 89 / 1050, (float) canvas.getHeight() * 49 / 540, paintFoin);
+                        if (foin >= 1000 && foin <= 9999)
+                            canvas.drawText(foin + " ", (float) canvas.getWidth() * 83 / 1050, (float) canvas.getHeight() * 49 / 540, paintFoin);
                         // Xanuti knopka
                         canvas.drawBitmap(shopButton, (float) canvas.getWidth() * shopButtonLeft, (float) canvas.getHeight() * shopButtonTop, paint);
                         // utelu knopken
