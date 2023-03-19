@@ -1450,7 +1450,7 @@ public class DrawThread extends Thread {
                             new Minute().start();
                             m5 = 1;
                         }
-                        if (eatScore >= 4 && pop && !pooping && !eating && !playing && !flying && !sleeping && !laying && !hitting && !washing) {
+                        if (eatScore >= 3 && pop && !pooping && !eating && !playing && !flying && !sleeping && !laying && !hitting && !washing) {
                             eatButtonBitmap2 = eatButtonBitmap;
                             sleepButtonBitmap2 = sleepButtonBitmap;
                             playButtonBitmap2 = playButtonBitmap;
@@ -1613,7 +1613,7 @@ public class DrawThread extends Thread {
                             else if (bitmap1 == bitmapT1) bitmap = poopingBitmapT[disgust];
                             else if (bitmap1 == bitmapS1) bitmap = poopingBitmapS[disgust];
                         }
-                        if (disgusting && lastTouchX >= poopX && lastTouchX <= poopX + poopWidth && lastTouchY >= poopY && lastTouchY <= poopY + poopHeight) {
+                        if (disgusting && lastTouchX >= poopX * canvas.getWidth() && lastTouchX <= canvas.getWidth()*(poopX + poopWidth) && lastTouchY >= canvas.getHeight() * poopY && lastTouchY <= (poopY + poopHeight) * canvas.getHeight()) {
                             new PoopFlyBackThread().start();
                             isTouched = true;
                             disgusting = false;
