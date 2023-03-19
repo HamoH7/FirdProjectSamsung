@@ -222,6 +222,7 @@ public class DrawThread extends Thread {
     private int timePassed;
     private float levelRight3;
     private MediaPlayer mediaPlayerHappy, mediaPlayerHit, mediaPlayerWash;
+    public DrawThread(){}
     public DrawThread(Context context, SurfaceHolder surfaceHolder, MyDraw myDraw, int timePassed) {
         this.view = view;
         this.timePassed = timePassed;
@@ -1068,7 +1069,15 @@ public class DrawThread extends Thread {
         bitmapSmile1 = Bitmap.createScaledBitmap(bitmapSmile1, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
         bitmapSmile2 = Bitmap.createScaledBitmap(bitmapSmile2, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
         for (int i = 1; i < 11; i++) {
-            eatBitmap[i] = Bitmap.createScaledBitmap(eatBitmap[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);eatBitmapSmile[i] = Bitmap.createScaledBitmap(eatBitmapSmile[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);eatBitmapD[i] = Bitmap.createScaledBitmap(eatBitmapD[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);eatBitmapDS[i] = Bitmap.createScaledBitmap(eatBitmapDS[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);eatBitmapDT[i] = Bitmap.createScaledBitmap(eatBitmapDT[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);eatBitmapDTS[i] = Bitmap.createScaledBitmap(eatBitmapDTS[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);eatBitmapS[i] = Bitmap.createScaledBitmap(eatBitmapS[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);eatBitmapT[i] = Bitmap.createScaledBitmap(eatBitmapT[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);eatBitmapTS[i] = Bitmap.createScaledBitmap(eatBitmapTS[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            eatBitmap[i] = Bitmap.createScaledBitmap(eatBitmap[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+            eatBitmapSmile[i] = Bitmap.createScaledBitmap(eatBitmapSmile[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() *283.5 / 540), true);
+            eatBitmapD[i] = Bitmap.createScaledBitmap(eatBitmapD[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540 ), true);
+            eatBitmapDS[i] = Bitmap.createScaledBitmap(eatBitmapDS[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+            eatBitmapDT[i] = Bitmap.createScaledBitmap(eatBitmapDT[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+            eatBitmapDTS[i] = Bitmap.createScaledBitmap(eatBitmapDTS[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+            eatBitmapS[i] = Bitmap.createScaledBitmap(eatBitmapS[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+            eatBitmapT[i] = Bitmap.createScaledBitmap(eatBitmapT[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+            eatBitmapTS[i] = Bitmap.createScaledBitmap(eatBitmapTS[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() *283.5 / 540), true);
         }
         for (int i = 1; i < 21; i++) {
             playBitmap[i] = Bitmap.createScaledBitmap(playBitmap[i], canvas.getWidth() * 194 / 1050, canvas.getHeight() * 172 / 540, true);playBitmapD[i] = Bitmap.createScaledBitmap(playBitmapD[i], canvas.getWidth() * 194 / 1050, canvas.getHeight() * 172 / 540, true);playBitmapDT[i] = Bitmap.createScaledBitmap(playBitmapDT[i], canvas.getWidth() * 194 / 1050, canvas.getHeight() * 172 / 540, true);playBitmapT[i] = Bitmap.createScaledBitmap(playBitmapT[i], canvas.getWidth() * 194 / 1050, canvas.getHeight() * 172 / 540, true);
@@ -1756,7 +1765,8 @@ public class DrawThread extends Thread {
                             eatingTimeIsPassed = true;
                         }
                         if (eatingNeedToDrawNow && eating) {
-                            if (eat >= 1) {
+                            if (eat >= 1 && eat <= 10) {
+                                birdY = (float) 118 / 540;
                                 if (bitmap1 == bitmapDTS1 || bitmap1 == bitmapDTSH1)
                                     bitmap = eatBitmapDTS[eat];
                                 else if (bitmap1 == bitmapDT1 || bitmap1 == bitmapDTH1)
@@ -1789,7 +1799,7 @@ public class DrawThread extends Thread {
                                     e = 1;
                                 }
                             }
-                            if (eat == 10) {
+                            if (eat == 11) {
                                 eating = false;
                                 eat = 0;
                                 lastTouchY = 0;
@@ -1798,6 +1808,8 @@ public class DrawThread extends Thread {
                                 checkEatButton = true;
                                 e = 0;
                                 ea = false;
+                                bitmap = bitmap1;
+                                birdY = (float) 232/540;
                                 eatButtonBitmap = eatDarkButtonBitmap[10];
                                 eatTimer = 10;
                                 eatScore++;
@@ -2512,8 +2524,8 @@ public class DrawThread extends Thread {
         @Override
         public void run() {
             try {
-                if(eat<10) {
-                    sleep(500);
+                if(eat<11) {
+                    sleep(200);
                     eat++;
                     eatingTimeIsPassed = false;
                     eatingNeedToDrawNow = true;
