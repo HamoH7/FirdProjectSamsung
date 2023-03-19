@@ -72,4 +72,11 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
         mediaPlayer.stop();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mediaPlayer = MediaPlayer.create(this, R.raw.songfon);
+        mediaPlayer.start();
+    }
 }
