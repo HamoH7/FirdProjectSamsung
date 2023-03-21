@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
 import android.view.Window;
 import android.view.WindowManager;
@@ -40,93 +41,41 @@ public class MainActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
-        currentDate = new Date();
-        timeText = timeFormat.format(currentDate);
-        timePassed = (Integer.parseInt(timeText.charAt(0) + "")*10+(Integer.parseInt(timeText.charAt(1) + ""))*3600)+(((Integer.parseInt(timeText.charAt(3)+ ""))*10+
-                (Integer.parseInt(timeText.charAt(4) + ""))*60)+((Integer.parseInt(timeText.charAt(6)+""))*10+(Integer.parseInt(timeText.charAt(7)+""))));
-        timePassedsp = getApplicationContext().getSharedPreferences("TIMEPASSED", MODE_PRIVATE);
-        editor = timePassedsp.edit();
-        editor.putInt("timePassed1",timePassed);
-        mediaPlayer = MediaPlayer.create(this, R.raw.songfon);
-        mediaPlayer.start();
-        setContentView(new MyDraw(this, timePassedsp.getInt("timePassed2",timePassed)- timePassedsp.getInt("timePassed1",timePassed)));
+        setContentView(new MyDraw(this, 0));
         //setContentView(R.layout.shopskin);
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        currentDate = new Date();
-        editor = timePassedsp.edit();
-        timeText = timeFormat.format(currentDate);
-        timePassed = (Integer.parseInt(timeText.charAt(0) + "")*10+(Integer.parseInt(timeText.charAt(1) + ""))*3600)+(((Integer.parseInt(timeText.charAt(3)+ ""))*10+
-                (Integer.parseInt(timeText.charAt(4) + ""))*60)+((Integer.parseInt(timeText.charAt(6)+""))*10+(Integer.parseInt(timeText.charAt(7)+""))));
-        editor.putInt("timePassed1",timePassed);
-        editor.apply();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        currentDate = new Date();
-        editor = timePassedsp.edit();
-        timeText = timeFormat.format(currentDate);
-        timePassed = (Integer.parseInt(timeText.charAt(0) + "")*10+(Integer.parseInt(timeText.charAt(1) + ""))*3600)+(((Integer.parseInt(timeText.charAt(3)+ ""))*10+
-                (Integer.parseInt(timeText.charAt(4) + ""))*60)+((Integer.parseInt(timeText.charAt(6)+""))*10+(Integer.parseInt(timeText.charAt(7)+""))));
-        editor.putInt("timePassed2",timePassed);
-        editor.apply();
-        mediaPlayer.stop();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        currentDate = new Date();
-        editor = timePassedsp.edit();
-        timeText = timeFormat.format(currentDate);
-        timePassed = (Integer.parseInt(timeText.charAt(0) + "")*10+(Integer.parseInt(timeText.charAt(1) + ""))*3600)+(((Integer.parseInt(timeText.charAt(3)+ ""))*10+
-                (Integer.parseInt(timeText.charAt(4) + ""))*60)+((Integer.parseInt(timeText.charAt(6)+""))*10+(Integer.parseInt(timeText.charAt(7)+""))));
-        editor.putInt("timePassed2",timePassed);
-        editor.apply();
-        mediaPlayer.stop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        currentDate = new Date();
-        editor = timePassedsp.edit();
-        timeText = timeFormat.format(currentDate);
-        timePassed = (Integer.parseInt(timeText.charAt(0) + "")*10+(Integer.parseInt(timeText.charAt(1) + ""))*3600)+(((Integer.parseInt(timeText.charAt(3)+ ""))*10+
-                (Integer.parseInt(timeText.charAt(4) + ""))*60)+((Integer.parseInt(timeText.charAt(6)+""))*10+(Integer.parseInt(timeText.charAt(7)+""))));
-        editor.putInt("timePassed2",timePassed);
-        editor.apply();
-        mediaPlayer.stop();
-    }
-    @Override
-    protected void onStop() {
-        super.onStop();
-        currentDate = new Date();
-        editor = timePassedsp.edit();
-        timeText = timeFormat.format(currentDate);
-        timePassed = (Integer.parseInt(timeText.charAt(0) + "")*10+(Integer.parseInt(timeText.charAt(1) + ""))*3600)+(((Integer.parseInt(timeText.charAt(3)+ ""))*10+
-                (Integer.parseInt(timeText.charAt(4) + ""))*60)+((Integer.parseInt(timeText.charAt(6)+""))*10+(Integer.parseInt(timeText.charAt(7)+""))));
-        editor.putInt("timePassed2",timePassed);
-        editor.apply();
-        mediaPlayer.stop();
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
         mediaPlayer = MediaPlayer.create(this, R.raw.songfon);
-        mediaPlayer.start();
-        currentDate = new Date();
+        timePassedsp = getApplicationContext().getSharedPreferences("TIMEPASSED", MODE_PRIVATE);
         editor = timePassedsp.edit();
+        currentDate = new Date();
         timeText = timeFormat.format(currentDate);
-        timePassed = (Integer.parseInt(timeText.charAt(0) + "")*10+(Integer.parseInt(timeText.charAt(1) + ""))*3600)+(((Integer.parseInt(timeText.charAt(3)+ ""))*10+
-                (Integer.parseInt(timeText.charAt(4) + ""))*60)+((Integer.parseInt(timeText.charAt(6)+""))*10+(Integer.parseInt(timeText.charAt(7)+""))));
+        editor = timePassedsp.edit();
+        timePassed = ((Integer.parseInt(timeText.charAt(0) + ""))*10+(Integer.parseInt(timeText.charAt(1) + "")))*3600+((Integer.parseInt(timeText.charAt(3)+ ""))*10+
+                Integer.parseInt(timeText.charAt(4) + ""))*60+((Integer.parseInt(timeText.charAt(6)+""))*10+Integer.parseInt(timeText.charAt(7)+""));
         editor.putInt("timePassed1",timePassed);
+        editor.apply();
+        mediaPlayer.start();
+        int timePassed2 = timePassedsp.getInt("timePassed2",0);
+        int timePassed1 = timePassedsp.getInt("timePassed1",0);
+        setContentView(new MyDraw(this, timePassed1 - timePassed2));
+    }
+
+   @Override
+   protected void onPause() {
+       super.onPause();
+       saveTimePassed();
+       mediaPlayer.stop();
+   }
+    public void saveTimePassed() {
+        currentDate = new Date();
+        timeText = timeFormat.format(currentDate);
+        editor = timePassedsp.edit();
+        timePassed = ((Integer.parseInt(timeText.charAt(0) + ""))*10+(Integer.parseInt(timeText.charAt(1) + "")))*3600+((Integer.parseInt(timeText.charAt(3)+ ""))*10+
+                Integer.parseInt(timeText.charAt(4) + ""))*60+((Integer.parseInt(timeText.charAt(6)+""))*10+Integer.parseInt(timeText.charAt(7)+""));
+        editor.putInt("timePassed2",timePassed);
         editor.apply();
     }
 }

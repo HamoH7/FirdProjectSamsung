@@ -57,13 +57,13 @@ public class DrawThread extends Thread {
     private float poopX = (float)  450 / 1050, poopY = (float)  309 / 540;
     private float poopWidth = (float)  94 / 105, poopHeight = (float)  94 / 540;
     private int disgust = 1, eatScore = 0, wash = 1,foinTime = 0, hit = 1,poop1=1,poop2=1,poop3=0, m = 0,m1 = 1,m2 = 1, m6 = 0, eat = 1, e = 0, eatTimer = 10, m5 = 0, p = 0, playTimer = 15, sleepTimer = 60, play = 0, sleep = 0, r1 = 0, flyBack = 0;
-    private double hungryChangeValue = (float)1/ 100; // Sovi timeri hamar
-    private double happyChangeValue = (float) 1 / 70; // Uraxutyan timeri hamar
-    private double sleepChangeValue = (float) 1 / 120; // Qni timeri hamar
-    private double dirtyChangeValue = (float) 1 / 50; // kextotutyan timeri hamar
+    private double hungryChangeValue = (float)1/ 1000; // Sovi timeri hamar
+    private double happyChangeValue = (float) 1 / 7000; // Uraxutyan timeri hamar
+    private double sleepChangeValue = (float) 1 / 1200; // Qni timeri hamar
+    private double dirtyChangeValue = (float) 1 / 5000; // kextotutyan timeri hamar
     private double food = (float) 1 ;//food = (float) 1 / 10;
-    private double smile = (float) 1 / 300;//smile = (float) 1 / 60;
-    private double qun = (float) 1 / 40;//qun = (float) 1 / 40;
+    private double smile = (float) 1 / 1;//smile = (float) 1 / 60;
+    private double qun = (float) 1 / 1;//qun = (float) 1 / 40;
     private float hungryRight = 0, happyRight = 0, sleepRight = 0, dirtRight = 0, levelRight = 0;
     private int levelColor, dirtColor, hungryColor, tiredColor, happyColor;
     private boolean hungryButtonIsPressed = false, happyButtonIsTouched = false, sl = false, sleepButtonIsPressed = false, sle = false, birdIsPunched = false, washButtonIsPressed = false, pop = false, po = false;
@@ -133,6 +133,7 @@ public class DrawThread extends Thread {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private int timePassed;
+    private Bitmap foinR;
     private MediaPlayer mediaPlayerHappy, mediaPlayerHit, mediaPlayerWash;
     private int playBitmapId[] = {0 ,R.drawable.xaxacox1,R.drawable.xaxacox2,R.drawable.xaxacox3,R.drawable.xaxacox4,R.drawable.xaxacox5,R.drawable.xaxacox6,R.drawable.xaxacox7,R.drawable.xaxacox8,R.drawable.xaxacox9,R.drawable.xaxacox10,R.drawable.xaxacox11,R.drawable.xaxacox12,R.drawable.xaxacox13,R.drawable.xaxacox14,R.drawable.xaxacox15,R.drawable.xaxacox16,R.drawable.xaxacox17,R.drawable.xaxacox18,R.drawable.xaxacox19,R.drawable.xaxacox20};
     private int playBitmapDId[] = {0,R.drawable.d_xaxacox1,R.drawable.d_xaxacox2,R.drawable.d_xaxacox3,R.drawable.d_xaxacox4,R.drawable.d_xaxacox5,R.drawable.d_xaxacox6,R.drawable.d_xaxacox7,R.drawable.d_xaxacox8,R.drawable.d_xaxacox9,R.drawable.d_xaxacox10,R.drawable.d_xaxacox11,R.drawable.d_xaxacox12,R.drawable.d_xaxacox13,R.drawable.d_xaxacox14,R.drawable.d_xaxacox15,R.drawable.d_xaxacox16,R.drawable.d_xaxacox17,R.drawable.d_xaxacox18,R.drawable.d_xaxacox19,R.drawable.d_xaxacox20};
@@ -280,6 +281,7 @@ public class DrawThread extends Thread {
         for (int i = 0; i < 8; i++) {
             getFoinBitmap[i] = BitmapFactory.decodeResource(context.getResources(),getFoinBitmapId[i]);
         }
+        foinBitmap = BitmapFactory.decodeResource(context.getResources(),getFoinBitmapId[0]);
         for (int i = 1; i < 19; i++) {
             levelBitmap[i] = BitmapFactory.decodeResource(context.getResources() ,levelBitmapId[i]);
         }
@@ -541,6 +543,7 @@ public class DrawThread extends Thread {
         sleepS2 = Bitmap.createScaledBitmap(sleepS2, canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
         for (int i = 1; i < 48; i++) washBitmap[i] = Bitmap.createScaledBitmap(washBitmap[i], canvas.getWidth() * 341 / 1050, canvas.getHeight() * 378 / 540, true);
         for (int i = 0; i < 8; i++) getFoinBitmap[i] = Bitmap.createScaledBitmap(getFoinBitmap[i],  canvas.getWidth() * 137 / 1050, canvas.getHeight()* 134 / 540, true);
+        foinBitmap = Bitmap.createScaledBitmap(foinBitmap,  canvas.getWidth() * 137 / 1050, canvas.getHeight()* 134 / 540, true);
         shopButton = Bitmap.createScaledBitmap(shopButton,canvas.getWidth()*75/1050, canvas.getHeight()*75/540,true);
         paintFoin.setTextSize((float) canvas.getWidth() * 20/1050);
         for (int i = 0; i < 11; i++) {
@@ -811,7 +814,7 @@ public class DrawThread extends Thread {
                                 editor.apply();
                             }
                         }
-                        canvas.drawBitmap(getFoinBitmap[0], (float) canvas.getWidth() * 19 / 1050, (float) canvas.getHeight() * 19 / 540, paint);
+                        canvas.drawBitmap(foinBitmap, (float) canvas.getWidth() * 19 / 1050, (float) canvas.getHeight() * 19 / 540, paint);
                         if (foin >= 0 && foin <= 9)
                             canvas.drawText(foin + " ", (float) canvas.getWidth() * 101 / 1050, (float) canvas.getHeight() * 49 / 540, paintFoin);
                         if (foin >= 10 && foin <= 99)
@@ -1687,8 +1690,8 @@ public class DrawThread extends Thread {
                         //  }
                         // Рисуем птичку
                         canvas.drawBitmap(bird, (float) canvas.getWidth() * birdX, (float) canvas.getHeight() * birdY, paint);
-                        // paintDirt.setTextSize(50);
-                        // canvas.drawText(timePassed + "", 500, 500, paintDirt);
+                        paintDirt.setTextSize(50);
+                        canvas.drawText(timePassed + "", 500, 500, paintDirt);
                     }
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
