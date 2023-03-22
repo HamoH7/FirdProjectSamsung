@@ -132,7 +132,7 @@ public class DrawThread extends Thread {
     private Paint paint = new Paint(),paintLevel = new Paint(),paintDirt = new Paint(),paintHungry = new Paint(),paintSleep = new Paint(),paintHappy = new Paint(),paintBlack = new Paint(),paintFoin = new Paint();
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
-    private int timePassed;
+    private int timePassed, timePassedIsUsed = 0;
     private Bitmap foinR;
     private MediaPlayer mediaPlayerHappy, mediaPlayerHit, mediaPlayerWash;
     private int playBitmapId[] = {0 ,R.drawable.xaxacox1,R.drawable.xaxacox2,R.drawable.xaxacox3,R.drawable.xaxacox4,R.drawable.xaxacox5,R.drawable.xaxacox6,R.drawable.xaxacox7,R.drawable.xaxacox8,R.drawable.xaxacox9,R.drawable.xaxacox10,R.drawable.xaxacox11,R.drawable.xaxacox12,R.drawable.xaxacox13,R.drawable.xaxacox14,R.drawable.xaxacox15,R.drawable.xaxacox16,R.drawable.xaxacox17,R.drawable.xaxacox18,R.drawable.xaxacox19,R.drawable.xaxacox20};
@@ -370,11 +370,46 @@ public class DrawThread extends Thread {
         sleepRight = sharedPreferences.getFloat("SLEEP", (float)  1040 / 1050);
         happyRight = sharedPreferences.getFloat("HAPPY", (float) 1040 / 1050);
         levelRight = sharedPreferences.getFloat("LEVELRIGHT",(float)  844 / 1050);
+
+        //Обновляем статистику после выхода и входа
+
+        changeStateAfterStart(dirtRight,dirtLeft,dirtWeight,dirtyChangeValue,1);
+        changeStateAfterStart(hungryRight,hungryLeft,hungryWeight,hungryChangeValue,2);
+        changeStateAfterStart(sleepRight,sleepLeft,sleepWeight,sleepChangeValue,3);
+        changeStateAfterStart(happyRight,happyLeft,happyWeight,happyChangeValue,4);
         paintHappy.setColor(happyColor);
         paintSleep.setColor(tiredColor);
         paintHungry.setColor(hungryColor);
         paintDirt.setColor(dirtColor);
         paintLevel.setColor(levelColor);
+    }
+    private void changeStateAfterStart(float stateRight, float stateLeft, float stateWeight, double stateChangeValue,int stateChecker) {
+        if (stateRight - stateChangeValue *stateWeight * timePassed*10 >=stateLeft) {
+            stateChangeValue *=stateWeight * timePassed*10;
+            stateRight -= stateChangeValue;
+            stateChangeValue /= (stateWeight * timePassed*10);
+        }
+        if ((stateRight  >=  stateLeft && stateRight - stateChangeValue *stateWeight * timePassed*10 < stateLeft)||(stateRight<stateLeft)) {
+            stateRight = stateLeft;
+        }
+        if(stateChecker == 1){
+            dirtRight = stateRight;
+            editor.putFloat("DIRT", stateRight);
+        }
+        else if (stateChecker == 2) {
+            hungryRight = stateRight;
+            editor.putFloat("HUNGRY", stateRight);
+        }
+        else if (stateChecker == 3) {
+            sleepRight = stateRight;
+            editor.putFloat("SLEEP", stateRight);
+        }
+        else if (stateChecker == 4) {
+            happyRight = stateRight;
+            editor.putFloat("HAPPY", stateRight);
+            timePassed = 0;
+        }
+        editor.apply();
     }
     private void takeScreenshot() {
         try {
@@ -594,31 +629,40 @@ public class DrawThread extends Thread {
     }
 
     private void stateChanger(float stateRight, float stateLeft, float stateWeight, double stateChangeValue,int stateChecker) {
-            if (stateRight - stateChangeValue * stateWeight >= stateLeft) {
-                stateChangeValue *= stateWeight;
-                stateRight -= stateChangeValue;
-                stateChangeValue /= stateWeight;
-            }
-            if (stateRight >= stateLeft && stateRight - stateChangeValue * stateWeight < stateLeft) {
-                stateRight = stateLeft;
-            }
-            if(stateChecker == 1){
-                dirtRight = stateRight;
-                editor.putFloat("DIRT", stateRight);
-            }
-            else if (stateChecker == 2) {
-                hungryRight = stateRight;
-                editor.putFloat("HUNGRY", stateRight);
-            }
-            else if (stateChecker == 3) {
-                sleepRight = stateRight;
-                editor.putFloat("SLEEP", stateRight);
-            }
-            else if (stateChecker == 4) {
-                happyRight = stateRight;
-                editor.putFloat("HAPPY", stateRight);
-            }
-            editor.apply();
+        if (stateRight - stateChangeValue * stateWeight >= stateLeft) {
+            stateChangeValue *= stateWeight;
+            stateRight -= stateChangeValue;
+            stateChangeValue /= stateWeight;
+        }
+        if (stateRight >= stateLeft && stateRight - stateChangeValue * stateWeight < stateLeft) {
+            stateRight = stateLeft;
+        }
+        if (stateRight - stateChangeValue * stateWeight >= stateLeft) {
+            stateChangeValue *= stateWeight;
+            stateRight -= stateChangeValue;
+            stateChangeValue /= stateWeight;
+        }
+        if (stateRight >= stateLeft && stateRight - stateChangeValue * stateWeight < stateLeft) {
+            stateRight = stateLeft;
+        }
+        if(stateChecker == 1){
+            dirtRight = stateRight;
+            editor.putFloat("DIRT", stateRight);
+        }
+        else if (stateChecker == 2) {
+            hungryRight = stateRight;
+            editor.putFloat("HUNGRY", stateRight);
+        }
+        else if (stateChecker == 3) {
+            sleepRight = stateRight;
+            editor.putFloat("SLEEP", stateRight);
+        }
+        else if (stateChecker == 4) {
+            happyRight = stateRight;
+            editor.putFloat("HAPPY", stateRight);
+        }
+        editor.apply();
+        editor.apply();
     }
 
     @Override
@@ -629,6 +673,7 @@ public class DrawThread extends Thread {
                 try {
                     if(m2 == 1) {
                         giveSize(canvas);
+                        timePassed = 0;
                         m2 = 0;
                     }
                     if(loaded) {
@@ -713,7 +758,6 @@ public class DrawThread extends Thread {
                             stateChanger(happyRight, happyLeft, happyWeight, happyChangeValue, 4);
                             happyNeedToDrawNow = false;
                         }
-
                         // Иконки уровня, загрезнения, голода, усталости и радости
 
                         canvas.drawBitmap(levelBitmap[level], (float) canvas.getWidth() * 815 / 1050, (float) canvas.getHeight() * 2 / 540, paint);
@@ -1356,7 +1400,6 @@ public class DrawThread extends Thread {
                         //  Магазин
                         if (lastTouchX >= (shopButtonLeft* canvas.getWidth()) && lastTouchX <= (shopButtonLeft + shopButtonWidth)* (canvas.getWidth()) && lastTouchY >= (shopButtonTop* canvas.getHeight()) && lastTouchY <= (shopButtonTop + shopButtonHeight)*(canvas.getHeight())) {
                             startShopActivity();
-                            canvas.drawCircle(100,100,100,paintDirt);
                             lastTouchY = 0;
                             lastTouchX = 0;
                         }
@@ -1410,6 +1453,18 @@ public class DrawThread extends Thread {
                     ioException.printStackTrace();
                 } finally {
                     surfaceHolder.unlockCanvasAndPost(canvas);
+                }
+            }
+            else {
+                mediaPlayerWash.stop();
+                mediaPlayerHappy.stop();
+                mediaPlayerHit.stop();
+                try {
+                    mediaPlayerWash.prepare();
+                    mediaPlayerHappy.prepare();
+                    mediaPlayerHit.prepare();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
                 }
             }
         }
