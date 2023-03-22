@@ -49,7 +49,7 @@ public class DrawThread extends Thread {
     private float sleepLeft = (float) 877 / 1050, sleepTop = (float)  129 / 540, sleepRight2 = (float) 1040 / 1050, sleepWeight = sleepRight2 - sleepLeft, sleepBottom = (float)  153 / 540;
     private float happyLeft = (float) 877 / 1050, happyTop = (float)  166 / 540, happyRight2 = (float)  1040 / 1050, happyWeight = happyRight2 - happyLeft, happyBottom = (float)  190 / 540;
     private float shopButtonLeft = (float)878/1050, shopButtonTop = (float) 462/540;
-    private int shopButtonWidth = 75/1050, shopButtonHeight = 75/540;
+    private float shopButtonWidth = (float) 75/1050, shopButtonHeight = (float)75/540;
     private float eatButtonLeft = (float) 19/1050, eatButtonTop = (float) 427/540;
     private float playButtonLeft = (float)130/1050, playButtonTop = (float) 427/540;
     private float sleepButtonTop = (float) 427/540, dirtButtonLeft = (float)352/1050;
@@ -392,7 +392,7 @@ public class DrawThread extends Thread {
             bitmapScreen.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
             outputStream.flush();
             outputStream.close();
-            sendScreen();
+            m6 = 1;
         } catch (Throwable e) {
             // Several error may come out with file handling or DOM
             e.printStackTrace();
@@ -544,7 +544,7 @@ public class DrawThread extends Thread {
         for (int i = 1; i < 48; i++) washBitmap[i] = Bitmap.createScaledBitmap(washBitmap[i], canvas.getWidth() * 341 / 1050, canvas.getHeight() * 378 / 540, true);
         for (int i = 0; i < 8; i++) getFoinBitmap[i] = Bitmap.createScaledBitmap(getFoinBitmap[i],  canvas.getWidth() * 137 / 1050, canvas.getHeight()* 134 / 540, true);
         foinBitmap = Bitmap.createScaledBitmap(foinBitmap,  canvas.getWidth() * 137 / 1050, canvas.getHeight()* 134 / 540, true);
-        shopButton = Bitmap.createScaledBitmap(shopButton,canvas.getWidth()*75/1050, canvas.getHeight()*75/540,true);
+        shopButton = Bitmap.createScaledBitmap(shopButton,(int)(canvas.getWidth()*shopButtonWidth), (int)(canvas.getHeight()*shopButtonHeight),true);
         paintFoin.setTextSize((float) canvas.getWidth() * 20/1050);
         for (int i = 0; i < 11; i++) {
             eatDarkButtonBitmap[i] = Bitmap.createScaledBitmap(eatDarkButtonBitmap[i],(int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
@@ -823,10 +823,6 @@ public class DrawThread extends Thread {
                             canvas.drawText(foin + " ", (float) canvas.getWidth() * 89 / 1050, (float) canvas.getHeight() * 49 / 540, paintFoin);
                         if (foin >= 1000 && foin <= 9999)
                             canvas.drawText(foin + " ", (float) canvas.getWidth() * 83 / 1050, (float) canvas.getHeight() * 49 / 540, paintFoin);
-                        // Кнопка магазина
-
-                        canvas.drawBitmap(shopButton, (float) canvas.getWidth() * shopButtonLeft, (float) canvas.getHeight() * shopButtonTop, paint);
-
                         // Кнопка голода
 
                         if (!eatChecker && checkEatButton && !pooping && !flyPoop && !disgusting && !flyBackPoop) {
@@ -921,105 +917,25 @@ public class DrawThread extends Thread {
                         if (poopingNeedToDrawNow2 && flyPoop) {
                             switch (poop2) {
                                 case 1:
-                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[4];
-                                    else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[4];
-                                    else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[4];
-                                    else if (birdBreath1 == bitmapD1) bird = flyBitmapD[4];
-                                    else if (birdBreath1 == bitmapH1) bird = flyBitmapH[4];
-                                    else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[4];
-                                    else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[4];
-                                    else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[4];
-                                    else if (birdBreath1 == bitmapS1) bird = flyBitmapS[4];
-                                    else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[4];
-                                    else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[4];
-                                    else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[4];
-                                    else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[4];
-                                    else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[4];
-                                    else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[4];
-                                    else if (birdBreath1 == bitmapT1) bird = flyBitmapT[4];
-                                    else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[4];
+                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[4];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[4];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[4];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[4];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[4];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[4];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[4];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[4];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[4];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[4];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[4];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[4];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[4];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[4];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[4];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[4];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[4];
                                     break;
                                 case 2:
-                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[3];
-                                    else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[3];
-                                    else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[3];
-                                    else if (birdBreath1 == bitmapD1) bird = flyBitmapD[3];
-                                    else if (birdBreath1 == bitmapH1) bird = flyBitmapH[3];
-                                    else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[3];
-                                    else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[3];
-                                    else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[3];
-                                    else if (birdBreath1 == bitmapS1) bird = flyBitmapS[3];
-                                    else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[3];
-                                    else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[3];
-                                    else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[3];
-                                    else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[3];
-                                    else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[3];
-                                    else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[3];
-                                    else if (birdBreath1 == bitmapT1) bird = flyBitmapT[3];
-                                    else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[3];
+                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[3];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[3];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[3];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[3];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[3];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[3];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[3];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[3];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[3];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[3];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[3];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[3];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[3];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[3];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[3];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[3];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[3];
                                     birdX = (float) 548 / 1050;
                                     birdY = (float) 176 / 540;
                                     break;
                                 case 3:
-                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[4];
-                                    else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[4];
-                                    else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[4];
-                                    else if (birdBreath1 == bitmapD1) bird = flyBitmapD[4];
-                                    else if (birdBreath1 == bitmapH1) bird = flyBitmapH[4];
-                                    else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[4];
-                                    else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[4];
-                                    else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[4];
-                                    else if (birdBreath1 == bitmapS1) bird = flyBitmapS[4];
-                                    else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[4];
-                                    else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[4];
-                                    else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[4];
-                                    else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[4];
-                                    else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[4];
-                                    else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[4];
-                                    else if (birdBreath1 == bitmapT1) bird = flyBitmapT[4];
-                                    else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[4];
+                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[4];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[4];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[4];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[4];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[4];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[4];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[4];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[4];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[4];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[4];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[4];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[4];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[4];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[4];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[4];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[4];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[4];
                                     birdX = (float) 625 / 1050;
                                     birdY = (float) 203 / 540;
                                     break;
                                 case 4:
-                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[3];
-                                    else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[3];
-                                    else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[3];
-                                    else if (birdBreath1 == bitmapD1) bird = flyBitmapD[3];
-                                    else if (birdBreath1 == bitmapH1) bird = flyBitmapH[3];
-                                    else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[3];
-                                    else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[3];
-                                    else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[3];
-                                    else if (birdBreath1 == bitmapS1) bird = flyBitmapS[3];
-                                    else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[3];
-                                    else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[3];
-                                    else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[3];
-                                    else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[3];
-                                    else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[3];
-                                    else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[3];
-                                    else if (birdBreath1 == bitmapT1) bird = flyBitmapT[3];
-                                    else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[3];
+                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[3];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[3];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[3];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[3];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[3];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[3];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[3];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[3];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[3];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[3];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[3];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[3];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[3];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[3];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[3];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[3];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[3];
                                     birdX = (float) 715 / 1050;
                                     birdY = (float) 195 / 540;
                                     break;
                                 case 5:
-                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[4];
-                                    else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[4];
-                                    else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[4];
-                                    else if (birdBreath1 == bitmapD1) bird = flyBitmapD[4];
-                                    else if (birdBreath1 == bitmapH1) bird = flyBitmapH[4];
-                                    else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[4];
-                                    else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[4];
-                                    else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[4];
-                                    else if (birdBreath1 == bitmapS1) bird = flyBitmapS[4];
-                                    else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[4];
-                                    else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[4];
-                                    else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[4];
-                                    else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[4];
-                                    else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[4];
-                                    else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[4];
-                                    else if (birdBreath1 == bitmapT1) bird = flyBitmapT[4];
-                                    else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[4];
+                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[4];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[4];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[4];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[4];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[4];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[4];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[4];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[4];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[4];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[4];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[4];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[4];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[4];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[4];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[4];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[4];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[4];
                                     birdX = (float) 795 / 1050;
                                     birdY = (float) 232 / 540;
                                     break;
@@ -1038,21 +954,7 @@ public class DrawThread extends Thread {
                                 disgust = 1;
                             }
                             if (birdBreath1 == bitmapUsual1 || birdBreath1 == bitmapSmile1)
-                                bird = poopingBitmapUsual[disgust];
-                            else if (birdBreath1 == bitmapDSH1) bird = poopingBitmapDSH[disgust];
-                            else if (birdBreath1 == bitmapDTS1) bird = poopingBitmapDTS[disgust];
-                            else if (birdBreath1 == bitmapDTH1) bird = poopingBitmapDTH[disgust];
-                            else if (birdBreath1 == bitmapDH1) bird = poopingBitmapDH[disgust];
-                            else if (birdBreath1 == bitmapDT1) bird = poopingBitmapDT[disgust];
-                            else if (birdBreath1 == bitmapDS1) bird = poopingBitmapDS[disgust];
-                            else if (birdBreath1 == bitmapD1) bird = poopingBitmapD[disgust];
-                            else if (birdBreath1 == bitmapTSH1) bird = poopingBitmapTHS[disgust];
-                            else if (birdBreath1 == bitmapSH1) bird = poopingBitmapHS[disgust];
-                            else if (birdBreath1 == bitmapTH1) bird = poopingBitmapTH[disgust];
-                            else if (birdBreath1 == bitmapH1) bird = poopingBitmapH[disgust];
-                            else if (birdBreath1 == bitmapTS1) bird = poopingBitmapTS[disgust];
-                            else if (birdBreath1 == bitmapT1) bird = poopingBitmapT[disgust];
-                            else if (birdBreath1 == bitmapS1) bird = poopingBitmapS[disgust];
+                                bird = poopingBitmapUsual[disgust];else if (birdBreath1 == bitmapDSH1) bird = poopingBitmapDSH[disgust];else if (birdBreath1 == bitmapDTS1) bird = poopingBitmapDTS[disgust];else if (birdBreath1 == bitmapDTH1) bird = poopingBitmapDTH[disgust];else if (birdBreath1 == bitmapDH1) bird = poopingBitmapDH[disgust];else if (birdBreath1 == bitmapDT1) bird = poopingBitmapDT[disgust];else if (birdBreath1 == bitmapDS1) bird = poopingBitmapDS[disgust];else if (birdBreath1 == bitmapD1) bird = poopingBitmapD[disgust];else if (birdBreath1 == bitmapTSH1) bird = poopingBitmapTHS[disgust];else if (birdBreath1 == bitmapSH1) bird = poopingBitmapHS[disgust];else if (birdBreath1 == bitmapTH1) bird = poopingBitmapTH[disgust];else if (birdBreath1 == bitmapH1) bird = poopingBitmapH[disgust];else if (birdBreath1 == bitmapTS1) bird = poopingBitmapTS[disgust];else if (birdBreath1 == bitmapT1) bird = poopingBitmapT[disgust];else if (birdBreath1 == bitmapS1) bird = poopingBitmapS[disgust];
                         }
                         if (disgusting && lastTouchX >= poopX * canvas.getWidth() && lastTouchX <= canvas.getWidth() * (poopX + poopWidth) && lastTouchY >= canvas.getHeight() * poopY && lastTouchY <= (poopY + poopHeight) * canvas.getHeight()) {
                             new PoopFlyBackThread().start();
@@ -1068,105 +970,25 @@ public class DrawThread extends Thread {
                             switch (poop3) {
                                 case 1:
                                     // Проверяем состояние и подбираем картинку
-                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[2];
-                                    else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[2];
-                                    else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[2];
-                                    else if (birdBreath1 == bitmapD1) bird = flyBitmapD[2];
-                                    else if (birdBreath1 == bitmapH1) bird = flyBitmapH[2];
-                                    else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[2];
-                                    else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[2];
-                                    else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[2];
-                                    else if (birdBreath1 == bitmapS1) bird = flyBitmapS[2];
-                                    else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[2];
-                                    else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[2];
-                                    else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[2];
-                                    else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[2];
-                                    else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[2];
-                                    else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[2];
-                                    else if (birdBreath1 == bitmapT1) bird = flyBitmapT[2];
-                                    else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[2];
+                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[2];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[2];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[2];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[2];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[2];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[2];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[2];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[2];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[2];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[2];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[2];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[2];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[2];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[2];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[2];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[2];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[2];
                                     break;
                                 case 2:
-                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[1];
-                                    else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[1];
-                                    else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[1];
-                                    else if (birdBreath1 == bitmapD1) bird = flyBitmapD[1];
-                                    else if (birdBreath1 == bitmapH1) bird = flyBitmapH[1];
-                                    else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[1];
-                                    else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[1];
-                                    else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[1];
-                                    else if (birdBreath1 == bitmapS1) bird = flyBitmapS[1];
-                                    else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[1];
-                                    else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[1];
-                                    else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[1];
-                                    else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[1];
-                                    else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[1];
-                                    else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[1];
-                                    else if (birdBreath1 == bitmapT1) bird = flyBitmapT[1];
-                                    else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[1];
+                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[1];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[1];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[1];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[1];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[1];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[1];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[1];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[1];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[1];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[1];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[1];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[1];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[1];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[1];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[1];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[1];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[1];
                                     birdX = (float) 715 / 1050;
                                     birdY = (float) 195 / 540;
                                     break;
                                 case 3:
-                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[2];
-                                    else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[2];
-                                    else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[2];
-                                    else if (birdBreath1 == bitmapD1) bird = flyBitmapD[2];
-                                    else if (birdBreath1 == bitmapH1) bird = flyBitmapH[2];
-                                    else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[2];
-                                    else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[2];
-                                    else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[2];
-                                    else if (birdBreath1 == bitmapS1) bird = flyBitmapS[2];
-                                    else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[2];
-                                    else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[2];
-                                    else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[2];
-                                    else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[2];
-                                    else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[2];
-                                    else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[2];
-                                    else if (birdBreath1 == bitmapT1) bird = flyBitmapT[2];
-                                    else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[2];
+                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[2];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[2];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[2];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[2];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[2];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[2];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[2];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[2];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[2];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[2];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[2];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[2];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[2];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[2];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[2];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[2];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[2];
                                     birdX = (float) 625 / 1050;
                                     birdY = (float) 203 / 540;
                                     break;
                                 case 4:
-                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[1];
-                                    else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[1];
-                                    else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[1];
-                                    else if (birdBreath1 == bitmapD1) bird = flyBitmapD[1];
-                                    else if (birdBreath1 == bitmapH1) bird = flyBitmapH[1];
-                                    else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[1];
-                                    else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[1];
-                                    else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[1];
-                                    else if (birdBreath1 == bitmapS1) bird = flyBitmapS[1];
-                                    else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[1];
-                                    else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[1];
-                                    else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[1];
-                                    else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[1];
-                                    else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[1];
-                                    else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[1];
-                                    else if (birdBreath1 == bitmapT1) bird = flyBitmapT[1];
-                                    else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[1];
+                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[1];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[1];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[1];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[1];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[1];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[1];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[1];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[1];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[1];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[1];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[1];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[1];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[1];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[1];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[1];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[1];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[1];
                                     birdX = (float) 548 / 1050;
                                     birdY = (float) 176 / 540;
                                     break;
                                 case 5:
-                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[2];
-                                    else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[2];
-                                    else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[2];
-                                    else if (birdBreath1 == bitmapD1) bird = flyBitmapD[2];
-                                    else if (birdBreath1 == bitmapH1) bird = flyBitmapH[2];
-                                    else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[2];
-                                    else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[2];
-                                    else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[2];
-                                    else if (birdBreath1 == bitmapS1) bird = flyBitmapS[2];
-                                    else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[2];
-                                    else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[2];
-                                    else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[2];
-                                    else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[2];
-                                    else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[2];
-                                    else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[2];
-                                    else if (birdBreath1 == bitmapT1) bird = flyBitmapT[2];
-                                    else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[2];
+                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[2];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[2];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[2];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[2];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[2];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[2];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[2];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[2];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[2];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[2];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[2];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[2];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[2];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[2];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[2];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[2];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[2];
                                     birdX = (float) 419 / 1050;
                                     birdY = (float) 232 / 540;
                                     break;
@@ -1214,23 +1036,7 @@ public class DrawThread extends Thread {
                             if (eat >= 1 && eat <= 10) {
                                 birdY = (float) 118 / 540;
                                 // Проверяем состояние и подбираем картинку
-                                if (birdBreath1 == bitmapDTS1 || birdBreath1 == bitmapDTSH1)
-                                    bird = eatBitmapDTS[eat];
-                                else if (birdBreath1 == bitmapDT1 || birdBreath1 == bitmapDTH1)
-                                    bird = eatBitmapDT[eat];
-                                else if (birdBreath1 == bitmapDS1 || birdBreath1 == bitmapDSH1)
-                                    bird = eatBitmapDS[eat];
-                                else if (birdBreath1 == bitmapTS1 || birdBreath1 == bitmapTSH1)
-                                    bird = eatBitmapTS[eat];
-                                else if (birdBreath1 == bitmapD1 || birdBreath1 == bitmapDH1)
-                                    bird = eatBitmapD[eat];
-                                else if (birdBreath1 == bitmapS1 || birdBreath1 == bitmapSH1)
-                                    bird = eatBitmapS[eat];
-                                else if (birdBreath1 == bitmapT1 || birdBreath1 == bitmapTH1)
-                                    bird = eatBitmapT[eat];
-                                else if (birdBreath1 == bitmapUsual1 || birdBreath1 == bitmapH1)
-                                    bird = eatBitmap[eat];
-                                else if (birdBreath1 == bitmapSmile1) bird = eatBitmapSmile[eat];
+                                if (birdBreath1 == bitmapDTS1 || birdBreath1 == bitmapDTSH1) bird = eatBitmapDTS[eat];else if (birdBreath1 == bitmapDT1 || birdBreath1 == bitmapDTH1) bird = eatBitmapDT[eat];else if (birdBreath1 == bitmapDS1 || birdBreath1 == bitmapDSH1) bird = eatBitmapDS[eat];else if (birdBreath1 == bitmapTS1 || birdBreath1 == bitmapTSH1) bird = eatBitmapTS[eat];else if (birdBreath1 == bitmapD1 || birdBreath1 == bitmapDH1) bird = eatBitmapD[eat];else if (birdBreath1 == bitmapS1 || birdBreath1 == bitmapSH1) bird = eatBitmapS[eat];else if (birdBreath1 == bitmapT1 || birdBreath1 == bitmapTH1) bird = eatBitmapT[eat];else if (birdBreath1 == bitmapUsual1 || birdBreath1 == bitmapH1) bird = eatBitmap[eat];else if (birdBreath1 == bitmapSmile1) bird = eatBitmapSmile[eat];
                             }
                             if (eat == 9) {
                                 if (e == 0) {
@@ -1326,105 +1132,25 @@ public class DrawThread extends Thread {
                         if (flyingToBedNeedToDrawNow && flying && !sleepFinished && !sleeping) {
                             switch (sleep) {
                                 case 1:
-                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[2];
-                                    else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[2];
-                                    else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[2];
-                                    else if (birdBreath1 == bitmapD1) bird = flyBitmapD[2];
-                                    else if (birdBreath1 == bitmapH1) bird = flyBitmapH[2];
-                                    else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[2];
-                                    else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[2];
-                                    else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[2];
-                                    else if (birdBreath1 == bitmapS1) bird = flyBitmapS[2];
-                                    else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[2];
-                                    else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[2];
-                                    else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[2];
-                                    else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[2];
-                                    else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[2];
-                                    else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[2];
-                                    else if (birdBreath1 == bitmapT1) bird = flyBitmapT[2];
-                                    else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[2];
+                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[2];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[2];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[2];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[2];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[2];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[2];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[2];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[2];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[2];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[2];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[2];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[2];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[2];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[2];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[2];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[2];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[2];
                                     break;
                                 case 2:
-                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[1];
-                                    else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[1];
-                                    else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[1];
-                                    else if (birdBreath1 == bitmapD1) bird = flyBitmapD[1];
-                                    else if (birdBreath1 == bitmapH1) bird = flyBitmapH[1];
-                                    else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[1];
-                                    else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[1];
-                                    else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[1];
-                                    else if (birdBreath1 == bitmapS1) bird = flyBitmapS[1];
-                                    else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[1];
-                                    else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[1];
-                                    else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[1];
-                                    else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[1];
-                                    else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[1];
-                                    else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[1];
-                                    else if (birdBreath1 == bitmapT1) bird = flyBitmapT[1];
-                                    else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[1];
+                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[1];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[1];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[1];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[1];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[1];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[1];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[1];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[1];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[1];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[1];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[1];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[1];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[1];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[1];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[1];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[1];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[1];
                                     birdX = (float) 353 / 1050;
                                     birdY = (float) 238 / 540;
                                     break;
                                 case 3:
-                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[2];
-                                    else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[2];
-                                    else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[2];
-                                    else if (birdBreath1 == bitmapD1) bird = flyBitmapD[2];
-                                    else if (birdBreath1 == bitmapH1) bird = flyBitmapH[2];
-                                    else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[2];
-                                    else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[2];
-                                    else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[2];
-                                    else if (birdBreath1 == bitmapS1) bird = flyBitmapS[2];
-                                    else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[2];
-                                    else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[2];
-                                    else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[2];
-                                    else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[2];
-                                    else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[2];
-                                    else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[2];
-                                    else if (birdBreath1 == bitmapT1) bird = flyBitmapT[2];
-                                    else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[2];
+                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[2];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[2];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[2];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[2];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[2];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[2];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[2];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[2];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[2];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[2];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[2];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[2];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[2];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[2];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[2];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[2];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[2];
                                     birdX = (float) 287 / 1050;
                                     birdY = (float) 226 / 540;
                                     break;
                                 case 4:
-                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[1];
-                                    else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[1];
-                                    else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[1];
-                                    else if (birdBreath1 == bitmapD1) bird = flyBitmapD[1];
-                                    else if (birdBreath1 == bitmapH1) bird = flyBitmapH[1];
-                                    else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[1];
-                                    else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[1];
-                                    else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[1];
-                                    else if (birdBreath1 == bitmapS1) bird = flyBitmapS[1];
-                                    else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[1];
-                                    else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[1];
-                                    else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[1];
-                                    else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[1];
-                                    else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[1];
-                                    else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[1];
-                                    else if (birdBreath1 == bitmapT1) bird = flyBitmapT[1];
-                                    else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[1];
+                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[1];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[1];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[1];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[1];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[1];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[1];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[1];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[1];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[1];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[1];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[1];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[1];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[1];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[1];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[1];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[1];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[1];
                                     birdX = (float) 230 / 1050;
                                     birdY = (float) 232 / 540;
                                     break;
                                 case 5:
-                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[2];
-                                    else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[2];
-                                    else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[2];
-                                    else if (birdBreath1 == bitmapD1) bird = flyBitmapD[2];
-                                    else if (birdBreath1 == bitmapH1) bird = flyBitmapH[2];
-                                    else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[2];
-                                    else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[2];
-                                    else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[2];
-                                    else if (birdBreath1 == bitmapS1) bird = flyBitmapS[2];
-                                    else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[2];
-                                    else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[2];
-                                    else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[2];
-                                    else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[2];
-                                    else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[2];
-                                    else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[2];
-                                    else if (birdBreath1 == bitmapT1) bird = flyBitmapT[2];
-                                    else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[2];
+                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[2];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[2];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[2];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[2];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[2];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[2];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[2];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[2];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[2];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[2];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[2];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[2];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[2];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[2];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[2];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[2];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[2];
                                     birdX = (float) 159 / 1050;
                                     birdY = (float) 193 / 540;
                                     break;
@@ -1438,23 +1164,7 @@ public class DrawThread extends Thread {
                                     birdY = (float) 207 / 540;
                                     laying = true;
                                     flying = false;
-                                    if (birdBreath1 == bitmapDTSH1 || birdBreath1 == bitmapDSH1)
-                                        bird = sleepDSH1;
-                                    else if (birdBreath1 == bitmapDTS1 || birdBreath1 == bitmapDS1)
-                                        bird = sleepDS1;
-                                    else if (birdBreath1 == bitmapDTH1 || birdBreath1 == bitmapDH1)
-                                        bird = sleepDH1;
-                                    else if (birdBreath1 == bitmapDT1 || birdBreath1 == bitmapD1)
-                                        bird = sleepD1;
-                                    else if (birdBreath1 == bitmapTSH1 || birdBreath1 == bitmapSH1)
-                                        bird = sleepSH1;
-                                    else if (birdBreath1 == bitmapTS1 || birdBreath1 == bitmapS1)
-                                        bird = sleepS1;
-                                    else if (birdBreath1 == bitmapTH1 || birdBreath1 == bitmapH1)
-                                        bird = sleepH1;
-                                    else if (birdBreath1 == bitmapT1 || birdBreath1 == bitmapUsual1)
-                                        bird = sleepUsual1;
-                                    else if (birdBreath1 == bitmapSmile1) bird = sleepSmile1;
+                                    if (birdBreath1 == bitmapDTSH1 || birdBreath1 == bitmapDSH1) bird = sleepDSH1;else if (birdBreath1 == bitmapDTS1 || birdBreath1 == bitmapDS1) bird = sleepDS1;else if (birdBreath1 == bitmapDTH1 || birdBreath1 == bitmapDH1) bird = sleepDH1;else if (birdBreath1 == bitmapDT1 || birdBreath1 == bitmapD1) bird = sleepD1;else if (birdBreath1 == bitmapTSH1 || birdBreath1 == bitmapSH1) bird = sleepSH1;else if (birdBreath1 == bitmapTS1 || birdBreath1 == bitmapS1) bird = sleepS1;else if (birdBreath1 == bitmapTH1 || birdBreath1 == bitmapH1) bird = sleepH1;else if (birdBreath1 == bitmapT1 || birdBreath1 == bitmapUsual1) bird = sleepUsual1;else if (birdBreath1 == bitmapSmile1) bird = sleepSmile1;
                                     sleepButtonBitmap = sleepDarkButtonBitmap[60];
                                     checkSleepButton = true;
                                     sleepChecker = false;
@@ -1644,11 +1354,14 @@ public class DrawThread extends Thread {
                         screenshotBitmap = Bitmap.createScaledBitmap(screenshotBitmap, canvas.getWidth() * 73 / 1050, canvas.getHeight() * 73 / 540, true);
                         canvas.drawBitmap(screenshotBitmap, (float) canvas.getWidth() * screenshotX, (float) canvas.getHeight() * screenshotY, paint);
                         //  Магазин
-                        if (lastTouchX >= shopButtonLeft && lastTouchX <= (shopButtonLeft + shopButtonWidth) && lastTouchY >= (shopButtonTop) && lastTouchY <= (shopButtonTop + shopButtonHeight)) {
-                            context.startActivity(new Intent(((Activity) context), ShopSkin.class));
+                        if (lastTouchX >= (shopButtonLeft* canvas.getWidth()) && lastTouchX <= (shopButtonLeft + shopButtonWidth)* (canvas.getWidth()) && lastTouchY >= (shopButtonTop* canvas.getHeight()) && lastTouchY <= (shopButtonTop + shopButtonHeight)*(canvas.getHeight())) {
+                            startShopActivity();
+                            canvas.drawCircle(100,100,100,paintDirt);
                             lastTouchY = 0;
                             lastTouchX = 0;
                         }
+                        canvas.drawBitmap(shopButton, (float) canvas.getWidth() * shopButtonLeft, (float) canvas.getHeight() * shopButtonTop, paint);
+
                         //lvl+
                         //if (bitmap1 == bitmapSmile1 && statChecker) {
                         //    statChecker = false;
@@ -1702,6 +1415,9 @@ public class DrawThread extends Thread {
         }
     }
 
+    public void startShopActivity(){
+        context.startActivity(new Intent(((Activity) context), ShopSkin.class));
+    }
 
     public int getFoinTime() {
         return foinTime;

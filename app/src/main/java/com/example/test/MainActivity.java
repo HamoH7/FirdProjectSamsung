@@ -30,6 +30,7 @@ import java.util.Scanner;
 public class MainActivity extends AppCompatActivity {
     private int timePassed = 0;
     private Date currentDate;
+    private Context context;
     private SharedPreferences timePassedsp;
     private SharedPreferences.Editor editor;
     private DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss",Locale.getDefault());
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
+        context = this;
         setContentView(new MyDraw(this, 0));
         //setContentView(R.layout.shopskin);
     }
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         mediaPlayer.start();
         int timePassed2 = timePassedsp.getInt("timePassed2",0);
         int timePassed1 = timePassedsp.getInt("timePassed1",0);
-        setContentView(new MyDraw(this, timePassed1 - timePassed2));
+        setContentView(new MyDraw(context, timePassed1 - timePassed2));
     }
 
    @Override
