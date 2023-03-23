@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private Context context;
     private SharedPreferences timePassedsp;
     private SharedPreferences.Editor editor;
-    private DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss",Locale.getDefault());
+    private final DateFormat timeFormat = new SimpleDateFormat("DD:HH:mm:ss",Locale.getDefault());
     private String timeText;
     private MediaPlayer mediaPlayer;
     @Override
@@ -55,14 +55,12 @@ public class MainActivity extends AppCompatActivity {
         currentDate = new Date();
         timeText = timeFormat.format(currentDate);
         editor = timePassedsp.edit();
-        timePassed = ((Integer.parseInt(timeText.charAt(0) + ""))*10+(Integer.parseInt(timeText.charAt(1) + "")))*3600+((Integer.parseInt(timeText.charAt(3)+ ""))*10+
-                Integer.parseInt(timeText.charAt(4) + ""))*60+((Integer.parseInt(timeText.charAt(6)+""))*10+Integer.parseInt(timeText.charAt(7)+""));
+        timePassed = ((Integer.parseInt(timeText.charAt(0) + "")*10 + Integer.parseInt(timeText.charAt(1) + ""))*86400)+((Integer.parseInt(timeText.charAt(3) + ""))*10+(Integer.parseInt(timeText.charAt(4) + "")))*3600+((Integer.parseInt(timeText.charAt(6)+ ""))*10+
+                Integer.parseInt(timeText.charAt(7) + ""))*60+((Integer.parseInt(timeText.charAt(9)+""))*10+Integer.parseInt(timeText.charAt(10)+""));
         editor.putInt("timePassed1",timePassed);
         editor.apply();
         mediaPlayer.start();
-        int timePassed2 = timePassedsp.getInt("timePassed2",0);
-        int timePassed1 = timePassedsp.getInt("timePassed1",0);
-        setContentView(new MyDraw(context, timePassed1 - timePassed2));
+        setContentView(new MyDraw(context, timePassedsp.getInt("timePassed1",0) - timePassedsp.getInt("timePassed2",timePassed)));
     }
 
    @Override
@@ -75,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
         currentDate = new Date();
         timeText = timeFormat.format(currentDate);
         editor = timePassedsp.edit();
-        timePassed = ((Integer.parseInt(timeText.charAt(0) + ""))*10+(Integer.parseInt(timeText.charAt(1) + "")))*3600+((Integer.parseInt(timeText.charAt(3)+ ""))*10+
-                Integer.parseInt(timeText.charAt(4) + ""))*60+((Integer.parseInt(timeText.charAt(6)+""))*10+Integer.parseInt(timeText.charAt(7)+""));
+        timePassed = ((Integer.parseInt(timeText.charAt(0) + "")*10 + Integer.parseInt(timeText.charAt(1) + ""))*86400)+((Integer.parseInt(timeText.charAt(3) + ""))*10+(Integer.parseInt(timeText.charAt(4) + "")))*3600+((Integer.parseInt(timeText.charAt(6)+ ""))*10+
+                Integer.parseInt(timeText.charAt(7) + ""))*60+((Integer.parseInt(timeText.charAt(9)+""))*10+Integer.parseInt(timeText.charAt(10)+""));
         editor.putInt("timePassed2",timePassed);
         editor.apply();
     }
