@@ -56,7 +56,7 @@ public class DrawThread extends Thread {
     private float dirtButtonTop = (float)427/540;
     private float poopX = (float)  450 / 1050, poopY = (float)  309 / 540;
     private float poopWidth = (float)  94 / 105, poopHeight = (float)  94 / 540;
-    private int disgust = 1, eatScore, wash = 1,foinTime = 0, hit = 1,poop1=1,poop2=1,poop3=0, m = 0,m1 = 1,m2 = 1, m6 = 0, eat = 1, e = 0, eatTimer = 10, m5 = 0, p = 0, playTimer = 15, sleepTimer = 60, play = 0, sleep = 0, r1 = 0, flyBack = 0;
+    private int disgust = 1, eatScore, wash = 1,foinTime = 0, hit = 1,poop1=1,poop2=1,poop3=0, m = 0,m2 = 1, m6 = 0, eat = 1, eatOnes = 0, eatTimer, m5 = 0, playTimer, sleepTimer = 60, play = 0, sleep = 0, r1 = 0, flyBack = 0;
     private double hungryChangeValue = (float)1/ 1000; // Sovi timeri hamar
     private double happyChangeValue = (float) 1 / 4000; // Uraxutyan timeri hamar
     private double sleepChangeValue = (float) 1 / 1200; // Qni timeri hamar
@@ -66,11 +66,11 @@ public class DrawThread extends Thread {
     private double qun = (float) 1 / 1;//qun = (float) 1 / 40;
     private float hungryRight = 0, happyRight = 0, sleepRight = 0, dirtRight = 0, levelRight = 0;
     private int levelColor, dirtColor, hungryColor, tiredColor, happyColor;
-    private boolean hungryButtonIsPressed = false, happyButtonIsTouched = false, sl = false, sleepButtonIsPressed = false, sle = false, birdIsPunched = false, washButtonIsPressed = false, pop = false, po = false;
+    private boolean hungryButtonIsPressed = false, happyButtonIsTouched = false,sleepButtonIsPressed = false, birdIsPunched = false, washButtonIsPressed = false, pop = false, po = false;
     private boolean playingTimeIsPassed = false,playingNeedToDrawNow = false;
     private boolean checkPlayButton = false, drawPlayButton = false;
-    private boolean playChecker = true;
-    private boolean hitting = false, eating = false, playing = false, gettingFoin = false, flying = false, laying = false, sleeping = false, flyingBack = false, washing = false, pooping = false, disgusting = false, flyPoop = false, flyBackPoop = false;
+    private boolean playChecker;
+    private boolean hitting = false, eating, playing, gettingFoin = false, flying = false, laying = false, sleeping = false, flyingBack = false, washing = false, pooping = false, disgusting = false, flyPoop = false, flyBackPoop = false;
     private boolean eatChecker;
     private boolean sleepChecker = true;
     private boolean checkEatButton = false, drawEatButton = false;
@@ -372,16 +372,78 @@ public class DrawThread extends Thread {
         levelRight = sharedPreferences.getFloat("LEVELRIGHT",(float)  844 / 1050);
         eatScore = sharedPreferences.getInt("EATSCORE",0);
         eatChecker = sharedPreferences.getBoolean("EATCHECKER",true);
-        if(!eatChecker) {
+        eatTimer = sharedPreferences.getInt("EATTIMER",10);
+        eating = sharedPreferences.getBoolean("EATING", false);
+        playChecker = sharedPreferences.getBoolean("PLAYCHECKER",true);
+        playTimer = sharedPreferences.getInt("PLAYTIMER",15);
+        playing = sharedPreferences.getBoolean("PLAYING", false);
+        if(!playChecker && !playing) {
+            checkPlayButton =true;
+            if(timePassed < 15) {
+                playTimer -= timePassed;
+                editor.putInt("PLAYTIMER",playTimer);
+            }
+            else{
+                playChecker = true;
+                editor.putBoolean("PLAYCHECKER",playChecker);
+            }
+            editor.apply();
+        }
+        if(playing) {
+            playing = false;
+            playChecker = false;
+            checkPlayButton = true;
+            playTimer = 15;
+            if(timePassed < 15) {
+                playTimer -= timePassed;
+            }
+            else{
+                playChecker = true;
+            }
+            playButtonBitmap = playDarkButtonBitmap[playTimer];
+            editor.putInt("PLAYTIMER",playTimer);
+            editor.putBoolean("PLAYCHECKER",playChecker);
+            editor.putBoolean("PLAYING",playing);
+            editor.apply();
+        }
+        if(!eatChecker && !eating) {
             checkEatButton = true;
-            if(timePassed <= 9) {
+            if(timePassed < 10) {
                 eatTimer -= timePassed;
+                editor.putInt("EATTIMER",eatTimer);
             }
             else{
                 eatChecker = true;
                 editor.putBoolean("EATCHECKER",eatChecker);
-                editor.apply();
             }
+            editor.apply();
+        }
+        if(eating) {
+            eating = false;
+            checkEatButton = true;
+            bird = birdBreath1;
+            eatTimer = 10;
+            eatScore++;
+            if(timePassed < 10) {
+                eatTimer -= timePassed;
+            } else{
+                eatChecker = true;
+            }
+            eatButtonBitmap = eatDarkButtonBitmap[eatTimer];
+            editor.putInt("EATTIMER",eatTimer);
+            editor.putBoolean("EATCHECKER",eatChecker);
+            editor.putBoolean("EATING",eating);
+            editor.putInt("EATSCORE",eatScore);
+            editor.apply();
+            food *= (hungryRight2 - hungryLeft);
+            if (hungryRight + food > hungryRight2) {
+                hungryRight = hungryRight2;
+            } else {
+                hungryRight += food;
+            }
+            editor.putFloat("HUNGRY", hungryRight);
+            editor.apply();
+            food /= (hungryRight2 - hungryLeft);
         }
         // Обновляем статистику после выхода и входа
 
@@ -396,33 +458,7 @@ public class DrawThread extends Thread {
         paintDirt.setColor(dirtColor);
         paintLevel.setColor(levelColor);
     }
-    private void changeStateAfterStart(float stateRight, float stateLeft, float stateWidth, double stateChangeValue,int stateChecker) {
-        if (stateRight - stateChangeValue *stateWidth * timePassed >=stateLeft && timePassed > 0) {
-            stateChangeValue *=stateWidth * timePassed;
-            stateRight -= stateChangeValue;
-            stateChangeValue /= (stateWidth * timePassed);
-        }
-        if ((stateRight  >=  stateLeft && stateRight - stateChangeValue *stateWidth * timePassed < stateLeft)||(stateRight<stateLeft) || timePassed < 0) {
-            stateRight = stateLeft;
-        }
-        if(stateChecker == 1){
-            dirtRight = stateRight;
-            editor.putFloat("DIRT", stateRight);
-        }
-        else if (stateChecker == 2) {
-            hungryRight = stateRight;
-            editor.putFloat("HUNGRY", stateRight);
-        }
-        else if (stateChecker == 3) {
-            sleepRight = stateRight;
-            editor.putFloat("SLEEP", stateRight);
-        }
-        else if (stateChecker == 4) {
-            happyRight = stateRight;
-            editor.putFloat("HAPPY", stateRight);
-        }
-        editor.apply();
-    }
+
     private void takeScreenshot() {
         try {
             // image naming and path  to include sd card  appending name you choose for file
@@ -641,42 +677,6 @@ public class DrawThread extends Thread {
         loaded = true;
     }
 
-    private void stateChanger(float stateRight, float stateLeft, float stateWeight, double stateChangeValue,int stateChecker) {
-        if (stateRight - stateChangeValue * stateWeight >= stateLeft) {
-            stateChangeValue *= stateWeight;
-            stateRight -= stateChangeValue;
-            stateChangeValue /= stateWeight;
-        }
-        if (stateRight >= stateLeft && stateRight - stateChangeValue * stateWeight < stateLeft) {
-            stateRight = stateLeft;
-        }
-        if (stateRight - stateChangeValue * stateWeight >= stateLeft) {
-            stateChangeValue *= stateWeight;
-            stateRight -= stateChangeValue;
-            stateChangeValue /= stateWeight;
-        }
-        if (stateRight >= stateLeft && stateRight - stateChangeValue * stateWeight < stateLeft) {
-            stateRight = stateLeft;
-        }
-        if(stateChecker == 1){
-            dirtRight = stateRight;
-            editor.putFloat("DIRT", stateRight);
-        }
-        else if (stateChecker == 2) {
-            hungryRight = stateRight;
-            editor.putFloat("HUNGRY", stateRight);
-        }
-        else if (stateChecker == 3) {
-            sleepRight = stateRight;
-            editor.putFloat("SLEEP", stateRight);
-        }
-        else if (stateChecker == 4) {
-            happyRight = stateRight;
-            editor.putFloat("HAPPY", stateRight);
-        }
-        editor.apply();
-        editor.apply();
-    }
 
     @Override
     public void run() {
@@ -891,8 +891,6 @@ public class DrawThread extends Thread {
                                 eatChecker = true;
                                 editor.putBoolean("EATCHECKER",eatChecker);
                                 editor.apply();
-                                lastTouchX = 0;
-                                lastTouchY = 0;
                             }
                         }
                         canvas.drawBitmap(eatButtonBitmap, (float) canvas.getWidth() * eatButtonLeft, (float) canvas.getHeight() * eatButtonTop, paint);
@@ -907,8 +905,8 @@ public class DrawThread extends Thread {
                             playButtonBitmap = playDarkButtonBitmap[playTimer];
                             if (playTimer == 1) {
                                 playChecker = true;
-                                lastTouchX = 0;
-                                lastTouchY = 0;
+                                editor.putBoolean("PLAYCHECKER",playChecker);
+                                editor.apply();
                             }
                         }
                         canvas.drawBitmap(playButtonBitmap, (float) canvas.getWidth() * playButtonLeft, (float) canvas.getHeight() * playButtonTop, paint);
@@ -1090,6 +1088,8 @@ public class DrawThread extends Thread {
                         if (!eatingTimeIsPassed && hungryButtonIsPressed) {
                             new EatingThread().start();
                             eating = true;
+                            editor.putBoolean("EATING",eating);
+                            editor.apply();
                             eatingTimeIsPassed = true;
                         }
                         if (eatingNeedToDrawNow && eating) {
@@ -1099,7 +1099,7 @@ public class DrawThread extends Thread {
                                 if (birdBreath1 == bitmapDTS1 || birdBreath1 == bitmapDTSH1) bird = eatBitmapDTS[eat];else if (birdBreath1 == bitmapDT1 || birdBreath1 == bitmapDTH1) bird = eatBitmapDT[eat];else if (birdBreath1 == bitmapDS1 || birdBreath1 == bitmapDSH1) bird = eatBitmapDS[eat];else if (birdBreath1 == bitmapTS1 || birdBreath1 == bitmapTSH1) bird = eatBitmapTS[eat];else if (birdBreath1 == bitmapD1 || birdBreath1 == bitmapDH1) bird = eatBitmapD[eat];else if (birdBreath1 == bitmapS1 || birdBreath1 == bitmapSH1) bird = eatBitmapS[eat];else if (birdBreath1 == bitmapT1 || birdBreath1 == bitmapTH1) bird = eatBitmapT[eat];else if (birdBreath1 == bitmapUsual1 || birdBreath1 == bitmapH1) bird = eatBitmap[eat];else if (birdBreath1 == bitmapSmile1) bird = eatBitmapSmile[eat];
                             }
                             if (eat == 9) {
-                                if (e == 0) {
+                                if (eatOnes == 0) {
                                     food *= (hungryRight2 - hungryLeft);
                                     if (hungryRight + food > hungryRight2) {
                                         hungryRight = hungryRight2;
@@ -1109,7 +1109,7 @@ public class DrawThread extends Thread {
                                     editor.putFloat("HUNGRY", hungryRight);
                                     editor.apply();
                                     food /= (hungryRight2 - hungryLeft);
-                                    e = 1;
+                                    eatOnes = 1;
                                 }
                             }
                             if (eat == 11) {
@@ -1117,19 +1117,19 @@ public class DrawThread extends Thread {
 
                                 eating = false;
                                 eat = 0;
-                                lastTouchY = 0;
-                                lastTouchX = 0;
                                 eatChecker = false;
                                 checkEatButton = true;
-                                e = 0;
+                                eatOnes = 0;
                                 hungryButtonIsPressed = false;
                                 bird = birdBreath1;
                                 birdY = (float) 232 / 540;
-                                eatButtonBitmap = eatDarkButtonBitmap[10];
                                 eatTimer = 10;
+                                eatButtonBitmap = eatDarkButtonBitmap[eatTimer];
                                 eatScore++;
+                                editor.putBoolean("EATING",eating);
                                 editor.putBoolean("EATCHECKER",eatChecker);
                                 editor.putInt("EATSCORE",eatScore);
+                                editor.putInt("EATTIMER",eatTimer);
                                 editor.apply();
                             }
                         }
@@ -1147,6 +1147,8 @@ public class DrawThread extends Thread {
                             new PlayingThread().start();
                             playing = true;
                             playingTimeIsPassed = true;
+                            editor.putBoolean("PLAYING",playing);
+                            editor.apply();
                         }
                         if (playingNeedToDrawNow && playing) {
                             smile *= (happyRight2 - happyLeft);
@@ -1172,14 +1174,15 @@ public class DrawThread extends Thread {
                                 playChecker = false;
                                 checkPlayButton = true;
                                 play = 0;
-                                lastTouchY = 0;
-                                lastTouchX = 0;
-                                p = 0;
                                 happyButtonIsTouched = false;
                                 playButtonBitmap = playDarkButtonBitmap[15];
                                 playTimer = 15;
                                 mediaPlayerHappy.stop();
                                 mediaPlayerHappy.prepare();
+                                editor.putInt("PLAYTIMER",playTimer);
+                                editor.putBoolean("PLAYCHECKER",playChecker);
+                                editor.putBoolean("PLAYING",playing);
+                                editor.apply();
                             }
                         }
                         // Спать
@@ -1326,7 +1329,6 @@ public class DrawThread extends Thread {
                                         sleep = 0;
                                         lastTouchY = 0;
                                         lastTouchX = 0;
-                                        sl = false;
                                         sleepButtonIsPressed = false;
                                         flying = false;
                                         flyingToBedTimeIsPassed = false;
@@ -1492,27 +1494,68 @@ public class DrawThread extends Thread {
     public void startShopActivity(){
         context.startActivity(new Intent(((Activity) context), ShopSkin.class));
     }
-
-    public int getFoinTime() {
-        return foinTime;
+    private void stateChanger(float stateRight, float stateLeft, float stateWeight, double stateChangeValue,int stateChecker) {
+        if (stateRight - stateChangeValue * stateWeight >= stateLeft) {
+            stateChangeValue *= stateWeight;
+            stateRight -= stateChangeValue;
+            stateChangeValue /= stateWeight;
+        }
+        if (stateRight >= stateLeft && stateRight - stateChangeValue * stateWeight < stateLeft) {
+            stateRight = stateLeft;
+        }
+        if (stateRight - stateChangeValue * stateWeight >= stateLeft) {
+            stateChangeValue *= stateWeight;
+            stateRight -= stateChangeValue;
+            stateChangeValue /= stateWeight;
+        }
+        if (stateRight >= stateLeft && stateRight - stateChangeValue * stateWeight < stateLeft) {
+            stateRight = stateLeft;
+        }
+        if(stateChecker == 1){
+            dirtRight = stateRight;
+            editor.putFloat("DIRT", stateRight);
+        }
+        else if (stateChecker == 2) {
+            hungryRight = stateRight;
+            editor.putFloat("HUNGRY", stateRight);
+        }
+        else if (stateChecker == 3) {
+            sleepRight = stateRight;
+            editor.putFloat("SLEEP", stateRight);
+        }
+        else if (stateChecker == 4) {
+            happyRight = stateRight;
+            editor.putFloat("HAPPY", stateRight);
+        }
+        editor.apply();
+        editor.apply();
     }
-    public void setFoinTime(int foinTime) {
-        this.foinTime = foinTime;
-    }
-    public boolean isGetFoinTimeIsPassed() {
-        return getFoinTimeIsPassed;
-    }
-
-    public void setGetFoinTimeIsPassed(boolean getFoinTimeIsPassed) {
-        this.getFoinTimeIsPassed = getFoinTimeIsPassed;
-    }
-
-    public boolean isGetFoinNeedToDrawNow() {
-        return getFoinNeedToDrawNow;
-    }
-
-    public void setGetFoinNeedToDrawNow(boolean getFoinNeedToDrawNow) {
-        this.getFoinNeedToDrawNow = getFoinNeedToDrawNow;
+    private void changeStateAfterStart(float stateRight, float stateLeft, float stateWidth, double stateChangeValue,int stateChecker) {
+        if (stateRight - stateChangeValue *stateWidth * timePassed >=stateLeft && timePassed > 0) {
+            stateChangeValue *=stateWidth * timePassed;
+            stateRight -= stateChangeValue;
+            stateChangeValue /= (stateWidth * timePassed);
+        }
+        if ((stateRight  >=  stateLeft && stateRight - stateChangeValue *stateWidth * timePassed < stateLeft)||(stateRight<stateLeft) || timePassed < 0) {
+            stateRight = stateLeft;
+        }
+        if(stateChecker == 1){
+            dirtRight = stateRight;
+            editor.putFloat("DIRT", stateRight);
+        }
+        else if (stateChecker == 2) {
+            hungryRight = stateRight;
+            editor.putFloat("HUNGRY", stateRight);
+        }
+        else if (stateChecker == 3) {
+            sleepRight = stateRight;
+            editor.putFloat("SLEEP", stateRight);
+        }
+        else if (stateChecker == 4) {
+            happyRight = stateRight;
+            editor.putFloat("HAPPY", stateRight);
+        }
+        editor.apply();
     }
 
     class LevelThread extends  Thread{
@@ -1749,6 +1792,8 @@ public class DrawThread extends Thread {
                     checkEatButton = true;
                     drawEatButton = true;
                     eatTimer--;
+                    editor.putInt("EATTIMER",eatTimer);
+                    editor.apply();
                 }
             }catch (InterruptedException e) {
                 e.printStackTrace();
@@ -1764,6 +1809,8 @@ public class DrawThread extends Thread {
                     checkPlayButton = true;
                     drawPlayButton = true;
                     playTimer--;
+                    editor.putInt("PLAYTIMER",playTimer);
+                    editor.apply();
                 }
             }catch (InterruptedException e) {
                 e.printStackTrace();
@@ -1804,7 +1851,7 @@ public class DrawThread extends Thread {
         @Override
         public void run() {
             try {
-                sleep(12000);
+                sleep(120000);
                 pop = true;
             }catch (InterruptedException e) {
                 e.printStackTrace();
