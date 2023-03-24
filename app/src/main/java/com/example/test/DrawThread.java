@@ -379,7 +379,7 @@ public class DrawThread extends Thread {
         playing = sharedPreferences.getBoolean("PLAYING", false);
         if(!playChecker && !playing) {
             checkPlayButton =true;
-            if(timePassed < 15) {
+            if(playTimer - timePassed > 0) {
                 playTimer -= timePassed;
                 editor.putInt("PLAYTIMER",playTimer);
             }
@@ -394,7 +394,7 @@ public class DrawThread extends Thread {
             playChecker = false;
             checkPlayButton = true;
             playTimer = 15;
-            if(timePassed < 15) {
+            if(playTimer - timePassed > 0) {
                 playTimer -= timePassed;
             }
             else{
@@ -408,7 +408,7 @@ public class DrawThread extends Thread {
         }
         if(!eatChecker && !eating) {
             checkEatButton = true;
-            if(timePassed < 10) {
+            if(eatTimer - timePassed > 0) {
                 eatTimer -= timePassed;
                 editor.putInt("EATTIMER",eatTimer);
             }
@@ -421,10 +421,11 @@ public class DrawThread extends Thread {
         if(eating) {
             eating = false;
             checkEatButton = true;
+            eatChecker = false;
             bird = birdBreath1;
             eatTimer = 10;
             eatScore++;
-            if(timePassed < 10) {
+            if(eatTimer - timePassed > 0) {
                 eatTimer -= timePassed;
             } else{
                 eatChecker = true;
