@@ -57,10 +57,10 @@ public class DrawThread extends Thread {
     private float poopX = (float)  450 / 1050, poopY = (float)  309 / 540;
     private float poopWidth = (float)  94 / 105, poopHeight = (float)  94 / 540;
     private int disgust = 1, eatScore, wash = 1,foinTime = 0, hit = 1,poop1=1,poop2=1,poop3=0, m = 0,m2 = 1, m6 = 0, eat = 1, eatOnes = 0, eatTimer, m5 = 0, playTimer, sleepTimer = 60, play = 0, sleep = 0, r1 = 0, flyBack = 0;
-    private double hungryChangeValue = (float)1/ 1000; // Sovi timeri hamar
-    private double happyChangeValue = (float) 1 / 4000; // Uraxutyan timeri hamar
-    private double sleepChangeValue = (float) 1 / 1200; // Qni timeri hamar
-    private double dirtyChangeValue = (float) 1 / 5000; // kextotutyan timeri hamar
+    private double hungryChangeValue = (float)1/ 2000; // Sovi timeri hamar
+    private double happyChangeValue = (float) 1 / 1900; // Uraxutyan timeri hamar
+    private double sleepChangeValue = (float) 1 / 2200; // Qni timeri hamar
+    private double dirtyChangeValue = (float) 1 / 2100; // kextotutyan timeri hamar
     private double food = (float) 1 ;//food = (float) 1 / 10;
     private double smile = (float) 1 / 1;//smile = (float) 1 / 60;
     private double qun = (float) 1 / 1;//qun = (float) 1 / 40;
@@ -109,8 +109,8 @@ public class DrawThread extends Thread {
     // D = Dirty
     // S = Sad
     // H = Hungry
-    private Bitmap bitmapbg,bitmapkust, bitmapDirt, bitmapHungry,bitmapSleep, bitmapHappy, eatButtonBitmap,eatButtonBitmap2, eatButtonBitmapPoop, highScoreBitmap, scoreBitmap;
-    private Bitmap bird, bitmapDTSH1, bitmapDTSH2, bitmapDTS1, bitmapDTS2, bitmapDTH1, bitmapDTH2, bitmapDSH1, bitmapDSH2, bitmapTSH1, bitmapTSH2,
+    private Bitmap bitmapbg,bitmapkust, bitmapDirtIcon, bitmapHungryIcon, bitmapSleepIcon, bitmapHappyIcon, eatButtonBitmap,eatButtonBitmap2, eatButtonBitmapPoop, highScoreBitmap, scoreBitmap;
+    private Bitmap fird, bitmapDTSH1, bitmapDTSH2, bitmapDTS1, bitmapDTS2, bitmapDTH1, bitmapDTH2, bitmapDSH1, bitmapDSH2, bitmapTSH1, bitmapTSH2,
             bitmapDH1, bitmapDH2, bitmapDS1, bitmapDS2, bitmapDT1, bitmapDT2, bitmapSH1, bitmapSH2, bitmapTH1,bitmapTH2,bitmapTS1,bitmapTS2
             ,bitmapD1,bitmapD2,bitmapT1,bitmapT2,bitmapS1,bitmapS2,bitmapH1,bitmapH2,bitmapSmile1,bitmapSmile2,bitmapUsual1,bitmapUsual2, birdBreath1, birdBreath2;
     private Bitmap bitmapDarkbg,bitmapDarkkust;
@@ -132,8 +132,7 @@ public class DrawThread extends Thread {
     private Paint paint = new Paint(),paintLevel = new Paint(),paintDirt = new Paint(),paintHungry = new Paint(),paintSleep = new Paint(),paintHappy = new Paint(),paintBlack = new Paint(),paintFoin = new Paint();
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
-    private int timePassed, timePassedIsUsed = 0;
-    private Bitmap foinR;
+    private int timePassed;
     private MediaPlayer mediaPlayerHappy, mediaPlayerHit, mediaPlayerWash;
     private int playBitmapId[] = {0 ,R.drawable.xaxacox1,R.drawable.xaxacox2,R.drawable.xaxacox3,R.drawable.xaxacox4,R.drawable.xaxacox5,R.drawable.xaxacox6,R.drawable.xaxacox7,R.drawable.xaxacox8,R.drawable.xaxacox9,R.drawable.xaxacox10,R.drawable.xaxacox11,R.drawable.xaxacox12,R.drawable.xaxacox13,R.drawable.xaxacox14,R.drawable.xaxacox15,R.drawable.xaxacox16,R.drawable.xaxacox17,R.drawable.xaxacox18,R.drawable.xaxacox19,R.drawable.xaxacox20};
     private int playBitmapDId[] = {0,R.drawable.d_xaxacox1,R.drawable.d_xaxacox2,R.drawable.d_xaxacox3,R.drawable.d_xaxacox4,R.drawable.d_xaxacox5,R.drawable.d_xaxacox6,R.drawable.d_xaxacox7,R.drawable.d_xaxacox8,R.drawable.d_xaxacox9,R.drawable.d_xaxacox10,R.drawable.d_xaxacox11,R.drawable.d_xaxacox12,R.drawable.d_xaxacox13,R.drawable.d_xaxacox14,R.drawable.d_xaxacox15,R.drawable.d_xaxacox16,R.drawable.d_xaxacox17,R.drawable.d_xaxacox18,R.drawable.d_xaxacox19,R.drawable.d_xaxacox20};
@@ -199,265 +198,6 @@ public class DrawThread extends Thread {
         this.surfaceHolder = surfaceHolder;
         this.context = context;
         this.res = context.getResources();
-        mediaPlayerHappy = MediaPlayer.create(context, R.raw.happysong);
-        mediaPlayerHit = MediaPlayer.create(context, R.raw.hitsong);
-        mediaPlayerWash = MediaPlayer.create(context,R.raw.washsong);
-        sharedPreferences = ((Activity)context).getPreferences(Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-        foin = sharedPreferences.getInt("FOIN", 0);
-        level = sharedPreferences.getInt("LEVEL", 1);
-        for (int i = 1; i < 11; i++) {
-            eatBitmap[i] = BitmapFactory.decodeResource(context.getResources(), eatBitmapId[i]);
-            eatBitmapD[i] = BitmapFactory.decodeResource(context.getResources(), eatBitmapDId[i]);
-            eatBitmapDS[i] = BitmapFactory.decodeResource(context.getResources(), eatBitmapDSId[i]);
-            eatBitmapDT[i] = BitmapFactory.decodeResource(context.getResources(), eatBitmapDTId[i]);
-            eatBitmapDTS[i] = BitmapFactory.decodeResource(context.getResources(), eatBitmapDTSId[i]);
-            eatBitmapS[i] = BitmapFactory.decodeResource(context.getResources(), eatBitmapSId[i]);
-            eatBitmapT[i] = BitmapFactory.decodeResource(context.getResources(), eatBitmapTId[i]);
-            eatBitmapTS[i] = BitmapFactory.decodeResource(context.getResources(), eatBitmapTSId[i]);
-            eatBitmapSmile[i] = BitmapFactory.decodeResource(context.getResources(), eatBitmapSmileId[i]);
-            poopingBitmapUsual[i] = BitmapFactory.decodeResource(context.getResources() ,poopingBitmapUsualId[i]);
-            poopingBitmapDH[i] = BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDHId[i]);
-            poopingBitmapDSH[i] = BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDSHId[i]);
-            poopingBitmapDS[i] = BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDSId[i]);
-            poopingBitmapDTH[i] = BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDTHId[i]);
-            poopingBitmapDTSH[i] = BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDTSHId[i]);
-            poopingBitmapDTS[i] = BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDTSId[i]);
-            poopingBitmapDT[i] = BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDTId[i]);
-            poopingBitmapD[i] = BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDId[i]);
-            poopingBitmapHS[i] = BitmapFactory.decodeResource(context.getResources() ,poopingBitmapHSId[i]);
-            poopingBitmapH[i] = BitmapFactory.decodeResource(context.getResources() ,poopingBitmapHId[i]);
-            poopingBitmapS[i] = BitmapFactory.decodeResource(context.getResources() ,poopingBitmapSId[i]);
-            poopingBitmapTH[i] = BitmapFactory.decodeResource(context.getResources() ,poopingBitmapTHId[i]);
-            poopingBitmapTHS[i] = BitmapFactory.decodeResource(context.getResources() ,poopingBitmapTHSId[i]);
-            poopingBitmapTS[i] = BitmapFactory.decodeResource(context.getResources() ,poopingBitmapTSId[i]);
-            poopingBitmapT[i] = BitmapFactory.decodeResource(context.getResources() ,poopingBitmapTId[i]);
-        }
-        for (int i = 1; i < 21; i++) {
-            playBitmap[i] = BitmapFactory.decodeResource(context.getResources(), playBitmapId[i]);
-            playBitmapD[i] = BitmapFactory.decodeResource(context.getResources(), playBitmapDId[i]);
-            playBitmapT[i] = BitmapFactory.decodeResource(context.getResources(), playBitmapTId[i]);
-            playBitmapDT[i] = BitmapFactory.decodeResource(context.getResources(), playBitmapDTId[i]);
-        }
-        for (int i = 1; i < 5; i++) {
-            flyBitmapUsual[i] = BitmapFactory.decodeResource(context.getResources(),flyBitmapUsualId[i]);
-            flyBitmapDH[i] = BitmapFactory.decodeResource(context.getResources(),flyBitmapDHId[i]);
-            flyBitmapD[i] = BitmapFactory.decodeResource(context.getResources(),flyBitmapDId[i]);
-            flyBitmapDS[i] = BitmapFactory.decodeResource(context.getResources(),flyBitmapDSId[i]);
-            flyBitmapH[i] = BitmapFactory.decodeResource(context.getResources(),flyBitmapHId[i]);
-            flyBitmapSmile[i] = BitmapFactory.decodeResource(context.getResources(),flyBitmapSmileId[i]);
-            flyBitmapSDH[i] = BitmapFactory.decodeResource(context.getResources(),flyBitmapSDHId[i]);
-            flyBitmapSH[i] = BitmapFactory.decodeResource(context.getResources(),flyBitmapSHId[i]);
-            flyBitmapS[i] = BitmapFactory.decodeResource(context.getResources(),flyBitmapSId[i]);
-            flyBitmapTDH[i] = BitmapFactory.decodeResource(context.getResources(),flyBitmapTDHId[i]);
-            flyBitmapTDSH[i] = BitmapFactory.decodeResource(context.getResources(),flyBitmapTDSHId[i]);
-            flyBitmapTDS[i] = BitmapFactory.decodeResource(context.getResources(),flyBitmapTDSId[i]);
-            flyBitmapTD[i] = BitmapFactory.decodeResource(context.getResources(),flyBitmapTDId[i]);
-            flyBitmapTH[i] = BitmapFactory.decodeResource(context.getResources(),flyBitmapTHId[i]);
-            flyBitmapTSH[i] = BitmapFactory.decodeResource(context.getResources(),flyBitmapTSHId[i]);
-            flyBitmapTS[i] = BitmapFactory.decodeResource(context.getResources(),flyBitmapTSId[i]);
-            flyBitmapT[i] = BitmapFactory.decodeResource(context.getResources(),flyBitmapTId[i]);
-            poopBitmap[i] = BitmapFactory.decodeResource(context.getResources(), poopBitmapId[i]);
-
-        }
-        for (int i = 1; i < 15; i++) {
-            hitBitmap[i] = BitmapFactory.decodeResource(context.getResources(), hitBitmapId[i]);
-            hitBitmapD[i] = BitmapFactory.decodeResource(context.getResources(), hitBitmapDId[i]);
-            hitBitmapH[i] = BitmapFactory.decodeResource(context.getResources(), hitBitmapHId[i]);
-            hitBitmapDH[i] = BitmapFactory.decodeResource(context.getResources(), hitBitmapDHId[i]);
-        }
-        for (int i = 1; i < 49; i++) {
-            washBitmap[i] = BitmapFactory.decodeResource(context.getResources(),washBitmapId[i]);
-        }
-        for (int i = 0; i < 11; i++) {
-            eatDarkButtonBitmap[i] = BitmapFactory.decodeResource(context.getResources(), eatDarkButtonBitmapId[i]);
-        }
-        for (int i = 0; i < 16; i++) {
-            playDarkButtonBitmap[i] =BitmapFactory.decodeResource(context.getResources(),playDarkButtonBitmapId[i]);
-        }
-        for (int i = 0; i < 61; i++) {
-            sleepDarkButtonBitmap[i] = BitmapFactory.decodeResource(context.getResources(), sleepDarkButtonBitmapId[i]);
-        }
-        for (int i = 0; i < 8; i++) {
-            getFoinBitmap[i] = BitmapFactory.decodeResource(context.getResources(),getFoinBitmapId[i]);
-        }
-        foinBitmap = BitmapFactory.decodeResource(context.getResources(),getFoinBitmapId[0]);
-        for (int i = 1; i < 19; i++) {
-            levelBitmap[i] = BitmapFactory.decodeResource(context.getResources() ,levelBitmapId[i]);
-        }
-        washButtonBitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvelu_knopka);
-        washButtonBitmap2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvelu_knopka);
-        washButtonBitmapPoop = BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvelu_knopkaa);
-        washDarkButtonBitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvelu_knopka_mug);
-        bitmapbg = BitmapFactory.decodeResource(context.getResources(), R.drawable.background1);
-        bitmapDarkbg = BitmapFactory.decodeResource(context.getResources(), R.drawable.background2);
-        bitmapDarkkust = BitmapFactory.decodeResource(context.getResources(), R.drawable.kustik2);
-        bitmapkust = BitmapFactory.decodeResource(context.getResources(), R.drawable.kustik);
-        bitmapDirt = BitmapFactory.decodeResource(context.getResources(),R.drawable.kextik);
-        bitmapHungry = BitmapFactory.decodeResource(context.getResources(),R.drawable.tarelka);
-        bitmapSleep = BitmapFactory.decodeResource(context.getResources(),R.drawable.zzz);
-        bitmapHappy = BitmapFactory.decodeResource(context.getResources(),R.drawable.smilik);
-        eatButtonBitmap =  BitmapFactory.decodeResource(context.getResources(), R.drawable.chervyak);
-        playButtonBitmap =  BitmapFactory.decodeResource(context.getResources(), R.drawable.petur);
-        sleepButtonBitmap =  BitmapFactory.decodeResource(context.getResources(), R.drawable.qnel);
-        eatButtonBitmapPoop =  BitmapFactory.decodeResource(context.getResources(), R.drawable.utelu_knopkaa);
-        playButtonBitmapPoop =  BitmapFactory.decodeResource(context.getResources(), R.drawable.xaxalu_knopkaa);
-        sleepButtonBitmapPoop =  BitmapFactory.decodeResource(context.getResources(), R.drawable.qnelu_knopkaa);
-        screenshotBitmap =  BitmapFactory.decodeResource(context.getResources(),R.drawable.screenshot);
-        shopButton =  BitmapFactory.decodeResource(context.getResources(),R.drawable.xanut);
-        bird = bitmapSmile1;
-        bitmapUsual1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.sovorakan1);
-        bitmapUsual2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.sovorakan2);
-        bitmapDTSH1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_s_h_1);
-        bitmapDTSH2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_s_h_2);
-        bitmapDTS1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_s_1);
-        bitmapDTS2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_s_2);
-        bitmapDTH1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_h_1);
-        bitmapDTH2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_h_2);
-        bitmapDSH1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.d_s_h_1);
-        bitmapDSH2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.d_s_h_2);
-        bitmapTSH1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.t_s_h_1);
-        bitmapTSH2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.t_s_h_2);
-        bitmapDH1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.d_h_1);
-        bitmapDH2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.d_h_2);
-        bitmapDS1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.d_s_1);
-        bitmapDS2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.d_s_2);
-        bitmapDT1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_1);
-        bitmapDT2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_2);
-        bitmapSH1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.s_h_1);
-        bitmapSH2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.s_h_2);
-        bitmapTH1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.t_h_1);
-        bitmapTH2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.t_h_2);
-        bitmapTS1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.t_s_1);
-        bitmapTS2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.t_s_2);
-        bitmapD1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.kextot1);
-        bitmapD2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.kextot2);
-        bitmapT1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.hognac1);
-        bitmapT2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.hognac2);
-        bitmapS1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.txur1);
-        bitmapS2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.txur2);
-        bitmapH1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.sovac1);
-        bitmapH2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.sovac2);
-        bitmapSmile1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.urax1);
-        bitmapSmile2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.urax2);
-        sleepUsual1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.qnac1);
-        sleepUsual2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.qnac2);
-        sleepDH1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d_h1);
-        sleepDH2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d_h2);
-        sleepDSH1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d_s_h1);
-        sleepDSH2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d_s_h2);
-        sleepDS1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d_s1);
-        sleepDS2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d_s2);
-        sleepDH1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d_h1);
-        sleepDH2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d_h2);
-        sleepD1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d1);
-        sleepD2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d2);
-        sleepH1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_h1);
-        sleepH2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_h2);
-        sleepSmile1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_hp1);
-        sleepSmile2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_hp2);
-        sleepSH1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_s_h1);
-        sleepSH2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_s_h2);
-        sleepS1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_s1);
-        sleepS2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_s2);
-        levelColor = ResourcesCompat.getColor(context.getResources(),R.color.life,null);
-        dirtColor = ResourcesCompat.getColor(context.getResources(),R.color.dirt,null);
-        hungryColor = ResourcesCompat.getColor(context.getResources(),R.color.hungry,null);
-        tiredColor = ResourcesCompat.getColor(context.getResources(),R.color.sleep,null);
-        happyColor = ResourcesCompat.getColor(context.getResources(),R.color.happy,null);
-        dirtRight = sharedPreferences.getFloat("DIRT", (float)  1040 / 1050);
-        hungryRight = sharedPreferences.getFloat("HUNGRY", (float)  1040 / 1050);
-        sleepRight = sharedPreferences.getFloat("SLEEP", (float)  1040 / 1050);
-        happyRight = sharedPreferences.getFloat("HAPPY", (float) 1040 / 1050);
-        levelRight = sharedPreferences.getFloat("LEVELRIGHT",(float)  844 / 1050);
-        eatScore = sharedPreferences.getInt("EATSCORE",0);
-        eatChecker = sharedPreferences.getBoolean("EATCHECKER",true);
-        eatTimer = sharedPreferences.getInt("EATTIMER",10);
-        eating = sharedPreferences.getBoolean("EATING", false);
-        playChecker = sharedPreferences.getBoolean("PLAYCHECKER",true);
-        playTimer = sharedPreferences.getInt("PLAYTIMER",15);
-        playing = sharedPreferences.getBoolean("PLAYING", false);
-        if(!playChecker && !playing) {
-            checkPlayButton =true;
-            if(playTimer - timePassed > 0) {
-                playTimer -= timePassed;
-                editor.putInt("PLAYTIMER",playTimer);
-            }
-            else{
-                playChecker = true;
-                editor.putBoolean("PLAYCHECKER",playChecker);
-            }
-            editor.apply();
-        }
-        if(playing) {
-            playing = false;
-            playChecker = false;
-            checkPlayButton = true;
-            playTimer = 15;
-            if(playTimer - timePassed > 0) {
-                playTimer -= timePassed;
-            }
-            else{
-                playChecker = true;
-            }
-            playButtonBitmap = playDarkButtonBitmap[playTimer];
-            editor.putInt("PLAYTIMER",playTimer);
-            editor.putBoolean("PLAYCHECKER",playChecker);
-            editor.putBoolean("PLAYING",playing);
-            editor.apply();
-        }
-        if(!eatChecker && !eating) {
-            checkEatButton = true;
-            if(eatTimer - timePassed > 0) {
-                eatTimer -= timePassed;
-                editor.putInt("EATTIMER",eatTimer);
-            }
-            else{
-                eatChecker = true;
-                editor.putBoolean("EATCHECKER",eatChecker);
-            }
-            editor.apply();
-        }
-        if(eating) {
-            eating = false;
-            checkEatButton = true;
-            eatChecker = false;
-            bird = birdBreath1;
-            eatTimer = 10;
-            eatScore++;
-            if(eatTimer - timePassed > 0) {
-                eatTimer -= timePassed;
-            } else{
-                eatChecker = true;
-            }
-            eatButtonBitmap = eatDarkButtonBitmap[eatTimer];
-            editor.putInt("EATTIMER",eatTimer);
-            editor.putBoolean("EATCHECKER",eatChecker);
-            editor.putBoolean("EATING",eating);
-            editor.putInt("EATSCORE",eatScore);
-            editor.apply();
-            food *= (hungryRight2 - hungryLeft);
-            if (hungryRight + food > hungryRight2) {
-                hungryRight = hungryRight2;
-            } else {
-                hungryRight += food;
-            }
-            editor.putFloat("HUNGRY", hungryRight);
-            editor.apply();
-            food /= (hungryRight2 - hungryLeft);
-        }
-        // Обновляем статистику после выхода и входа
-
-        changeStateAfterStart(dirtRight,dirtLeft, dirtWidth,dirtyChangeValue,1);
-        changeStateAfterStart(hungryRight,hungryLeft, hungryWidth,hungryChangeValue,2);
-        changeStateAfterStart(sleepRight,sleepLeft, sleepWidth,sleepChangeValue,3);
-        changeStateAfterStart(happyRight,happyLeft, happyWidth,happyChangeValue,4);
-
-        paintHappy.setColor(happyColor);
-        paintSleep.setColor(tiredColor);
-        paintHungry.setColor(hungryColor);
-        paintDirt.setColor(dirtColor);
-        paintLevel.setColor(levelColor);
     }
 
     private void takeScreenshot() {
@@ -514,8 +254,113 @@ public class DrawThread extends Thread {
         running = false;
     }
 
-    private void giveSize(Canvas canvas)
-    {
+    private void loading(Canvas canvas) {
+        mediaPlayerHappy = MediaPlayer.create(context, R.raw.happysong);
+        mediaPlayerHit = MediaPlayer.create(context, R.raw.hitsong);
+        mediaPlayerWash = MediaPlayer.create(context,R.raw.washsong);
+        sharedPreferences = ((Activity)context).getPreferences(Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        foin = sharedPreferences.getInt("FOIN", 0);
+        level = sharedPreferences.getInt("LEVEL", 1);
+        levelColor = ResourcesCompat.getColor(context.getResources(),R.color.life,null);
+        dirtColor = ResourcesCompat.getColor(context.getResources(),R.color.dirt,null);
+        hungryColor = ResourcesCompat.getColor(context.getResources(),R.color.hungry,null);
+        tiredColor = ResourcesCompat.getColor(context.getResources(),R.color.sleep,null);
+        happyColor = ResourcesCompat.getColor(context.getResources(),R.color.happy,null);
+        dirtRight = sharedPreferences.getFloat("DIRT", (float)  1040 / 1050);
+        hungryRight = sharedPreferences.getFloat("HUNGRY", (float)  1040 / 1050);
+        sleepRight = sharedPreferences.getFloat("SLEEP", (float)  1040 / 1050);
+        happyRight = sharedPreferences.getFloat("HAPPY", (float) 1040 / 1050);
+        levelRight = sharedPreferences.getFloat("LEVELRIGHT",(float)  844 / 1050);
+        eatScore = sharedPreferences.getInt("EATSCORE",0);
+        eatChecker = sharedPreferences.getBoolean("EATCHECKER",true);
+        eatTimer = sharedPreferences.getInt("EATTIMER",10);
+        eating = sharedPreferences.getBoolean("EATING", false);
+        playChecker = sharedPreferences.getBoolean("PLAYCHECKER",true);
+        playTimer = sharedPreferences.getInt("PLAYTIMER",15);
+        playing = sharedPreferences.getBoolean("PLAYING", false);
+        // Обновляем кнопки после выхода и входа
+        if(!playChecker && !playing) {
+            checkPlayButton =true;
+            if(playTimer - timePassed > 0) {
+                playTimer -= timePassed;
+                editor.putInt("PLAYTIMER",playTimer);
+            }
+            else{
+                playChecker = true;
+                editor.putBoolean("PLAYCHECKER",playChecker);
+            }
+            editor.apply();
+        }
+        if(playing) {
+            playing = false;
+            playChecker = false;
+            checkPlayButton = true;
+            playTimer = 15;
+            if(playTimer - timePassed > 0) {
+                playTimer -= timePassed;
+            }
+            else{
+                playChecker = true;
+            }
+            playButtonBitmap = playDarkButtonBitmap[playTimer];
+            editor.putInt("PLAYTIMER",playTimer);
+            editor.putBoolean("PLAYCHECKER",playChecker);
+            editor.putBoolean("PLAYING",playing);
+            editor.apply();
+        }
+        if(!eatChecker && !eating) {
+            checkEatButton = true;
+            if(eatTimer - timePassed > 0) {
+                eatTimer -= timePassed;
+                editor.putInt("EATTIMER",eatTimer);
+            }
+            else{
+                eatChecker = true;
+                editor.putBoolean("EATCHECKER",eatChecker);
+            }
+            editor.apply();
+        }
+        if(eating) {
+            eating = false;
+            checkEatButton = true;
+            eatChecker = false;
+            fird = birdBreath1;
+            eatTimer = 10;
+            eatScore++;
+            if(eatTimer - timePassed > 0) {
+                eatTimer -= timePassed;
+            } else{
+                eatChecker = true;
+            }
+            eatButtonBitmap = eatDarkButtonBitmap[eatTimer];
+            editor.putInt("EATTIMER",eatTimer);
+            editor.putBoolean("EATCHECKER",eatChecker);
+            editor.putBoolean("EATING",eating);
+            editor.putInt("EATSCORE",eatScore);
+            editor.apply();
+            food *= (hungryRight2 - hungryLeft);
+            if (hungryRight + food > hungryRight2) {
+                hungryRight = hungryRight2;
+            } else {
+                hungryRight += food;
+            }
+            editor.putFloat("HUNGRY", hungryRight);
+            editor.apply();
+            food /= (hungryRight2 - hungryLeft);
+        }
+        // Обновляем статистику после выхода и входа
+
+        changeStateAfterStart(dirtRight,dirtLeft, dirtWidth,dirtyChangeValue,1);
+        changeStateAfterStart(hungryRight,hungryLeft, hungryWidth,hungryChangeValue,2);
+        changeStateAfterStart(sleepRight,sleepLeft, sleepWidth,sleepChangeValue,3);
+        changeStateAfterStart(happyRight,happyLeft, happyWidth,happyChangeValue,4);
+
+        paintHappy.setColor(happyColor);
+        paintSleep.setColor(tiredColor);
+        paintHungry.setColor(hungryColor);
+        paintDirt.setColor(dirtColor);
+        paintLevel.setColor(levelColor);
         paintBlack.setColor(Color.BLACK);
         paintBlack.setStyle(Paint.Style.STROKE);
         paint.setSubpixelText(true);
@@ -527,154 +372,148 @@ public class DrawThread extends Thread {
         paintBlack.setSubpixelText(true);
         paintBlack.setAntiAlias(true);
         paintFoin.setColor(Color.BLACK);
-        bitmapbg = Bitmap.createScaledBitmap(bitmapbg, canvas.getWidth(), canvas.getHeight(), true);
-        bitmapDarkbg = Bitmap.createScaledBitmap(bitmapDarkbg, canvas.getWidth(), canvas.getHeight(), true);
-        bitmapkust = Bitmap.createScaledBitmap(bitmapkust, canvas.getWidth() * 245 / 1050, canvas.getHeight() * 180 / 540, true);
-        bitmapDarkkust = Bitmap.createScaledBitmap(bitmapDarkkust, canvas.getWidth() * 245 / 1050, canvas.getHeight() * 180 / 540, true);
+        bitmapbg = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.background1), canvas.getWidth(), canvas.getHeight(), true);
+        bitmapDarkbg = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.background2), canvas.getWidth(), canvas.getHeight(), true);
+        bitmapkust = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.kustik), canvas.getWidth() * 245 / 1050, canvas.getHeight() * 180 / 540, true);
+        bitmapDarkkust = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.kustik2), canvas.getWidth() * 245 / 1050, canvas.getHeight() * 180 / 540, true);
+        bitmapDirtIcon = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.kextik), canvas.getWidth() * 60 / 1050, canvas.getHeight() * 51 / 540, true);
+        bitmapHungryIcon = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.tarelka), canvas.getWidth() * 46 / 1050, canvas.getHeight() * 33 / 540, true);
+        bitmapSleepIcon = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.zzz), canvas.getWidth() * 52 / 1050, canvas.getHeight() * 57 / 540, true);
+        bitmapHappyIcon = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.smilik), canvas.getWidth() * 34 / 1050, canvas.getHeight() * 35 / 540, true);
+        bitmapUsual1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sovorakan1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapUsual2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sovorakan2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapDTSH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_s_h_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapDTSH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_s_h_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapDTS1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_s_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapDTS2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_s_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapDTH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_h_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapDTH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_h_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapDSH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_s_h_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapDSH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_s_h_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapTSH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.t_s_h_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapTSH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.t_s_h_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapDH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_h_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapDH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_h_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapDS1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_s_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapDS2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_s_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapDT1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapDT2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapSH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.s_h_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapSH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.s_h_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapTH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.t_h_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapTH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.t_h_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapTS1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.t_s_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapTS2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.t_s_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapD1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.kextot1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapD2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.kextot2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapT1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.hognac1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapT2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.hognac2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapS1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.txur1) , (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapS2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.txur2) , (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sovac1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sovac2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapSmile1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.urax1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        bitmapSmile2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.urax2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+        sleepUsual1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.qnac1), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+        sleepUsual2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.qnac2), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+        sleepDH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d_h1), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+        sleepDH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d_h2), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+        sleepDSH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d_s_h1), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+        sleepDSH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d_s_h2), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+        sleepDS1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d_s1), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+        sleepDS2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d_s2), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+        sleepD1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d1), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+        sleepD2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d2), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+        sleepH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_h1), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+        sleepH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_h2), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+        sleepSmile1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_hp1), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+        sleepSmile2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_hp2), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+        sleepSH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_s_h1), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+        sleepSH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_s_h2), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+        sleepS1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_s1), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+        sleepS2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_s2), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+        foinBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),getFoinBitmapId[0]),  canvas.getWidth() * 137 / 1050, canvas.getHeight()* 134 / 540, true);
+        shopButton = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.xanut),(int)(canvas.getWidth()*shopButtonWidth), (int)(canvas.getHeight()*shopButtonHeight),true);
+        paintFoin.setTextSize((float) canvas.getWidth() * 20/1050);
         for (int i = 1; i < 19; i++) {
-            levelBitmap[i] = Bitmap.createScaledBitmap(levelBitmap[i], canvas.getWidth() * 45 / 1050, canvas.getHeight() * 45 / 540, true);
+            levelBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,levelBitmapId[i]), canvas.getWidth() * 45 / 1050, canvas.getHeight() * 45 / 540, true);
         }
-        bitmapDirt = Bitmap.createScaledBitmap(bitmapDirt, canvas.getWidth() * 60 / 1050, canvas.getHeight() * 51 / 540, true);
-        bitmapHungry = Bitmap.createScaledBitmap(bitmapHungry, canvas.getWidth() * 46 / 1050, canvas.getHeight() * 33 / 540, true);
-        bitmapSleep = Bitmap.createScaledBitmap(bitmapSleep, canvas.getWidth() * 52 / 1050, canvas.getHeight() * 57 / 540, true);
-        bitmapHappy = Bitmap.createScaledBitmap(bitmapHappy, canvas.getWidth() * 34 / 1050, canvas.getHeight() * 35 / 540, true);
-        bitmapUsual1 = Bitmap.createScaledBitmap(bitmapUsual1, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapUsual2 = Bitmap.createScaledBitmap(bitmapUsual2, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapDTSH1 = Bitmap.createScaledBitmap(bitmapDTSH1, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapDTSH2 = Bitmap.createScaledBitmap(bitmapDTSH2, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapDTS1 = Bitmap.createScaledBitmap(bitmapDTS1, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapDTS2 = Bitmap.createScaledBitmap(bitmapDTS2, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapDTH1 = Bitmap.createScaledBitmap(bitmapDTH1, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapDTH2 = Bitmap.createScaledBitmap(bitmapDTH2, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapDSH1 = Bitmap.createScaledBitmap(bitmapDSH1, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapDSH2 = Bitmap.createScaledBitmap(bitmapDSH2, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapTSH1 = Bitmap.createScaledBitmap(bitmapTSH1, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapTSH2 = Bitmap.createScaledBitmap(bitmapTSH2, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapDH1 = Bitmap.createScaledBitmap(bitmapDH1, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapDH2 = Bitmap.createScaledBitmap(bitmapDH2, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapDS1 = Bitmap.createScaledBitmap(bitmapDS1, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapDS2 = Bitmap.createScaledBitmap(bitmapDS2, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapDT1 = Bitmap.createScaledBitmap(bitmapDT1, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapDT2 = Bitmap.createScaledBitmap(bitmapDT2, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapSH1 = Bitmap.createScaledBitmap(bitmapSH1, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapSH2 = Bitmap.createScaledBitmap(bitmapSH2, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapTH1 = Bitmap.createScaledBitmap(bitmapTH1, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapTH2 = Bitmap.createScaledBitmap(bitmapTH2, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapTS1 = Bitmap.createScaledBitmap(bitmapTS1, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapTS2 = Bitmap.createScaledBitmap(bitmapTS2, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapD1 = Bitmap.createScaledBitmap(bitmapD1, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapD2 = Bitmap.createScaledBitmap(bitmapD2, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapT1 = Bitmap.createScaledBitmap(bitmapT1, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapT2 = Bitmap.createScaledBitmap(bitmapT2, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapS1 = Bitmap.createScaledBitmap(bitmapS1, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapS2 = Bitmap.createScaledBitmap(bitmapS2, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapH1 = Bitmap.createScaledBitmap(bitmapH1, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapH2 = Bitmap.createScaledBitmap(bitmapH2, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapSmile1 = Bitmap.createScaledBitmap(bitmapSmile1, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapSmile2 = Bitmap.createScaledBitmap(bitmapSmile2, (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
         for (int i = 1; i < 11; i++) {
-            eatBitmap[i] = Bitmap.createScaledBitmap(eatBitmap[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
-            eatBitmapSmile[i] = Bitmap.createScaledBitmap(eatBitmapSmile[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
-            eatBitmapD[i] = Bitmap.createScaledBitmap(eatBitmapD[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
-            eatBitmapDS[i] = Bitmap.createScaledBitmap(eatBitmapDS[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
-            eatBitmapDT[i] = Bitmap.createScaledBitmap(eatBitmapDT[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
-            eatBitmapDTS[i] = Bitmap.createScaledBitmap(eatBitmapDTS[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
-            eatBitmapS[i] = Bitmap.createScaledBitmap(eatBitmapS[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
-            eatBitmapT[i] = Bitmap.createScaledBitmap(eatBitmapT[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
-            eatBitmapTS[i] = Bitmap.createScaledBitmap(eatBitmapTS[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+            eatBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+            eatBitmapSmile[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapSmileId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+            eatBitmapD[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapDId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+            eatBitmapDS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapDSId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+            eatBitmapDT[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapDTId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+            eatBitmapDTS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapDTSId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+            eatBitmapS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapSId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+            eatBitmapT[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapTId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+            eatBitmapTS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapTSId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+            poopingBitmapUsual[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapUsualId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            poopingBitmapDTSH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDTSHId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            poopingBitmapDSH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDSHId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            poopingBitmapDTH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDTHId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            poopingBitmapDTS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDTSId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            poopingBitmapTHS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapTHSId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            poopingBitmapDH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDHId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            poopingBitmapDT[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDTId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            poopingBitmapDS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDSId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            poopingBitmapD[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            poopingBitmapTH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapTHId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            poopingBitmapHS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapHSId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            poopingBitmapTS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapTSId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            poopingBitmapT[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapTId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            poopingBitmapH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapHId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            poopingBitmapS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapSId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
         }
         for (int i = 1; i < 21; i++) {
-            playBitmap[i] = Bitmap.createScaledBitmap(playBitmap[i], canvas.getWidth() * 194 / 1050, canvas.getHeight() * 172 / 540, true);
-            playBitmapD[i] = Bitmap.createScaledBitmap(playBitmapD[i], canvas.getWidth() * 194 / 1050, canvas.getHeight() * 172 / 540, true);
-            playBitmapDT[i] = Bitmap.createScaledBitmap(playBitmapDT[i], canvas.getWidth() * 194 / 1050, canvas.getHeight() * 172 / 540, true);
-            playBitmapT[i] = Bitmap.createScaledBitmap(playBitmapT[i], canvas.getWidth() * 194 / 1050, canvas.getHeight() * 172 / 540, true);
+            playBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), playBitmapId[i]), canvas.getWidth() * 194 / 1050, canvas.getHeight() * 172 / 540, true);
+            playBitmapD[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), playBitmapDId[i]), canvas.getWidth() * 194 / 1050, canvas.getHeight() * 172 / 540, true);
+            playBitmapDT[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), playBitmapDTId[i]), canvas.getWidth() * 194 / 1050, canvas.getHeight() * 172 / 540, true);
+            playBitmapT[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), playBitmapTId[i]), canvas.getWidth() * 194 / 1050, canvas.getHeight() * 172 / 540, true);
         }
         for (int i = 1; i < 5; i++) {
-            flyBitmapSmile[i] = Bitmap.createScaledBitmap(flyBitmapSmile[i], canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapDH[i] = Bitmap.createScaledBitmap(flyBitmapDH[i], canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapDS[i] = Bitmap.createScaledBitmap(flyBitmapDS[i], canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapD[i] = Bitmap.createScaledBitmap(flyBitmapD[i], canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapH[i] = Bitmap.createScaledBitmap(flyBitmapH[i], canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapSDH[i] = Bitmap.createScaledBitmap(flyBitmapSDH[i], canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapSH[i] = Bitmap.createScaledBitmap(flyBitmapSH[i], canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapS[i] = Bitmap.createScaledBitmap(flyBitmapS[i], canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapTDH[i] = Bitmap.createScaledBitmap(flyBitmapTDH[i], canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapTDSH[i] = Bitmap.createScaledBitmap(flyBitmapTDSH[i], canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapTDS[i] = Bitmap.createScaledBitmap(flyBitmapTDS[i], canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapTD[i] = Bitmap.createScaledBitmap(flyBitmapTD[i], canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapTH[i] = Bitmap.createScaledBitmap(flyBitmapTH[i], canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapTSH[i] = Bitmap.createScaledBitmap(flyBitmapTSH[i], canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapTS[i] = Bitmap.createScaledBitmap(flyBitmapTS[i], canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapT[i] = Bitmap.createScaledBitmap(flyBitmapT[i], canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapUsual[i] = Bitmap.createScaledBitmap(flyBitmapUsual[i], canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-        }
-        sleepUsual1 = Bitmap.createScaledBitmap(sleepUsual1, canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepUsual2 = Bitmap.createScaledBitmap(sleepUsual2, canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepDH1 = Bitmap.createScaledBitmap(sleepDH1, canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepDH2 = Bitmap.createScaledBitmap(sleepDH2, canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepDSH1 = Bitmap.createScaledBitmap(sleepDSH1, canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepDSH2 = Bitmap.createScaledBitmap(sleepDSH2, canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepDS1 = Bitmap.createScaledBitmap(sleepDS1, canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepDS2 = Bitmap.createScaledBitmap(sleepDS2, canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepD1 = Bitmap.createScaledBitmap(sleepD1, canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepD2 = Bitmap.createScaledBitmap(sleepD2, canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepH1 = Bitmap.createScaledBitmap(sleepH1, canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepH2 = Bitmap.createScaledBitmap(sleepH2, canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepSmile1 = Bitmap.createScaledBitmap(sleepSmile1, canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepSmile2 = Bitmap.createScaledBitmap(sleepSmile2, canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepSH1 = Bitmap.createScaledBitmap(sleepSH1, canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepSH2 = Bitmap.createScaledBitmap(sleepSH2, canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepS1 = Bitmap.createScaledBitmap(sleepS1, canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepS2 = Bitmap.createScaledBitmap(sleepS2, canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        for (int i = 1; i < 48; i++) washBitmap[i] = Bitmap.createScaledBitmap(washBitmap[i], canvas.getWidth() * 341 / 1050, canvas.getHeight() * 378 / 540, true);
-        for (int i = 0; i < 8; i++) getFoinBitmap[i] = Bitmap.createScaledBitmap(getFoinBitmap[i],  canvas.getWidth() * 137 / 1050, canvas.getHeight()* 134 / 540, true);
-        foinBitmap = Bitmap.createScaledBitmap(foinBitmap,  canvas.getWidth() * 137 / 1050, canvas.getHeight()* 134 / 540, true);
-        shopButton = Bitmap.createScaledBitmap(shopButton,(int)(canvas.getWidth()*shopButtonWidth), (int)(canvas.getHeight()*shopButtonHeight),true);
-        paintFoin.setTextSize((float) canvas.getWidth() * 20/1050);
-        for (int i = 0; i < 11; i++) {
-            eatDarkButtonBitmap[i] = Bitmap.createScaledBitmap(eatDarkButtonBitmap[i],(int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
-        }
-        eatButtonBitmap = Bitmap.createScaledBitmap(eatButtonBitmap,(int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
-        for (int i = 0; i < 16; i++) {
-            playDarkButtonBitmap[i] = Bitmap.createScaledBitmap(playDarkButtonBitmap[i], (int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
-        }
-        playButtonBitmap = Bitmap.createScaledBitmap(playButtonBitmap,(int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
-        sleepButtonBitmap = Bitmap.createScaledBitmap(sleepButtonBitmap,(int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
-        for (int i = 0; i < 61; i++) {
-            sleepDarkButtonBitmap[i] = Bitmap.createScaledBitmap(sleepDarkButtonBitmap[i],(int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
-        }
-        washButtonBitmap = Bitmap.createScaledBitmap(washButtonBitmap,(int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
-        washButtonBitmap2 = Bitmap.createScaledBitmap(washButtonBitmap2,(int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
-        washDarkButtonBitmap = Bitmap.createScaledBitmap(washDarkButtonBitmap,(int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
-        eatButtonBitmapPoop = Bitmap.createScaledBitmap(eatButtonBitmapPoop,(int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
-        playButtonBitmapPoop = Bitmap.createScaledBitmap(playButtonBitmapPoop,(int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
-        washButtonBitmapPoop = Bitmap.createScaledBitmap(washButtonBitmapPoop,(int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
-        sleepButtonBitmapPoop = Bitmap.createScaledBitmap(sleepButtonBitmapPoop,(int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
-        for (int i = 1; i < 5; i++) poopBitmap[i] = Bitmap.createScaledBitmap(poopBitmap[i], canvas.getWidth() * 94 / 1050, canvas.getHeight() * 94 / 540, true);
-        for (int i = 1; i < 11; i++) {
-            poopingBitmapUsual[i] = Bitmap.createScaledBitmap(poopingBitmapUsual[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-            poopingBitmapDTSH[i] = Bitmap.createScaledBitmap(poopingBitmapDTSH[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-            poopingBitmapDSH[i] = Bitmap.createScaledBitmap(poopingBitmapDSH[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-            poopingBitmapDTH[i] = Bitmap.createScaledBitmap(poopingBitmapDTH[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-            poopingBitmapDTS[i] = Bitmap.createScaledBitmap(poopingBitmapDTS[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-            poopingBitmapTHS[i] = Bitmap.createScaledBitmap(poopingBitmapTHS[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-            poopingBitmapDH[i] = Bitmap.createScaledBitmap(poopingBitmapDH[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-            poopingBitmapDT[i] = Bitmap.createScaledBitmap(poopingBitmapDT[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-            poopingBitmapDS[i] = Bitmap.createScaledBitmap(poopingBitmapDS[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-            poopingBitmapD[i] = Bitmap.createScaledBitmap(poopingBitmapD[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-            poopingBitmapTH[i] = Bitmap.createScaledBitmap(poopingBitmapTH[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-            poopingBitmapHS[i] = Bitmap.createScaledBitmap(poopingBitmapHS[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-            poopingBitmapTS[i] = Bitmap.createScaledBitmap(poopingBitmapTS[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-            poopingBitmapT[i] = Bitmap.createScaledBitmap(poopingBitmapT[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-            poopingBitmapH[i] = Bitmap.createScaledBitmap(poopingBitmapH[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-            poopingBitmapS[i] = Bitmap.createScaledBitmap(poopingBitmapS[i], (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            flyBitmapSmile[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapSmileId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            flyBitmapDH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapDHId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            flyBitmapDS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapDSId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            flyBitmapD[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapDId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            flyBitmapH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapHId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            flyBitmapSDH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapSDHId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            flyBitmapSH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapSHId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            flyBitmapS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapSId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            flyBitmapTDH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTDHId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            flyBitmapTDSH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTDSHId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            flyBitmapTDS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTDSId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            flyBitmapTD[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTDId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            flyBitmapTH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTHId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            flyBitmapTSH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTSHId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            flyBitmapTS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTSId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            flyBitmapT[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            flyBitmapUsual[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapUsualId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            poopBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), poopBitmapId[i]), canvas.getWidth() * 94 / 1050, canvas.getHeight() * 94 / 540, true);
         }
         for (int i = 1; i < 15; i++) {
-            hitBitmap[i] = Bitmap.createScaledBitmap(hitBitmap[i],(int)(canvas.getWidth() * birdWidth),(int)(canvas.getHeight()*birdHeight),true);
-            hitBitmapD[i] = Bitmap.createScaledBitmap(hitBitmapD[i],(int)(canvas.getWidth() * birdWidth),(int)(canvas.getHeight()*birdHeight),true);
-            hitBitmapH[i] = Bitmap.createScaledBitmap(hitBitmapH[i],(int)(canvas.getWidth() * birdWidth),(int)(canvas.getHeight()*birdHeight),true);
-            hitBitmapDH[i] = Bitmap.createScaledBitmap(hitBitmapDH[i],(int)(canvas.getWidth() * birdWidth),(int)(canvas.getHeight()*birdHeight),true);
+            hitBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), hitBitmapId[i]),(int)(canvas.getWidth() * birdWidth),(int)(canvas.getHeight()*birdHeight),true);
+            hitBitmapD[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), hitBitmapDId[i]),(int)(canvas.getWidth() * birdWidth),(int)(canvas.getHeight()*birdHeight),true);
+            hitBitmapH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), hitBitmapHId[i]),(int)(canvas.getWidth() * birdWidth),(int)(canvas.getHeight()*birdHeight),true);
+            hitBitmapDH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), hitBitmapDHId[i]),(int)(canvas.getWidth() * birdWidth),(int)(canvas.getHeight()*birdHeight),true);
         }
+        for (int i = 1; i < 49; i++) washBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),washBitmapId[i]), canvas.getWidth() * 341 / 1050, canvas.getHeight() * 378 / 540, true);
+        for (int i = 0; i < 8; i++) getFoinBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),getFoinBitmapId[i]),  canvas.getWidth() * 137 / 1050, canvas.getHeight()* 134 / 540, true);
+        for (int i = 0; i < 11; i++) eatDarkButtonBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatDarkButtonBitmapId[i]),(int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
+        for (int i = 0; i < 16; i++) playDarkButtonBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),playDarkButtonBitmapId[i]), (int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
+        for (int i = 0; i < 61; i++) sleepDarkButtonBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), sleepDarkButtonBitmapId[i]),(int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
+        eatButtonBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.chervyak),(int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
+        playButtonBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.petur),(int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
+        sleepButtonBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.qnel),(int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
+        washButtonBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvelu_knopka),(int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
+        washButtonBitmap2 = washButtonBitmap;
+        washDarkButtonBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvelu_knopka_mug),(int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
+        eatButtonBitmapPoop = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.utelu_knopkaa),(int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
+        playButtonBitmapPoop = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.xaxalu_knopkaa),(int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
+        washButtonBitmapPoop = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvelu_knopkaa),(int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
+        sleepButtonBitmapPoop = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.qnelu_knopkaa),(int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
+        screenshotBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.screenshot), canvas.getWidth() * 73 / 1050, canvas.getHeight() * 73 / 540, true);
+        fird = bitmapSmile1;
         loaded = true;
     }
 
@@ -686,7 +525,7 @@ public class DrawThread extends Thread {
             if (canvas != null) {
                 try {
                     if(m2 == 1) {
-                        giveSize(canvas);
+                        loading(canvas);
                         m2 = 0;
                     }
                     if(loaded) {
@@ -775,70 +614,19 @@ public class DrawThread extends Thread {
 
                         canvas.drawBitmap(levelBitmap[level], (float) canvas.getWidth() * 815 / 1050, (float) canvas.getHeight() * 2 / 540, paint);
 
-                        canvas.drawBitmap(bitmapDirt, (float) canvas.getWidth() * 840 / 1050, (float) canvas.getHeight() * 41 / 540, paint);
+                        canvas.drawBitmap(bitmapDirtIcon, (float) canvas.getWidth() * 840 / 1050, (float) canvas.getHeight() * 41 / 540, paint);
 
-                        canvas.drawBitmap(bitmapHungry, (float) canvas.getWidth() * 850 / 1050, (float) canvas.getHeight() * 87 / 540, paint);
+                        canvas.drawBitmap(bitmapHungryIcon, (float) canvas.getWidth() * 850 / 1050, (float) canvas.getHeight() * 87 / 540, paint);
 
-                        canvas.drawBitmap(bitmapSleep, (float) canvas.getWidth() * 853 / 1050, (float) canvas.getHeight() * 110 / 540, paint);
+                        canvas.drawBitmap(bitmapSleepIcon, (float) canvas.getWidth() * 853 / 1050, (float) canvas.getHeight() * 110 / 540, paint);
 
-                        canvas.drawBitmap(bitmapHappy, (float) canvas.getWidth() * 862 / 1050, (float) canvas.getHeight() * 161 / 540, paint);
+                        canvas.drawBitmap(bitmapHappyIcon, (float) canvas.getWidth() * 862 / 1050, (float) canvas.getHeight() * 161 / 540, paint);
 
                         // Проверяем  состояние птички
-                        if (hungryRight - hungryLeft < hungryWidth / 2. && dirtRight - dirtLeft < dirtWidth / 2. && happyRight - happyLeft < happyWidth / 3. && sleepRight - sleepLeft < sleepWidth / 2.) {
-                            birdBreath1 = bitmapDTSH1;
-                            birdBreath2 = bitmapDTSH2;
-                        } else if (dirtRight - dirtLeft < dirtWidth / 2. && happyRight - happyLeft < happyWidth / 3. && sleepRight - sleepLeft < sleepWidth / 2.) {
-                            birdBreath1 = bitmapDTS1;
-                            birdBreath2 = bitmapDTS2;
-                        } else if (hungryRight - hungryLeft < hungryWidth / 2. && happyRight - happyLeft < happyWidth / 3. && sleepRight - sleepLeft < sleepWidth / 2.) {
-                            birdBreath1 = bitmapTSH1;
-                            birdBreath2 = bitmapTSH2;
-                        } else if (hungryRight - hungryLeft < hungryWidth / 2. && dirtRight - dirtLeft < dirtWidth / 2. && sleepRight - sleepLeft < sleepWidth / 2.) {
-                            birdBreath1 = bitmapDTH1;
-                            birdBreath2 = bitmapDTH2;
-                        } else if (hungryRight - hungryLeft < hungryWidth / 2. && dirtRight - dirtLeft < dirtWidth / 2. && happyRight - happyLeft < happyWidth / 3.) {
-                            birdBreath1 = bitmapDSH1;
-                            birdBreath2 = bitmapDSH2;
-                        } else if (hungryRight - hungryLeft < hungryWidth / 2. && dirtRight - dirtLeft < dirtWidth / 2.) {
-                            birdBreath1 = bitmapDH1;
-                            birdBreath2 = bitmapDH2;
-                        } else if (dirtRight - dirtLeft < dirtWidth / 2. && happyRight - happyLeft < happyWidth / 3.) {
-                            birdBreath1 = bitmapDS1;
-                            birdBreath2 = bitmapDS2;
-                        } else if (dirtRight - dirtLeft < dirtWidth / 2. && sleepRight - sleepLeft < sleepWidth / 2.) {
-                            birdBreath1 = bitmapDT1;
-                            birdBreath2 = bitmapDT2;
-                        } else if (hungryRight - hungryLeft < hungryWidth / 2. && happyRight - happyLeft < happyWidth / 3.) {
-                            birdBreath1 = bitmapSH1;
-                            birdBreath2 = bitmapSH2;
-                        } else if (sleepRight - sleepLeft < sleepWidth / 2. && hungryRight - hungryLeft < hungryWidth / 2.) {
-                            birdBreath1 = bitmapTH1;
-                            birdBreath2 = bitmapTH2;
-                        } else if (sleepRight - sleepLeft < sleepWidth / 2. && happyRight - happyLeft < happyWidth / 3.) {
-                            birdBreath1 = bitmapTS1;
-                            birdBreath2 = bitmapTS2;
-                        } else if (dirtRight - dirtLeft < dirtWidth / 2.) {
-                            birdBreath1 = bitmapD1;
-                            birdBreath2 = bitmapD2;
-                        } else if (sleepRight - sleepLeft < sleepWidth / 2.) {
-                            birdBreath1 = bitmapT1;
-                            birdBreath2 = bitmapT2;
-                        } else if (happyRight - happyLeft < happyWidth / 3.) {
-                            birdBreath1 = bitmapS1;
-                            birdBreath2 = bitmapS2;
-                        } else if (hungryRight - hungryLeft < hungryWidth / 2.) {
-                            birdBreath1 = bitmapH1;
-                            birdBreath2 = bitmapH2;
-                        } else if (happyRight - happyLeft < (2.) * happyWidth / 3.) {
-                            birdBreath1 = bitmapUsual1;
-                            birdBreath2 = bitmapUsual2;
-                        } else {
-                            birdBreath1 = bitmapSmile1;
-                            birdBreath2 = bitmapSmile2;
-                        }
+                        checkFirdState();
                         if (m == 0) {
                             m = 1;
-                            bird = birdBreath1;
+                            fird = birdBreath1;
                         }
                         // Таймер дыхания
 
@@ -847,12 +635,12 @@ public class DrawThread extends Thread {
                                 new ThreadBird1().start();
                                 timeIsPassed1 = true;
                             }
-                            if (needToDrawNow1 && !check) bird = birdBreath1;
+                            if (needToDrawNow1 && !check) fird = birdBreath1;
                             if (!timeIsPassed2 && check) {
                                 new ThreadBird2().start();
                                 timeIsPassed2 = true;
                             }
-                            if (needToDrawNow2 && check) bird = birdBreath2;
+                            if (needToDrawNow2 && check) fird = birdBreath2;
                         }
 
                         //foin
@@ -974,25 +762,25 @@ public class DrawThread extends Thread {
                         if (poopingNeedToDrawNow2 && flyPoop) {
                             switch (poop2) {
                                 case 1:
-                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[4];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[4];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[4];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[4];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[4];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[4];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[4];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[4];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[4];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[4];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[4];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[4];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[4];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[4];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[4];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[4];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[4];
+                                    if (birdBreath1 == bitmapDTSH1) fird = flyBitmapTDSH[4];else if (birdBreath1 == bitmapDH1) fird = flyBitmapDH[4];else if (birdBreath1 == bitmapDS1) fird = flyBitmapDS[4];else if (birdBreath1 == bitmapD1) fird = flyBitmapD[4];else if (birdBreath1 == bitmapH1) fird = flyBitmapH[4];else if (birdBreath1 == bitmapSmile1) fird = flyBitmapSmile[4];else if (birdBreath1 == bitmapSH1) fird = flyBitmapSH[4];else if (birdBreath1 == bitmapDSH1) fird = flyBitmapSDH[4];else if (birdBreath1 == bitmapS1) fird = flyBitmapS[4];else if (birdBreath1 == bitmapDTH1) fird = flyBitmapTDH[4];else if (birdBreath1 == bitmapDTS1) fird = flyBitmapTDS[4];else if (birdBreath1 == bitmapDT1) fird = flyBitmapTD[4];else if (birdBreath1 == bitmapTH1) fird = flyBitmapTH[4];else if (birdBreath1 == bitmapTSH1) fird = flyBitmapTSH[4];else if (birdBreath1 == bitmapTS1) fird = flyBitmapTS[4];else if (birdBreath1 == bitmapT1) fird = flyBitmapT[4];else if (birdBreath1 == bitmapUsual1) fird = flyBitmapUsual[4];
                                     break;
                                 case 2:
-                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[3];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[3];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[3];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[3];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[3];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[3];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[3];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[3];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[3];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[3];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[3];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[3];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[3];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[3];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[3];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[3];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[3];
+                                    if (birdBreath1 == bitmapDTSH1) fird = flyBitmapTDSH[3];else if (birdBreath1 == bitmapDH1) fird = flyBitmapDH[3];else if (birdBreath1 == bitmapDS1) fird = flyBitmapDS[3];else if (birdBreath1 == bitmapD1) fird = flyBitmapD[3];else if (birdBreath1 == bitmapH1) fird = flyBitmapH[3];else if (birdBreath1 == bitmapSmile1) fird = flyBitmapSmile[3];else if (birdBreath1 == bitmapSH1) fird = flyBitmapSH[3];else if (birdBreath1 == bitmapDSH1) fird = flyBitmapSDH[3];else if (birdBreath1 == bitmapS1) fird = flyBitmapS[3];else if (birdBreath1 == bitmapDTH1) fird = flyBitmapTDH[3];else if (birdBreath1 == bitmapDTS1) fird = flyBitmapTDS[3];else if (birdBreath1 == bitmapDT1) fird = flyBitmapTD[3];else if (birdBreath1 == bitmapTH1) fird = flyBitmapTH[3];else if (birdBreath1 == bitmapTSH1) fird = flyBitmapTSH[3];else if (birdBreath1 == bitmapTS1) fird = flyBitmapTS[3];else if (birdBreath1 == bitmapT1) fird = flyBitmapT[3];else if (birdBreath1 == bitmapUsual1) fird = flyBitmapUsual[3];
                                     birdX = (float) 548 / 1050;
                                     birdY = (float) 176 / 540;
                                     break;
                                 case 3:
-                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[4];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[4];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[4];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[4];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[4];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[4];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[4];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[4];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[4];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[4];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[4];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[4];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[4];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[4];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[4];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[4];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[4];
+                                    if (birdBreath1 == bitmapDTSH1) fird = flyBitmapTDSH[4];else if (birdBreath1 == bitmapDH1) fird = flyBitmapDH[4];else if (birdBreath1 == bitmapDS1) fird = flyBitmapDS[4];else if (birdBreath1 == bitmapD1) fird = flyBitmapD[4];else if (birdBreath1 == bitmapH1) fird = flyBitmapH[4];else if (birdBreath1 == bitmapSmile1) fird = flyBitmapSmile[4];else if (birdBreath1 == bitmapSH1) fird = flyBitmapSH[4];else if (birdBreath1 == bitmapDSH1) fird = flyBitmapSDH[4];else if (birdBreath1 == bitmapS1) fird = flyBitmapS[4];else if (birdBreath1 == bitmapDTH1) fird = flyBitmapTDH[4];else if (birdBreath1 == bitmapDTS1) fird = flyBitmapTDS[4];else if (birdBreath1 == bitmapDT1) fird = flyBitmapTD[4];else if (birdBreath1 == bitmapTH1) fird = flyBitmapTH[4];else if (birdBreath1 == bitmapTSH1) fird = flyBitmapTSH[4];else if (birdBreath1 == bitmapTS1) fird = flyBitmapTS[4];else if (birdBreath1 == bitmapT1) fird = flyBitmapT[4];else if (birdBreath1 == bitmapUsual1) fird = flyBitmapUsual[4];
                                     birdX = (float) 625 / 1050;
                                     birdY = (float) 203 / 540;
                                     break;
                                 case 4:
-                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[3];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[3];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[3];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[3];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[3];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[3];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[3];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[3];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[3];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[3];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[3];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[3];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[3];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[3];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[3];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[3];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[3];
+                                    if (birdBreath1 == bitmapDTSH1) fird = flyBitmapTDSH[3];else if (birdBreath1 == bitmapDH1) fird = flyBitmapDH[3];else if (birdBreath1 == bitmapDS1) fird = flyBitmapDS[3];else if (birdBreath1 == bitmapD1) fird = flyBitmapD[3];else if (birdBreath1 == bitmapH1) fird = flyBitmapH[3];else if (birdBreath1 == bitmapSmile1) fird = flyBitmapSmile[3];else if (birdBreath1 == bitmapSH1) fird = flyBitmapSH[3];else if (birdBreath1 == bitmapDSH1) fird = flyBitmapSDH[3];else if (birdBreath1 == bitmapS1) fird = flyBitmapS[3];else if (birdBreath1 == bitmapDTH1) fird = flyBitmapTDH[3];else if (birdBreath1 == bitmapDTS1) fird = flyBitmapTDS[3];else if (birdBreath1 == bitmapDT1) fird = flyBitmapTD[3];else if (birdBreath1 == bitmapTH1) fird = flyBitmapTH[3];else if (birdBreath1 == bitmapTSH1) fird = flyBitmapTSH[3];else if (birdBreath1 == bitmapTS1) fird = flyBitmapTS[3];else if (birdBreath1 == bitmapT1) fird = flyBitmapT[3];else if (birdBreath1 == bitmapUsual1) fird = flyBitmapUsual[3];
                                     birdX = (float) 715 / 1050;
                                     birdY = (float) 195 / 540;
                                     break;
                                 case 5:
-                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[4];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[4];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[4];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[4];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[4];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[4];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[4];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[4];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[4];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[4];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[4];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[4];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[4];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[4];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[4];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[4];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[4];
+                                    if (birdBreath1 == bitmapDTSH1) fird = flyBitmapTDSH[4];else if (birdBreath1 == bitmapDH1) fird = flyBitmapDH[4];else if (birdBreath1 == bitmapDS1) fird = flyBitmapDS[4];else if (birdBreath1 == bitmapD1) fird = flyBitmapD[4];else if (birdBreath1 == bitmapH1) fird = flyBitmapH[4];else if (birdBreath1 == bitmapSmile1) fird = flyBitmapSmile[4];else if (birdBreath1 == bitmapSH1) fird = flyBitmapSH[4];else if (birdBreath1 == bitmapDSH1) fird = flyBitmapSDH[4];else if (birdBreath1 == bitmapS1) fird = flyBitmapS[4];else if (birdBreath1 == bitmapDTH1) fird = flyBitmapTDH[4];else if (birdBreath1 == bitmapDTS1) fird = flyBitmapTDS[4];else if (birdBreath1 == bitmapDT1) fird = flyBitmapTD[4];else if (birdBreath1 == bitmapTH1) fird = flyBitmapTH[4];else if (birdBreath1 == bitmapTSH1) fird = flyBitmapTSH[4];else if (birdBreath1 == bitmapTS1) fird = flyBitmapTS[4];else if (birdBreath1 == bitmapT1) fird = flyBitmapT[4];else if (birdBreath1 == bitmapUsual1) fird = flyBitmapUsual[4];
                                     birdX = (float) 795 / 1050;
                                     birdY = (float) 232 / 540;
                                     break;
@@ -1011,7 +799,7 @@ public class DrawThread extends Thread {
                                 disgust = 1;
                             }
                             if (birdBreath1 == bitmapUsual1 || birdBreath1 == bitmapSmile1)
-                                bird = poopingBitmapUsual[disgust];else if (birdBreath1 == bitmapDSH1) bird = poopingBitmapDSH[disgust];else if (birdBreath1 == bitmapDTS1) bird = poopingBitmapDTS[disgust];else if (birdBreath1 == bitmapDTH1) bird = poopingBitmapDTH[disgust];else if (birdBreath1 == bitmapDH1) bird = poopingBitmapDH[disgust];else if (birdBreath1 == bitmapDT1) bird = poopingBitmapDT[disgust];else if (birdBreath1 == bitmapDS1) bird = poopingBitmapDS[disgust];else if (birdBreath1 == bitmapD1) bird = poopingBitmapD[disgust];else if (birdBreath1 == bitmapTSH1) bird = poopingBitmapTHS[disgust];else if (birdBreath1 == bitmapSH1) bird = poopingBitmapHS[disgust];else if (birdBreath1 == bitmapTH1) bird = poopingBitmapTH[disgust];else if (birdBreath1 == bitmapH1) bird = poopingBitmapH[disgust];else if (birdBreath1 == bitmapTS1) bird = poopingBitmapTS[disgust];else if (birdBreath1 == bitmapT1) bird = poopingBitmapT[disgust];else if (birdBreath1 == bitmapS1) bird = poopingBitmapS[disgust];
+                                fird = poopingBitmapUsual[disgust];else if (birdBreath1 == bitmapDSH1) fird = poopingBitmapDSH[disgust];else if (birdBreath1 == bitmapDTS1) fird = poopingBitmapDTS[disgust];else if (birdBreath1 == bitmapDTH1) fird = poopingBitmapDTH[disgust];else if (birdBreath1 == bitmapDH1) fird = poopingBitmapDH[disgust];else if (birdBreath1 == bitmapDT1) fird = poopingBitmapDT[disgust];else if (birdBreath1 == bitmapDS1) fird = poopingBitmapDS[disgust];else if (birdBreath1 == bitmapD1) fird = poopingBitmapD[disgust];else if (birdBreath1 == bitmapTSH1) fird = poopingBitmapTHS[disgust];else if (birdBreath1 == bitmapSH1) fird = poopingBitmapHS[disgust];else if (birdBreath1 == bitmapTH1) fird = poopingBitmapTH[disgust];else if (birdBreath1 == bitmapH1) fird = poopingBitmapH[disgust];else if (birdBreath1 == bitmapTS1) fird = poopingBitmapTS[disgust];else if (birdBreath1 == bitmapT1) fird = poopingBitmapT[disgust];else if (birdBreath1 == bitmapS1) fird = poopingBitmapS[disgust];
                         }
                         if (disgusting && lastTouchX >= poopX * canvas.getWidth() && lastTouchX <= canvas.getWidth() * (poopX + poopWidth) && lastTouchY >= canvas.getHeight() * poopY && lastTouchY <= (poopY + poopHeight) * canvas.getHeight()) {
                             new PoopFlyBackThread().start();
@@ -1027,31 +815,31 @@ public class DrawThread extends Thread {
                             switch (poop3) {
                                 case 1:
                                     // Проверяем состояние и подбираем картинку
-                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[2];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[2];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[2];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[2];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[2];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[2];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[2];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[2];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[2];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[2];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[2];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[2];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[2];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[2];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[2];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[2];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[2];
+                                    if (birdBreath1 == bitmapDTSH1) fird = flyBitmapTDSH[2];else if (birdBreath1 == bitmapDH1) fird = flyBitmapDH[2];else if (birdBreath1 == bitmapDS1) fird = flyBitmapDS[2];else if (birdBreath1 == bitmapD1) fird = flyBitmapD[2];else if (birdBreath1 == bitmapH1) fird = flyBitmapH[2];else if (birdBreath1 == bitmapSmile1) fird = flyBitmapSmile[2];else if (birdBreath1 == bitmapSH1) fird = flyBitmapSH[2];else if (birdBreath1 == bitmapDSH1) fird = flyBitmapSDH[2];else if (birdBreath1 == bitmapS1) fird = flyBitmapS[2];else if (birdBreath1 == bitmapDTH1) fird = flyBitmapTDH[2];else if (birdBreath1 == bitmapDTS1) fird = flyBitmapTDS[2];else if (birdBreath1 == bitmapDT1) fird = flyBitmapTD[2];else if (birdBreath1 == bitmapTH1) fird = flyBitmapTH[2];else if (birdBreath1 == bitmapTSH1) fird = flyBitmapTSH[2];else if (birdBreath1 == bitmapTS1) fird = flyBitmapTS[2];else if (birdBreath1 == bitmapT1) fird = flyBitmapT[2];else if (birdBreath1 == bitmapUsual1) fird = flyBitmapUsual[2];
                                     break;
                                 case 2:
-                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[1];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[1];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[1];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[1];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[1];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[1];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[1];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[1];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[1];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[1];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[1];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[1];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[1];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[1];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[1];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[1];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[1];
+                                    if (birdBreath1 == bitmapDTSH1) fird = flyBitmapTDSH[1];else if (birdBreath1 == bitmapDH1) fird = flyBitmapDH[1];else if (birdBreath1 == bitmapDS1) fird = flyBitmapDS[1];else if (birdBreath1 == bitmapD1) fird = flyBitmapD[1];else if (birdBreath1 == bitmapH1) fird = flyBitmapH[1];else if (birdBreath1 == bitmapSmile1) fird = flyBitmapSmile[1];else if (birdBreath1 == bitmapSH1) fird = flyBitmapSH[1];else if (birdBreath1 == bitmapDSH1) fird = flyBitmapSDH[1];else if (birdBreath1 == bitmapS1) fird = flyBitmapS[1];else if (birdBreath1 == bitmapDTH1) fird = flyBitmapTDH[1];else if (birdBreath1 == bitmapDTS1) fird = flyBitmapTDS[1];else if (birdBreath1 == bitmapDT1) fird = flyBitmapTD[1];else if (birdBreath1 == bitmapTH1) fird = flyBitmapTH[1];else if (birdBreath1 == bitmapTSH1) fird = flyBitmapTSH[1];else if (birdBreath1 == bitmapTS1) fird = flyBitmapTS[1];else if (birdBreath1 == bitmapT1) fird = flyBitmapT[1];else if (birdBreath1 == bitmapUsual1) fird = flyBitmapUsual[1];
                                     birdX = (float) 715 / 1050;
                                     birdY = (float) 195 / 540;
                                     break;
                                 case 3:
-                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[2];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[2];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[2];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[2];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[2];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[2];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[2];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[2];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[2];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[2];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[2];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[2];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[2];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[2];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[2];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[2];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[2];
+                                    if (birdBreath1 == bitmapDTSH1) fird = flyBitmapTDSH[2];else if (birdBreath1 == bitmapDH1) fird = flyBitmapDH[2];else if (birdBreath1 == bitmapDS1) fird = flyBitmapDS[2];else if (birdBreath1 == bitmapD1) fird = flyBitmapD[2];else if (birdBreath1 == bitmapH1) fird = flyBitmapH[2];else if (birdBreath1 == bitmapSmile1) fird = flyBitmapSmile[2];else if (birdBreath1 == bitmapSH1) fird = flyBitmapSH[2];else if (birdBreath1 == bitmapDSH1) fird = flyBitmapSDH[2];else if (birdBreath1 == bitmapS1) fird = flyBitmapS[2];else if (birdBreath1 == bitmapDTH1) fird = flyBitmapTDH[2];else if (birdBreath1 == bitmapDTS1) fird = flyBitmapTDS[2];else if (birdBreath1 == bitmapDT1) fird = flyBitmapTD[2];else if (birdBreath1 == bitmapTH1) fird = flyBitmapTH[2];else if (birdBreath1 == bitmapTSH1) fird = flyBitmapTSH[2];else if (birdBreath1 == bitmapTS1) fird = flyBitmapTS[2];else if (birdBreath1 == bitmapT1) fird = flyBitmapT[2];else if (birdBreath1 == bitmapUsual1) fird = flyBitmapUsual[2];
                                     birdX = (float) 625 / 1050;
                                     birdY = (float) 203 / 540;
                                     break;
                                 case 4:
-                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[1];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[1];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[1];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[1];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[1];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[1];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[1];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[1];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[1];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[1];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[1];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[1];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[1];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[1];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[1];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[1];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[1];
+                                    if (birdBreath1 == bitmapDTSH1) fird = flyBitmapTDSH[1];else if (birdBreath1 == bitmapDH1) fird = flyBitmapDH[1];else if (birdBreath1 == bitmapDS1) fird = flyBitmapDS[1];else if (birdBreath1 == bitmapD1) fird = flyBitmapD[1];else if (birdBreath1 == bitmapH1) fird = flyBitmapH[1];else if (birdBreath1 == bitmapSmile1) fird = flyBitmapSmile[1];else if (birdBreath1 == bitmapSH1) fird = flyBitmapSH[1];else if (birdBreath1 == bitmapDSH1) fird = flyBitmapSDH[1];else if (birdBreath1 == bitmapS1) fird = flyBitmapS[1];else if (birdBreath1 == bitmapDTH1) fird = flyBitmapTDH[1];else if (birdBreath1 == bitmapDTS1) fird = flyBitmapTDS[1];else if (birdBreath1 == bitmapDT1) fird = flyBitmapTD[1];else if (birdBreath1 == bitmapTH1) fird = flyBitmapTH[1];else if (birdBreath1 == bitmapTSH1) fird = flyBitmapTSH[1];else if (birdBreath1 == bitmapTS1) fird = flyBitmapTS[1];else if (birdBreath1 == bitmapT1) fird = flyBitmapT[1];else if (birdBreath1 == bitmapUsual1) fird = flyBitmapUsual[1];
                                     birdX = (float) 548 / 1050;
                                     birdY = (float) 176 / 540;
                                     break;
                                 case 5:
-                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[2];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[2];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[2];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[2];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[2];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[2];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[2];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[2];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[2];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[2];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[2];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[2];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[2];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[2];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[2];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[2];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[2];
+                                    if (birdBreath1 == bitmapDTSH1) fird = flyBitmapTDSH[2];else if (birdBreath1 == bitmapDH1) fird = flyBitmapDH[2];else if (birdBreath1 == bitmapDS1) fird = flyBitmapDS[2];else if (birdBreath1 == bitmapD1) fird = flyBitmapD[2];else if (birdBreath1 == bitmapH1) fird = flyBitmapH[2];else if (birdBreath1 == bitmapSmile1) fird = flyBitmapSmile[2];else if (birdBreath1 == bitmapSH1) fird = flyBitmapSH[2];else if (birdBreath1 == bitmapDSH1) fird = flyBitmapSDH[2];else if (birdBreath1 == bitmapS1) fird = flyBitmapS[2];else if (birdBreath1 == bitmapDTH1) fird = flyBitmapTDH[2];else if (birdBreath1 == bitmapDTS1) fird = flyBitmapTDS[2];else if (birdBreath1 == bitmapDT1) fird = flyBitmapTD[2];else if (birdBreath1 == bitmapTH1) fird = flyBitmapTH[2];else if (birdBreath1 == bitmapTSH1) fird = flyBitmapTSH[2];else if (birdBreath1 == bitmapTS1) fird = flyBitmapTS[2];else if (birdBreath1 == bitmapT1) fird = flyBitmapT[2];else if (birdBreath1 == bitmapUsual1) fird = flyBitmapUsual[2];
                                     birdX = (float) 419 / 1050;
                                     birdY = (float) 232 / 540;
                                     break;
                                 case 6:
                                     // Возвращаемся к преждним настройкам
-                                    bird = birdBreath1;
+                                    fird = birdBreath1;
                                     flyBackPoop = false;
                                     isTouched = false;
                                     pop = false;
@@ -1097,7 +885,7 @@ public class DrawThread extends Thread {
                             if (eat >= 1 && eat <= 10) {
                                 birdY = (float) 118 / 540;
                                 // Проверяем состояние и подбираем картинку
-                                if (birdBreath1 == bitmapDTS1 || birdBreath1 == bitmapDTSH1) bird = eatBitmapDTS[eat];else if (birdBreath1 == bitmapDT1 || birdBreath1 == bitmapDTH1) bird = eatBitmapDT[eat];else if (birdBreath1 == bitmapDS1 || birdBreath1 == bitmapDSH1) bird = eatBitmapDS[eat];else if (birdBreath1 == bitmapTS1 || birdBreath1 == bitmapTSH1) bird = eatBitmapTS[eat];else if (birdBreath1 == bitmapD1 || birdBreath1 == bitmapDH1) bird = eatBitmapD[eat];else if (birdBreath1 == bitmapS1 || birdBreath1 == bitmapSH1) bird = eatBitmapS[eat];else if (birdBreath1 == bitmapT1 || birdBreath1 == bitmapTH1) bird = eatBitmapT[eat];else if (birdBreath1 == bitmapUsual1 || birdBreath1 == bitmapH1) bird = eatBitmap[eat];else if (birdBreath1 == bitmapSmile1) bird = eatBitmapSmile[eat];
+                                if (birdBreath1 == bitmapDTS1 || birdBreath1 == bitmapDTSH1) fird = eatBitmapDTS[eat];else if (birdBreath1 == bitmapDT1 || birdBreath1 == bitmapDTH1) fird = eatBitmapDT[eat];else if (birdBreath1 == bitmapDS1 || birdBreath1 == bitmapDSH1) fird = eatBitmapDS[eat];else if (birdBreath1 == bitmapTS1 || birdBreath1 == bitmapTSH1) fird = eatBitmapTS[eat];else if (birdBreath1 == bitmapD1 || birdBreath1 == bitmapDH1) fird = eatBitmapD[eat];else if (birdBreath1 == bitmapS1 || birdBreath1 == bitmapSH1) fird = eatBitmapS[eat];else if (birdBreath1 == bitmapT1 || birdBreath1 == bitmapTH1) fird = eatBitmapT[eat];else if (birdBreath1 == bitmapUsual1 || birdBreath1 == bitmapH1) fird = eatBitmap[eat];else if (birdBreath1 == bitmapSmile1) fird = eatBitmapSmile[eat];
                             }
                             if (eat == 9) {
                                 if (eatOnes == 0) {
@@ -1122,7 +910,7 @@ public class DrawThread extends Thread {
                                 checkEatButton = true;
                                 eatOnes = 0;
                                 hungryButtonIsPressed = false;
-                                bird = birdBreath1;
+                                fird = birdBreath1;
                                 birdY = (float) 232 / 540;
                                 eatTimer = 10;
                                 eatButtonBitmap = eatDarkButtonBitmap[eatTimer];
@@ -1162,13 +950,13 @@ public class DrawThread extends Thread {
                             editor.apply();
                             smile /= (happyRight2 - happyLeft);
                             if (birdBreath1 == bitmapDT1 || birdBreath1 == bitmapDTH1 || birdBreath1 == bitmapDTS1 || birdBreath1 == bitmapDTSH1)
-                                bird = playBitmapDT[play];
+                                fird = playBitmapDT[play];
                             else if (birdBreath1 == bitmapD1 || birdBreath1 == bitmapDH1 || birdBreath1 == bitmapDS1 || birdBreath1 == bitmapDSH1)
-                                bird = playBitmapD[play];
+                                fird = playBitmapD[play];
                             else if (birdBreath1 == bitmapT1 || birdBreath1 == bitmapTH1 || birdBreath1 == bitmapTS1 || birdBreath1 == bitmapTSH1)
-                                bird = playBitmapT[play];
+                                fird = playBitmapT[play];
                             else if (birdBreath1 == bitmapUsual1 || birdBreath1 == bitmapH1 || birdBreath1 == bitmapS1 || birdBreath1 == bitmapSmile1)
-                                bird = playBitmap[play];
+                                fird = playBitmap[play];
                             if (play == 20) {
                                 // Возвращаемся к преждним настройкам
                                 playing = false;
@@ -1199,30 +987,30 @@ public class DrawThread extends Thread {
                         if (flyingToBedNeedToDrawNow && flying && !sleepFinished && !sleeping) {
                             switch (sleep) {
                                 case 1:
-                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[2];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[2];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[2];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[2];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[2];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[2];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[2];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[2];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[2];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[2];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[2];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[2];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[2];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[2];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[2];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[2];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[2];
+                                    if (birdBreath1 == bitmapDTSH1) fird = flyBitmapTDSH[2];else if (birdBreath1 == bitmapDH1) fird = flyBitmapDH[2];else if (birdBreath1 == bitmapDS1) fird = flyBitmapDS[2];else if (birdBreath1 == bitmapD1) fird = flyBitmapD[2];else if (birdBreath1 == bitmapH1) fird = flyBitmapH[2];else if (birdBreath1 == bitmapSmile1) fird = flyBitmapSmile[2];else if (birdBreath1 == bitmapSH1) fird = flyBitmapSH[2];else if (birdBreath1 == bitmapDSH1) fird = flyBitmapSDH[2];else if (birdBreath1 == bitmapS1) fird = flyBitmapS[2];else if (birdBreath1 == bitmapDTH1) fird = flyBitmapTDH[2];else if (birdBreath1 == bitmapDTS1) fird = flyBitmapTDS[2];else if (birdBreath1 == bitmapDT1) fird = flyBitmapTD[2];else if (birdBreath1 == bitmapTH1) fird = flyBitmapTH[2];else if (birdBreath1 == bitmapTSH1) fird = flyBitmapTSH[2];else if (birdBreath1 == bitmapTS1) fird = flyBitmapTS[2];else if (birdBreath1 == bitmapT1) fird = flyBitmapT[2];else if (birdBreath1 == bitmapUsual1) fird = flyBitmapUsual[2];
                                     break;
                                 case 2:
-                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[1];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[1];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[1];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[1];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[1];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[1];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[1];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[1];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[1];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[1];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[1];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[1];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[1];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[1];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[1];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[1];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[1];
+                                    if (birdBreath1 == bitmapDTSH1) fird = flyBitmapTDSH[1];else if (birdBreath1 == bitmapDH1) fird = flyBitmapDH[1];else if (birdBreath1 == bitmapDS1) fird = flyBitmapDS[1];else if (birdBreath1 == bitmapD1) fird = flyBitmapD[1];else if (birdBreath1 == bitmapH1) fird = flyBitmapH[1];else if (birdBreath1 == bitmapSmile1) fird = flyBitmapSmile[1];else if (birdBreath1 == bitmapSH1) fird = flyBitmapSH[1];else if (birdBreath1 == bitmapDSH1) fird = flyBitmapSDH[1];else if (birdBreath1 == bitmapS1) fird = flyBitmapS[1];else if (birdBreath1 == bitmapDTH1) fird = flyBitmapTDH[1];else if (birdBreath1 == bitmapDTS1) fird = flyBitmapTDS[1];else if (birdBreath1 == bitmapDT1) fird = flyBitmapTD[1];else if (birdBreath1 == bitmapTH1) fird = flyBitmapTH[1];else if (birdBreath1 == bitmapTSH1) fird = flyBitmapTSH[1];else if (birdBreath1 == bitmapTS1) fird = flyBitmapTS[1];else if (birdBreath1 == bitmapT1) fird = flyBitmapT[1];else if (birdBreath1 == bitmapUsual1) fird = flyBitmapUsual[1];
                                     birdX = (float) 353 / 1050;
                                     birdY = (float) 238 / 540;
                                     break;
                                 case 3:
-                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[2];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[2];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[2];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[2];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[2];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[2];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[2];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[2];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[2];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[2];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[2];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[2];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[2];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[2];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[2];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[2];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[2];
+                                    if (birdBreath1 == bitmapDTSH1) fird = flyBitmapTDSH[2];else if (birdBreath1 == bitmapDH1) fird = flyBitmapDH[2];else if (birdBreath1 == bitmapDS1) fird = flyBitmapDS[2];else if (birdBreath1 == bitmapD1) fird = flyBitmapD[2];else if (birdBreath1 == bitmapH1) fird = flyBitmapH[2];else if (birdBreath1 == bitmapSmile1) fird = flyBitmapSmile[2];else if (birdBreath1 == bitmapSH1) fird = flyBitmapSH[2];else if (birdBreath1 == bitmapDSH1) fird = flyBitmapSDH[2];else if (birdBreath1 == bitmapS1) fird = flyBitmapS[2];else if (birdBreath1 == bitmapDTH1) fird = flyBitmapTDH[2];else if (birdBreath1 == bitmapDTS1) fird = flyBitmapTDS[2];else if (birdBreath1 == bitmapDT1) fird = flyBitmapTD[2];else if (birdBreath1 == bitmapTH1) fird = flyBitmapTH[2];else if (birdBreath1 == bitmapTSH1) fird = flyBitmapTSH[2];else if (birdBreath1 == bitmapTS1) fird = flyBitmapTS[2];else if (birdBreath1 == bitmapT1) fird = flyBitmapT[2];else if (birdBreath1 == bitmapUsual1) fird = flyBitmapUsual[2];
                                     birdX = (float) 287 / 1050;
                                     birdY = (float) 226 / 540;
                                     break;
                                 case 4:
-                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[1];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[1];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[1];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[1];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[1];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[1];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[1];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[1];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[1];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[1];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[1];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[1];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[1];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[1];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[1];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[1];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[1];
+                                    if (birdBreath1 == bitmapDTSH1) fird = flyBitmapTDSH[1];else if (birdBreath1 == bitmapDH1) fird = flyBitmapDH[1];else if (birdBreath1 == bitmapDS1) fird = flyBitmapDS[1];else if (birdBreath1 == bitmapD1) fird = flyBitmapD[1];else if (birdBreath1 == bitmapH1) fird = flyBitmapH[1];else if (birdBreath1 == bitmapSmile1) fird = flyBitmapSmile[1];else if (birdBreath1 == bitmapSH1) fird = flyBitmapSH[1];else if (birdBreath1 == bitmapDSH1) fird = flyBitmapSDH[1];else if (birdBreath1 == bitmapS1) fird = flyBitmapS[1];else if (birdBreath1 == bitmapDTH1) fird = flyBitmapTDH[1];else if (birdBreath1 == bitmapDTS1) fird = flyBitmapTDS[1];else if (birdBreath1 == bitmapDT1) fird = flyBitmapTD[1];else if (birdBreath1 == bitmapTH1) fird = flyBitmapTH[1];else if (birdBreath1 == bitmapTSH1) fird = flyBitmapTSH[1];else if (birdBreath1 == bitmapTS1) fird = flyBitmapTS[1];else if (birdBreath1 == bitmapT1) fird = flyBitmapT[1];else if (birdBreath1 == bitmapUsual1) fird = flyBitmapUsual[1];
                                     birdX = (float) 230 / 1050;
                                     birdY = (float) 232 / 540;
                                     break;
                                 case 5:
-                                    if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[2];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[2];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[2];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[2];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[2];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[2];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[2];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[2];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[2];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[2];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[2];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[2];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[2];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[2];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[2];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[2];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[2];
+                                    if (birdBreath1 == bitmapDTSH1) fird = flyBitmapTDSH[2];else if (birdBreath1 == bitmapDH1) fird = flyBitmapDH[2];else if (birdBreath1 == bitmapDS1) fird = flyBitmapDS[2];else if (birdBreath1 == bitmapD1) fird = flyBitmapD[2];else if (birdBreath1 == bitmapH1) fird = flyBitmapH[2];else if (birdBreath1 == bitmapSmile1) fird = flyBitmapSmile[2];else if (birdBreath1 == bitmapSH1) fird = flyBitmapSH[2];else if (birdBreath1 == bitmapDSH1) fird = flyBitmapSDH[2];else if (birdBreath1 == bitmapS1) fird = flyBitmapS[2];else if (birdBreath1 == bitmapDTH1) fird = flyBitmapTDH[2];else if (birdBreath1 == bitmapDTS1) fird = flyBitmapTDS[2];else if (birdBreath1 == bitmapDT1) fird = flyBitmapTD[2];else if (birdBreath1 == bitmapTH1) fird = flyBitmapTH[2];else if (birdBreath1 == bitmapTSH1) fird = flyBitmapTSH[2];else if (birdBreath1 == bitmapTS1) fird = flyBitmapTS[2];else if (birdBreath1 == bitmapT1) fird = flyBitmapT[2];else if (birdBreath1 == bitmapUsual1) fird = flyBitmapUsual[2];
                                     birdX = (float) 159 / 1050;
                                     birdY = (float) 193 / 540;
                                     break;
                                 case 6:
-                                    bird = birdBreath1;
+                                    fird = birdBreath1;
                                     birdX = (float) 48 / 1050;
                                     birdY = (float) 218 / 540;
                                     break;
@@ -1231,7 +1019,7 @@ public class DrawThread extends Thread {
                                     birdY = (float) 207 / 540;
                                     laying = true;
                                     flying = false;
-                                    if (birdBreath1 == bitmapDTSH1 || birdBreath1 == bitmapDSH1) bird = sleepDSH1;else if (birdBreath1 == bitmapDTS1 || birdBreath1 == bitmapDS1) bird = sleepDS1;else if (birdBreath1 == bitmapDTH1 || birdBreath1 == bitmapDH1) bird = sleepDH1;else if (birdBreath1 == bitmapDT1 || birdBreath1 == bitmapD1) bird = sleepD1;else if (birdBreath1 == bitmapTSH1 || birdBreath1 == bitmapSH1) bird = sleepSH1;else if (birdBreath1 == bitmapTS1 || birdBreath1 == bitmapS1) bird = sleepS1;else if (birdBreath1 == bitmapTH1 || birdBreath1 == bitmapH1) bird = sleepH1;else if (birdBreath1 == bitmapT1 || birdBreath1 == bitmapUsual1) bird = sleepUsual1;else if (birdBreath1 == bitmapSmile1) bird = sleepSmile1;
+                                    if (birdBreath1 == bitmapDTSH1 || birdBreath1 == bitmapDSH1) fird = sleepDSH1;else if (birdBreath1 == bitmapDTS1 || birdBreath1 == bitmapDS1) fird = sleepDS1;else if (birdBreath1 == bitmapDTH1 || birdBreath1 == bitmapDH1) fird = sleepDH1;else if (birdBreath1 == bitmapDT1 || birdBreath1 == bitmapD1) fird = sleepD1;else if (birdBreath1 == bitmapTSH1 || birdBreath1 == bitmapSH1) fird = sleepSH1;else if (birdBreath1 == bitmapTS1 || birdBreath1 == bitmapS1) fird = sleepS1;else if (birdBreath1 == bitmapTH1 || birdBreath1 == bitmapH1) fird = sleepH1;else if (birdBreath1 == bitmapT1 || birdBreath1 == bitmapUsual1) fird = sleepUsual1;else if (birdBreath1 == bitmapSmile1) fird = sleepSmile1;
                                     sleepButtonBitmap = sleepDarkButtonBitmap[60];
                                     checkSleepButton = true;
                                     sleepChecker = false;
@@ -1247,14 +1035,14 @@ public class DrawThread extends Thread {
                                 timeIsPassedSleep1 = true;
                             }
                             if (needToDrawNowSleep1 && !checkSleep) {
-                                if (birdBreath1 == bitmapDTSH1 || birdBreath1 == bitmapDSH1) bird = sleepDSH1;else if (birdBreath1 == bitmapDTS1 || birdBreath1 == bitmapDS1) bird = sleepDS1;else if (birdBreath1 == bitmapDTH1 || birdBreath1 == bitmapDH1) bird = sleepDH1;else if (birdBreath1 == bitmapDT1 || birdBreath1 == bitmapD1) bird = sleepD1;else if (birdBreath1 == bitmapTSH1 || birdBreath1 == bitmapSH1) bird = sleepSH1;else if (birdBreath1 == bitmapTS1 || birdBreath1 == bitmapS1) bird = sleepS1;else if (birdBreath1 == bitmapTH1 || birdBreath1 == bitmapH1) bird = sleepH1;else if (birdBreath1 == bitmapT1 || birdBreath1 == bitmapUsual1) bird = sleepUsual1;else if (birdBreath1 == bitmapSmile1) bird = sleepSmile1;
+                                if (birdBreath1 == bitmapDTSH1 || birdBreath1 == bitmapDSH1) fird = sleepDSH1;else if (birdBreath1 == bitmapDTS1 || birdBreath1 == bitmapDS1) fird = sleepDS1;else if (birdBreath1 == bitmapDTH1 || birdBreath1 == bitmapDH1) fird = sleepDH1;else if (birdBreath1 == bitmapDT1 || birdBreath1 == bitmapD1) fird = sleepD1;else if (birdBreath1 == bitmapTSH1 || birdBreath1 == bitmapSH1) fird = sleepSH1;else if (birdBreath1 == bitmapTS1 || birdBreath1 == bitmapS1) fird = sleepS1;else if (birdBreath1 == bitmapTH1 || birdBreath1 == bitmapH1) fird = sleepH1;else if (birdBreath1 == bitmapT1 || birdBreath1 == bitmapUsual1) fird = sleepUsual1;else if (birdBreath1 == bitmapSmile1) fird = sleepSmile1;
                             }
                             if (!timeIsPassedSleep2 && checkSleep) {
                                 new ThreadSleepBird2().start();
                                 timeIsPassedSleep2 = true;
                             }
                             if (needToDrawNowSleep2 && checkSleep) {
-                                if (birdBreath1 == bitmapDTSH1 || birdBreath1 == bitmapDSH1) bird = sleepDSH2;else if (birdBreath1 == bitmapDTS1 || birdBreath1 == bitmapDS1) bird = sleepDS2;else if (birdBreath1 == bitmapDTH1 || birdBreath1 == bitmapDH1) bird = sleepDH2;else if (birdBreath1 == bitmapDT1 || birdBreath1 == bitmapD1) bird = sleepD2;else if (birdBreath1 == bitmapTSH1 || birdBreath1 == bitmapSH1) bird = sleepSH2;else if (birdBreath1 == bitmapTS1 || birdBreath1 == bitmapS1) bird = sleepS2;else if (birdBreath1 == bitmapTH1 || birdBreath1 == bitmapH1) bird = sleepH2;else if (birdBreath1 == bitmapT1 || birdBreath1 == bitmapUsual1) bird = sleepUsual2;else if (birdBreath1 == bitmapSmile1) bird = sleepSmile2;
+                                if (birdBreath1 == bitmapDTSH1 || birdBreath1 == bitmapDSH1) fird = sleepDSH2;else if (birdBreath1 == bitmapDTS1 || birdBreath1 == bitmapDS1) fird = sleepDS2;else if (birdBreath1 == bitmapDTH1 || birdBreath1 == bitmapDH1) fird = sleepDH2;else if (birdBreath1 == bitmapDT1 || birdBreath1 == bitmapD1) fird = sleepD2;else if (birdBreath1 == bitmapTSH1 || birdBreath1 == bitmapSH1) fird = sleepSH2;else if (birdBreath1 == bitmapTS1 || birdBreath1 == bitmapS1) fird = sleepS2;else if (birdBreath1 == bitmapTH1 || birdBreath1 == bitmapH1) fird = sleepH2;else if (birdBreath1 == bitmapT1 || birdBreath1 == bitmapUsual1) fird = sleepUsual2;else if (birdBreath1 == bitmapSmile1) fird = sleepSmile2;
                             }
                             if (!sleepingTimeIsPassed) {
                                 new Sleep().start();
@@ -1289,38 +1077,38 @@ public class DrawThread extends Thread {
                             if (flyingBackNeedToDrawNow && flyingBack) {
                                 switch (flyBack) {
                                     case 1:
-                                        bird = birdBreath1;
+                                        fird = birdBreath1;
                                         birdX = (float) 48 / 1050;
                                         birdY = (float) 218 / 540;
                                         break;
                                     case 2:
-                                        if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[4];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[4];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[4];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[4];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[4];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[4];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[4];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[4];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[4];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[4];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[4];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[4];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[4];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[4];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[4];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[4];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[4];
+                                        if (birdBreath1 == bitmapDTSH1) fird = flyBitmapTDSH[4];else if (birdBreath1 == bitmapDH1) fird = flyBitmapDH[4];else if (birdBreath1 == bitmapDS1) fird = flyBitmapDS[4];else if (birdBreath1 == bitmapD1) fird = flyBitmapD[4];else if (birdBreath1 == bitmapH1) fird = flyBitmapH[4];else if (birdBreath1 == bitmapSmile1) fird = flyBitmapSmile[4];else if (birdBreath1 == bitmapSH1) fird = flyBitmapSH[4];else if (birdBreath1 == bitmapDSH1) fird = flyBitmapSDH[4];else if (birdBreath1 == bitmapS1) fird = flyBitmapS[4];else if (birdBreath1 == bitmapDTH1) fird = flyBitmapTDH[4];else if (birdBreath1 == bitmapDTS1) fird = flyBitmapTDS[4];else if (birdBreath1 == bitmapDT1) fird = flyBitmapTD[4];else if (birdBreath1 == bitmapTH1) fird = flyBitmapTH[4];else if (birdBreath1 == bitmapTSH1) fird = flyBitmapTSH[4];else if (birdBreath1 == bitmapTS1) fird = flyBitmapTS[4];else if (birdBreath1 == bitmapT1) fird = flyBitmapT[4];else if (birdBreath1 == bitmapUsual1) fird = flyBitmapUsual[4];
                                         birdX = (float) 159 / 1050;
                                         birdY = (float) 193 / 540;
                                         break;
                                     case 3:
-                                        if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[3];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[3];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[3];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[3];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[3];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[3];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[3];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[3];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[3];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[3];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[3];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[3];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[3];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[3];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[3];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[3];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[3];
+                                        if (birdBreath1 == bitmapDTSH1) fird = flyBitmapTDSH[3];else if (birdBreath1 == bitmapDH1) fird = flyBitmapDH[3];else if (birdBreath1 == bitmapDS1) fird = flyBitmapDS[3];else if (birdBreath1 == bitmapD1) fird = flyBitmapD[3];else if (birdBreath1 == bitmapH1) fird = flyBitmapH[3];else if (birdBreath1 == bitmapSmile1) fird = flyBitmapSmile[3];else if (birdBreath1 == bitmapSH1) fird = flyBitmapSH[3];else if (birdBreath1 == bitmapDSH1) fird = flyBitmapSDH[3];else if (birdBreath1 == bitmapS1) fird = flyBitmapS[3];else if (birdBreath1 == bitmapDTH1) fird = flyBitmapTDH[3];else if (birdBreath1 == bitmapDTS1) fird = flyBitmapTDS[3];else if (birdBreath1 == bitmapDT1) fird = flyBitmapTD[3];else if (birdBreath1 == bitmapTH1) fird = flyBitmapTH[3];else if (birdBreath1 == bitmapTSH1) fird = flyBitmapTSH[3];else if (birdBreath1 == bitmapTS1) fird = flyBitmapTS[3];else if (birdBreath1 == bitmapT1) fird = flyBitmapT[3];else if (birdBreath1 == bitmapUsual1) fird = flyBitmapUsual[3];
                                         birdX = (float) 230 / 1050;
                                         birdY = (float) 232 / 540;
                                         break;
                                     case 4:
-                                        if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[4];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[4];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[4];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[4];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[4];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[4];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[4];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[4];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[4];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[4];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[4];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[4];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[4];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[4];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[4];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[4];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[4];
+                                        if (birdBreath1 == bitmapDTSH1) fird = flyBitmapTDSH[4];else if (birdBreath1 == bitmapDH1) fird = flyBitmapDH[4];else if (birdBreath1 == bitmapDS1) fird = flyBitmapDS[4];else if (birdBreath1 == bitmapD1) fird = flyBitmapD[4];else if (birdBreath1 == bitmapH1) fird = flyBitmapH[4];else if (birdBreath1 == bitmapSmile1) fird = flyBitmapSmile[4];else if (birdBreath1 == bitmapSH1) fird = flyBitmapSH[4];else if (birdBreath1 == bitmapDSH1) fird = flyBitmapSDH[4];else if (birdBreath1 == bitmapS1) fird = flyBitmapS[4];else if (birdBreath1 == bitmapDTH1) fird = flyBitmapTDH[4];else if (birdBreath1 == bitmapDTS1) fird = flyBitmapTDS[4];else if (birdBreath1 == bitmapDT1) fird = flyBitmapTD[4];else if (birdBreath1 == bitmapTH1) fird = flyBitmapTH[4];else if (birdBreath1 == bitmapTSH1) fird = flyBitmapTSH[4];else if (birdBreath1 == bitmapTS1) fird = flyBitmapTS[4];else if (birdBreath1 == bitmapT1) fird = flyBitmapT[4];else if (birdBreath1 == bitmapUsual1) fird = flyBitmapUsual[4];
                                         birdX = (float) 287 / 1050;
                                         birdY = (float) 226 / 540;
                                         break;
                                     case 5:
-                                        if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[3];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[3];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[3];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[3];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[3];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[3];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[3];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[3];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[3];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[3];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[3];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[3];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[3];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[3];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[3];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[3];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[3];
+                                        if (birdBreath1 == bitmapDTSH1) fird = flyBitmapTDSH[3];else if (birdBreath1 == bitmapDH1) fird = flyBitmapDH[3];else if (birdBreath1 == bitmapDS1) fird = flyBitmapDS[3];else if (birdBreath1 == bitmapD1) fird = flyBitmapD[3];else if (birdBreath1 == bitmapH1) fird = flyBitmapH[3];else if (birdBreath1 == bitmapSmile1) fird = flyBitmapSmile[3];else if (birdBreath1 == bitmapSH1) fird = flyBitmapSH[3];else if (birdBreath1 == bitmapDSH1) fird = flyBitmapSDH[3];else if (birdBreath1 == bitmapS1) fird = flyBitmapS[3];else if (birdBreath1 == bitmapDTH1) fird = flyBitmapTDH[3];else if (birdBreath1 == bitmapDTS1) fird = flyBitmapTDS[3];else if (birdBreath1 == bitmapDT1) fird = flyBitmapTD[3];else if (birdBreath1 == bitmapTH1) fird = flyBitmapTH[3];else if (birdBreath1 == bitmapTSH1) fird = flyBitmapTSH[3];else if (birdBreath1 == bitmapTS1) fird = flyBitmapTS[3];else if (birdBreath1 == bitmapT1) fird = flyBitmapT[3];else if (birdBreath1 == bitmapUsual1) fird = flyBitmapUsual[3];
                                         birdX = (float) 353 / 1050;
                                         birdY = (float) 238 / 540;
                                         break;
                                     case 6:
-                                        if (birdBreath1 == bitmapDTSH1) bird = flyBitmapTDSH[4];else if (birdBreath1 == bitmapDH1) bird = flyBitmapDH[4];else if (birdBreath1 == bitmapDS1) bird = flyBitmapDS[4];else if (birdBreath1 == bitmapD1) bird = flyBitmapD[4];else if (birdBreath1 == bitmapH1) bird = flyBitmapH[4];else if (birdBreath1 == bitmapSmile1) bird = flyBitmapSmile[4];else if (birdBreath1 == bitmapSH1) bird = flyBitmapSH[4];else if (birdBreath1 == bitmapDSH1) bird = flyBitmapSDH[4];else if (birdBreath1 == bitmapS1) bird = flyBitmapS[4];else if (birdBreath1 == bitmapDTH1) bird = flyBitmapTDH[4];else if (birdBreath1 == bitmapDTS1) bird = flyBitmapTDS[4];else if (birdBreath1 == bitmapDT1) bird = flyBitmapTD[4];else if (birdBreath1 == bitmapTH1) bird = flyBitmapTH[4];else if (birdBreath1 == bitmapTSH1) bird = flyBitmapTSH[4];else if (birdBreath1 == bitmapTS1) bird = flyBitmapTS[4];else if (birdBreath1 == bitmapT1) bird = flyBitmapT[4];else if (birdBreath1 == bitmapUsual1) bird = flyBitmapUsual[4];
+                                        if (birdBreath1 == bitmapDTSH1) fird = flyBitmapTDSH[4];else if (birdBreath1 == bitmapDH1) fird = flyBitmapDH[4];else if (birdBreath1 == bitmapDS1) fird = flyBitmapDS[4];else if (birdBreath1 == bitmapD1) fird = flyBitmapD[4];else if (birdBreath1 == bitmapH1) fird = flyBitmapH[4];else if (birdBreath1 == bitmapSmile1) fird = flyBitmapSmile[4];else if (birdBreath1 == bitmapSH1) fird = flyBitmapSH[4];else if (birdBreath1 == bitmapDSH1) fird = flyBitmapSDH[4];else if (birdBreath1 == bitmapS1) fird = flyBitmapS[4];else if (birdBreath1 == bitmapDTH1) fird = flyBitmapTDH[4];else if (birdBreath1 == bitmapDTS1) fird = flyBitmapTDS[4];else if (birdBreath1 == bitmapDT1) fird = flyBitmapTD[4];else if (birdBreath1 == bitmapTH1) fird = flyBitmapTH[4];else if (birdBreath1 == bitmapTSH1) fird = flyBitmapTSH[4];else if (birdBreath1 == bitmapTS1) fird = flyBitmapTS[4];else if (birdBreath1 == bitmapT1) fird = flyBitmapT[4];else if (birdBreath1 == bitmapUsual1) fird = flyBitmapUsual[4];
                                         birdX = (float) 419 / 1050;
                                         birdY = (float) 232 / 540;
                                         break;
                                     case 7:
                                         // Возвращаемся к преждним настройкам
-                                        bird = birdBreath1;
+                                        fird = birdBreath1;
                                         birdX = (float) 419 / 1050;
                                         birdY = (float) 232 / 540;
                                         flyingBack = false;
@@ -1352,21 +1140,21 @@ public class DrawThread extends Thread {
                             washing = true;
                             washingTimeIsPassed = true;
                         }
-                        if (washingNeedToDrawNow && washing && wash <= 48) {
+                        if (washingNeedToDrawNow && washing && wash <= 49) {
                             birdX = (float) 414 / 1050;
                             birdY = (float) 31 / 540;
-                            bird = washBitmap[wash];
+                            fird = washBitmap[wash];
                             if (wash == 31) dirtRight = dirtRight2;
                             editor.putFloat("DIRT", dirtRight);
                             editor.apply();
-                            if (wash == 48) {
+                            if (wash == 49) {
                                 washing = false;
                                 wash = 1;
                                 washingTimeIsPassed = false;
                                 lastTouchY = 0;
                                 lastTouchX = 0;
                                 washButtonIsPressed = false;
-                                bird = birdBreath1;
+                                fird = birdBreath1;
                                 birdX = (float) 419 / 1050;
                                 birdY = (float) 232 / 540;
                                 mediaPlayerWash.stop();
@@ -1393,7 +1181,7 @@ public class DrawThread extends Thread {
                             hitTimeIsPassed = true;
                         }
                         if (hitNeedToDrawNow && hitting) {
-                            if (birdBreath1 == bitmapDH1 || birdBreath1 == bitmapDTH1 || birdBreath1 == bitmapDTSH1 || birdBreath1 == bitmapDSH1) bird = hitBitmapDH[hit];else if (birdBreath1 == bitmapD1 || birdBreath1 == bitmapDT1 || birdBreath1 == bitmapDTS1 || birdBreath1 == bitmapDS1) bird = hitBitmapD[hit];else if (birdBreath1 == bitmapH1 || birdBreath1 == bitmapTH1 || birdBreath1 == bitmapTSH1 || birdBreath1 == bitmapSH1) bird = hitBitmapH[hit];else if (birdBreath1 == bitmapUsual1 || birdBreath1 == bitmapS1 || birdBreath1 == bitmapT1 || birdBreath1 == bitmapTS1 || birdBreath1 == bitmapSmile1) bird = hitBitmap[hit];
+                            if (birdBreath1 == bitmapDH1 || birdBreath1 == bitmapDTH1 || birdBreath1 == bitmapDTSH1 || birdBreath1 == bitmapDSH1) fird = hitBitmapDH[hit];else if (birdBreath1 == bitmapD1 || birdBreath1 == bitmapDT1 || birdBreath1 == bitmapDTS1 || birdBreath1 == bitmapDS1) fird = hitBitmapD[hit];else if (birdBreath1 == bitmapH1 || birdBreath1 == bitmapTH1 || birdBreath1 == bitmapTSH1 || birdBreath1 == bitmapSH1) fird = hitBitmapH[hit];else if (birdBreath1 == bitmapUsual1 || birdBreath1 == bitmapS1 || birdBreath1 == bitmapT1 || birdBreath1 == bitmapTS1 || birdBreath1 == bitmapSmile1) fird = hitBitmap[hit];
                             if (hit >= 14) {
                                 // Возвращаемся к преждним настройкам
                                 hitting = false;
@@ -1417,7 +1205,6 @@ public class DrawThread extends Thread {
                             lastTouchY = 0;
                             lastTouchX = 0;
                         }
-                        screenshotBitmap = Bitmap.createScaledBitmap(screenshotBitmap, canvas.getWidth() * 73 / 1050, canvas.getHeight() * 73 / 540, true);
                         canvas.drawBitmap(screenshotBitmap, (float) canvas.getWidth() * screenshotX, (float) canvas.getHeight() * screenshotY, paint);
                         //  Магазин
                         if (lastTouchX >= (shopButtonLeft* canvas.getWidth()) && lastTouchX <= (shopButtonLeft + shopButtonWidth)* (canvas.getWidth()) && lastTouchY >= (shopButtonTop* canvas.getHeight()) && lastTouchY <= (shopButtonTop + shopButtonHeight)*(canvas.getHeight())) {
@@ -1467,7 +1254,7 @@ public class DrawThread extends Thread {
                         //    lvl /= (levelRight2 - levelLeft);
                         //  }
                         // Рисуем птичку
-                        canvas.drawBitmap(bird, (float) canvas.getWidth() * birdX, (float) canvas.getHeight() * birdY, paint);
+                        canvas.drawBitmap(fird, (float) canvas.getWidth() * birdX, (float) canvas.getHeight() * birdY, paint);
                         paintDirt.setTextSize(50);
                         canvas.drawText(timePassed + "", 500, 500, paintDirt);
                     }
@@ -1558,7 +1345,60 @@ public class DrawThread extends Thread {
         }
         editor.apply();
     }
-
+    private void checkFirdState() {
+        if (hungryRight - hungryLeft < hungryWidth / 2. && dirtRight - dirtLeft < dirtWidth / 2. && happyRight - happyLeft < happyWidth / 3. && sleepRight - sleepLeft < sleepWidth / 2.) {
+            birdBreath1 = bitmapDTSH1;
+            birdBreath2 = bitmapDTSH2;
+        } else if (dirtRight - dirtLeft < dirtWidth / 2. && happyRight - happyLeft < happyWidth / 3. && sleepRight - sleepLeft < sleepWidth / 2.) {
+            birdBreath1 = bitmapDTS1;
+            birdBreath2 = bitmapDTS2;
+        } else if (hungryRight - hungryLeft < hungryWidth / 2. && happyRight - happyLeft < happyWidth / 3. && sleepRight - sleepLeft < sleepWidth / 2.) {
+            birdBreath1 = bitmapTSH1;
+            birdBreath2 = bitmapTSH2;
+        } else if (hungryRight - hungryLeft < hungryWidth / 2. && dirtRight - dirtLeft < dirtWidth / 2. && sleepRight - sleepLeft < sleepWidth / 2.) {
+            birdBreath1 = bitmapDTH1;
+            birdBreath2 = bitmapDTH2;
+        } else if (hungryRight - hungryLeft < hungryWidth / 2. && dirtRight - dirtLeft < dirtWidth / 2. && happyRight - happyLeft < happyWidth / 3.) {
+            birdBreath1 = bitmapDSH1;
+            birdBreath2 = bitmapDSH2;
+        } else if (hungryRight - hungryLeft < hungryWidth / 2. && dirtRight - dirtLeft < dirtWidth / 2.) {
+            birdBreath1 = bitmapDH1;
+            birdBreath2 = bitmapDH2;
+        } else if (dirtRight - dirtLeft < dirtWidth / 2. && happyRight - happyLeft < happyWidth / 3.) {
+            birdBreath1 = bitmapDS1;
+            birdBreath2 = bitmapDS2;
+        } else if (dirtRight - dirtLeft < dirtWidth / 2. && sleepRight - sleepLeft < sleepWidth / 2.) {
+            birdBreath1 = bitmapDT1;
+            birdBreath2 = bitmapDT2;
+        } else if (hungryRight - hungryLeft < hungryWidth / 2. && happyRight - happyLeft < happyWidth / 3.) {
+            birdBreath1 = bitmapSH1;
+            birdBreath2 = bitmapSH2;
+        } else if (sleepRight - sleepLeft < sleepWidth / 2. && hungryRight - hungryLeft < hungryWidth / 2.) {
+            birdBreath1 = bitmapTH1;
+            birdBreath2 = bitmapTH2;
+        } else if (sleepRight - sleepLeft < sleepWidth / 2. && happyRight - happyLeft < happyWidth / 3.) {
+            birdBreath1 = bitmapTS1;
+            birdBreath2 = bitmapTS2;
+        } else if (dirtRight - dirtLeft < dirtWidth / 2.) {
+            birdBreath1 = bitmapD1;
+            birdBreath2 = bitmapD2;
+        } else if (sleepRight - sleepLeft < sleepWidth / 2.) {
+            birdBreath1 = bitmapT1;
+            birdBreath2 = bitmapT2;
+        } else if (happyRight - happyLeft < happyWidth / 3.) {
+            birdBreath1 = bitmapS1;
+            birdBreath2 = bitmapS2;
+        } else if (hungryRight - hungryLeft < hungryWidth / 2.) {
+            birdBreath1 = bitmapH1;
+            birdBreath2 = bitmapH2;
+        } else if (happyRight - happyLeft < (2.) * happyWidth / 3.) {
+            birdBreath1 = bitmapUsual1;
+            birdBreath2 = bitmapUsual2;
+        } else {
+            birdBreath1 = bitmapSmile1;
+            birdBreath2 = bitmapSmile2;
+        }
+    }
     class LevelThread extends  Thread{
         @Override
         public void run() {
