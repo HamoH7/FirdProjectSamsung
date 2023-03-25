@@ -55,8 +55,9 @@ public class DrawThread extends Thread {
     private float sleepButtonTop = (float) 427/540, dirtButtonLeft = (float)352/1050;
     private float dirtButtonTop = (float)427/540;
     private float poopX = (float)  450 / 1050, poopY = (float)  309 / 540;
-    private float poopWidth = (float)  94 / 105, poopHeight = (float)  94 / 540;
-    private int disgust = 1, eatScore, wash = 1,foinTime = 0, hit = 1,poop1=1,poop2=1,poop3=0, m = 0,m2 = 1, m6 = 0, eat = 1, eatOnes = 0, eatTimer, m5 = 0, playTimer, sleepTimer, play = 0, sleep = 0, r1 = 0, flyBack = 0;
+    private float poopWidth = (float)  94 / 1050, poopHeight = (float)  94 / 540;
+    private int timeForPoop = 600;
+    private int disgust = 1, eatScore, wash = 1,foinTime = 0, hit = 1, poop =1, poopFlyTime =1, poopFlyBackTime =0, m = 0,m2 = 1, m6 = 0, eat = 1, eatOnes = 0, eatTimer, m5 = 0, playTimer, sleepTimer, play = 0, sleep = 0, r1 = 0, flyBack = 0;
     private double hungryChangeValue = (float)1/ 2000; // Sovi timeri hamar
     private double happyChangeValue = (float) 1 / 1900; // Uraxutyan timeri hamar
     private double sleepChangeValue = (float) 1 / 1800; // Qni timeri hamar
@@ -66,19 +67,19 @@ public class DrawThread extends Thread {
     private double qun = (float) 1 / 40;//qun = (float) 1 / 40;
     private float hungryRight = 0, happyRight = 0, sleepRight = 0, dirtRight = 0, levelRight = 0;
     private int levelColor, dirtColor, hungryColor, tiredColor, happyColor;
-    private boolean hungryButtonIsPressed = false, happyButtonIsTouched = false,sleepButtonIsPressed = false, birdIsPunched = false, washButtonIsPressed = false, pop = false, po = false;
+    private boolean hungryButtonIsPressed = false, happyButtonIsTouched = false,sleepButtonIsPressed = false, birdIsPunched = false, washButtonIsPressed = false;
     private boolean playingTimeIsPassed = false,playingNeedToDrawNow = false;
     private boolean checkPlayButton = false, drawPlayButton = false;
     private boolean playChecker;
-    private boolean hitting = false, eating, playing, gettingFoin = false, flying = false, laying = false, sleeping, flyingBack = false, washing = false, pooping = false, disgusting = false, flyPoop = false, flyBackPoop = false;
+    private boolean hitting = false, eating, playing, gettingFoin = false, flying, laying, sleeping, flyingBack, washing, pooping , disgusting, poopFly, poopFlyBack;
     private boolean eatChecker, sleepChecker;
     private boolean checkEatButton = false, drawEatButton = false;
     private boolean checkSleepButton = false, drawSleepButton = false;
     private boolean eatingTimeIsPassed = false, eatingNeedToDrawNow = false;
     private boolean flyingToBedTimeIsPassed = false, flyingToBedNeedToDrawNow = false;
-    private boolean poopingTimeIsPassed1 = false;
-    private boolean poopingTimeIsPassed2 = false, poopingNeedToDrawNow2 = false;
-    private boolean poopingTimeIsPassed3 = false, poopingNeedToDrawNow3 = false;
+    private boolean poopTimeIsPassed = false, poopNeedToDraw = false;
+    private boolean poopFlyTimeIsPassed = false, poopFlyNeedToDrawNow = false;
+    private boolean poopFlyBackTimeIsPassed = false, poopFlyBackNeedToDrawNow3 = false;
     private boolean disgustingTimeIsPassed = false, disgustingNeedToDrawNow = false;
     private boolean flyingBackTimeIsPassed = false, flyingBackNeedToDrawNow = false;
     private boolean washingTimeIsPassed = false, washingNeedToDrawNow = false;
@@ -286,6 +287,11 @@ public class DrawThread extends Thread {
         flying = sharedPreferences.getBoolean("FLYING",false);
         flyingBack = sharedPreferences.getBoolean("FLYINGBACK",false);
         laying = sharedPreferences.getBoolean("LAYING",false);
+        pooping = sharedPreferences.getBoolean("POOPING",false);
+        poopFly = sharedPreferences.getBoolean("POOPFLY",false);
+        poopFlyBack = sharedPreferences.getBoolean("POOPFLYBACK",false);
+        disgusting = sharedPreferences.getBoolean("DISGUSTING",false);
+        timeForPoop = sharedPreferences.getInt("TIMEFORPOOP",60);
         paintHappy.setColor(happyColor);
         paintSleep.setColor(tiredColor);
         paintHungry.setColor(hungryColor);
@@ -463,7 +469,6 @@ public class DrawThread extends Thread {
                 editor.putBoolean("LAYING",laying);
                 editor.putBoolean("FLYINGBACK",flyingBack);
                 editor.putBoolean("SLEEPING",sleeping);
-                editor.apply();
             } else {
                 sleepRight += qun;
                 birdX = (float) 60 / 1050;
@@ -473,7 +478,6 @@ public class DrawThread extends Thread {
                 editor.putFloat("SLEEP",sleepRight);
                 editor.putBoolean("FLYING",flying);
                 editor.putBoolean("LAYING",laying);
-                editor.apply();
             }
             qun /= ((sleepRight2 - sleepLeft)* timePassed);
         }
@@ -486,7 +490,6 @@ public class DrawThread extends Thread {
             editor.putBoolean("LAYING",laying);
             editor.putBoolean("FLYINGBACK",flyingBack);
             editor.putBoolean("SLEEPING",sleeping);
-            editor.apply();
         }
         if(!sleepChecker && !sleeping) {
             checkSleepButton = true;
@@ -497,7 +500,6 @@ public class DrawThread extends Thread {
                 sleepChecker = true;
                 editor.putBoolean("SLEEPCHECKER",sleepChecker);
             }
-            editor.apply();
         }
         if(!playChecker && !playing) {
             checkPlayButton =true;
@@ -509,7 +511,7 @@ public class DrawThread extends Thread {
                 playChecker = true;
                 editor.putBoolean("PLAYCHECKER",playChecker);
             }
-            editor.apply();
+            playButtonBitmap = playDarkButtonBitmap[playTimer];
         }
         if(playing) {
             playing = false;
@@ -526,7 +528,6 @@ public class DrawThread extends Thread {
             editor.putInt("PLAYTIMER",playTimer);
             editor.putBoolean("PLAYCHECKER",playChecker);
             editor.putBoolean("PLAYING",playing);
-            editor.apply();
         }
         if(!eatChecker && !eating) {
             checkEatButton = true;
@@ -538,7 +539,7 @@ public class DrawThread extends Thread {
                 eatChecker = true;
                 editor.putBoolean("EATCHECKER",eatChecker);
             }
-            editor.apply();
+            eatButtonBitmap = eatDarkButtonBitmap[eatTimer];
         }
         if(eating) {
             eating = false;
@@ -557,7 +558,6 @@ public class DrawThread extends Thread {
             editor.putBoolean("EATCHECKER",eatChecker);
             editor.putBoolean("EATING",eating);
             editor.putInt("EATSCORE",eatScore);
-            editor.apply();
             food *= (hungryRight2 - hungryLeft);
             if (hungryRight + food > hungryRight2) {
                 hungryRight = hungryRight2;
@@ -565,8 +565,38 @@ public class DrawThread extends Thread {
                 hungryRight += food;
             }
             editor.putFloat("HUNGRY", hungryRight);
-            editor.apply();
             food /= (hungryRight2 - hungryLeft);
+        }
+
+        eatButtonBitmap2 = eatButtonBitmap;
+        sleepButtonBitmap2 = sleepButtonBitmap;
+        playButtonBitmap2 = playButtonBitmap;
+        washButtonBitmap3 = washButtonBitmap;
+        if(disgusting || poopFly) {
+            disgusting = true;
+            poopFly = false;
+            birdX = (float) 795 / 1050;
+            birdY = (float) 232 / 540;
+            eatButtonBitmap = eatButtonBitmapPoop;
+            sleepButtonBitmap = sleepButtonBitmapPoop;
+            playButtonBitmap = playButtonBitmapPoop;
+            washButtonBitmap = washButtonBitmapPoop;
+            editor.putBoolean("DISGUSTING",disgusting);
+            editor.putBoolean("POOPFLY",poopFly);
+        }
+        if(poopFlyBack) {
+            poopFlyBack = false;
+            pooping = false;
+            eatScore = 0;
+            eatButtonBitmap = eatButtonBitmap2;
+            sleepButtonBitmap = sleepButtonBitmap2;
+            playButtonBitmap = playButtonBitmap2;
+            washButtonBitmap = washButtonBitmap3;
+            editor.putBoolean("POOPFLYBACK",poopFlyBack);
+            editor.putBoolean("POOPING",pooping);
+            editor.putInt("TIMEFORPOOP",timeForPoop);
+            editor.putInt("EATSCORE",0);
+
         }
         // Обновляем статистику после выхода и входа
 
@@ -575,6 +605,13 @@ public class DrawThread extends Thread {
         changeStateAfterStart(sleepRight,sleepLeft, sleepWidth,sleepChangeValue,3);
         changeStateAfterStart(happyRight,happyLeft, happyWidth,happyChangeValue,4);
 
+        new Second().start();
+        if(timeForPoop - timePassed > 0) {
+            timeForPoop -= timePassed;
+            editor.putInt("TIMEFORPOOP",timeForPoop);
+        } else timeForPoop = 0;
+
+        editor.apply();
         loaded = true;
     }
 
@@ -690,7 +727,7 @@ public class DrawThread extends Thread {
                         }
                         // Таймер дыхания
 
-                        if (!eating && !playing && !flying && !sleeping && !laying && !hitting && !washing && !pooping && !flyPoop && !disgusting && !flyBackPoop) {
+                        if (!eating && !playing && !flying && !sleeping && !laying && !hitting && !washing && !pooping && !poopFly && !disgusting && !poopFlyBack) {
                             if (!timeIsPassed1 && !check) {
                                 new ThreadBird1().start();
                                 timeIsPassed1 = true;
@@ -730,11 +767,11 @@ public class DrawThread extends Thread {
                             canvas.drawText(foin + " ", (float) canvas.getWidth() * 83 / 1050, (float) canvas.getHeight() * 49 / 540, paintFoin);
                         // Кнопка голода
 
-                        if (!eatChecker && checkEatButton && !pooping && !flyPoop && !disgusting && !flyBackPoop) {
+                        if (!eatChecker && checkEatButton && !pooping && !poopFly && !disgusting && !poopFlyBack) {
                             new EatDarkButtonThread().start();
                             checkEatButton = false;
                         }
-                        if (drawEatButton && !pooping && !flyPoop && !disgusting && !flyBackPoop) {
+                        if (drawEatButton && !pooping && !poopFly && !disgusting && !poopFlyBack) {
                             eatButtonBitmap = eatDarkButtonBitmap[eatTimer];
                             if (eatTimer == 1) {
                                 eatChecker = true;
@@ -746,11 +783,11 @@ public class DrawThread extends Thread {
 
                         // Кнопка радости
 
-                        if (!playChecker && checkPlayButton && !pooping && !flyPoop && !disgusting && !flyBackPoop) {
+                        if (!playChecker && checkPlayButton && !pooping && !poopFly && !disgusting && !poopFlyBack) {
                             new PlayDarkButtonThread().start();
                             checkPlayButton = false;
                         }
-                        if (drawPlayButton && !pooping && !flyPoop && !disgusting && !flyBackPoop) {
+                        if (drawPlayButton && !pooping && !poopFly && !disgusting && !poopFlyBack) {
                             playButtonBitmap = playDarkButtonBitmap[playTimer];
                             if (playTimer == 1) {
                                 playChecker = true;
@@ -762,11 +799,11 @@ public class DrawThread extends Thread {
 
                         // Кнопка усталости
 
-                        if (!sleepChecker && checkSleepButton && !pooping && !flyPoop && !disgusting && !flyBackPoop) {
+                        if (!sleepChecker && checkSleepButton && !pooping && !poopFly && !disgusting && !poopFlyBack) {
                             new SleepDarkButtonThread().start();
                             checkSleepButton = false;
                         }
-                        if (drawSleepButton && !pooping && !flyPoop && !disgusting && !flyBackPoop) {
+                        if (drawSleepButton && !pooping && !poopFly && !disgusting && !poopFlyBack) {
                             if (sleepTimer >= 0)
                                 sleepButtonBitmap = sleepDarkButtonBitmap[sleepTimer];
                             if (sleepTimer == 0) {
@@ -780,18 +817,14 @@ public class DrawThread extends Thread {
 
                         // Кнопка загрязнения
 
-                        if (dirtRight - dirtLeft >= dirtWidth / 2. && !pooping && !flyPoop && !disgusting && !flyBackPoop)
+                        if (dirtRight - dirtLeft >= dirtWidth / 2. && !pooping && !poopFly && !disgusting && !poopFlyBack)
                             washButtonBitmap = washDarkButtonBitmap;
-                        if (dirtRight - dirtLeft <= dirtWidth / 2. && !pooping && !flyPoop && !disgusting && !flyBackPoop)
+                        if (dirtRight - dirtLeft <= dirtWidth / 2. && !pooping && !poopFly && !disgusting && !poopFlyBack)
                             washButtonBitmap = washButtonBitmap2;
                         canvas.drawBitmap(washButtonBitmap, (float) canvas.getWidth() * dirtButtonLeft, (float) canvas.getHeight() * dirtButtonTop, paint);
 
                         // Какать
-                        if (m5 == 0) {
-                            new Minute().start();
-                            m5 = 1;
-                        }
-                        if (eatScore >= 3 && pop && !pooping && !eating && !playing && !flying && !sleeping && !laying && !hitting && !washing && !flyingBack) {
+                        if (eatScore >= 5 && timeForPoop <= 0 && !pooping && !eating && !playing && !flying && !sleeping && !laying && !hitting && !washing && !flyingBack) {
                             eatButtonBitmap2 = eatButtonBitmap;
                             sleepButtonBitmap2 = sleepButtonBitmap;
                             playButtonBitmap2 = playButtonBitmap;
@@ -800,26 +833,30 @@ public class DrawThread extends Thread {
                             sleepButtonBitmap = sleepButtonBitmapPoop;
                             playButtonBitmap = playButtonBitmapPoop;
                             washButtonBitmap = washButtonBitmapPoop;
-                            po = true;
-                        }
-                        if (po && !isTouched) {
-                            if (poop1 > 4) {
-                                poop1 = 1;
-                            }
-                            canvas.drawBitmap(poopBitmap[poop1], (float) canvas.getWidth() * poopX, (float) canvas.getHeight() * poopY, paint);
-                        }
-                        if (po && !poopingTimeIsPassed1) {
-                            new PoopThread().start();
                             pooping = true;
-                            poopingTimeIsPassed1 = true;
+                            editor.putBoolean("POOPING",pooping);
+                            editor.apply();
                         }
-                        if (po && !poopingTimeIsPassed2) {
+                        if (pooping && !isTouched && poopNeedToDraw) {
+                            if (poop >= 4) {
+                                poop = 1;
+                            }
+                            poopNeedToDraw = false;
+                        }
+                        if(pooping && !isTouched) canvas.drawBitmap(poopBitmap[poop], (float) canvas.getWidth() * poopX, (float) canvas.getHeight() * poopY, paint);
+                        if (pooping && !poopTimeIsPassed) {
+                            new PoopThread().start();
+                            poopTimeIsPassed = true;
+                        }
+                        if (pooping && !poopFlyTimeIsPassed && !disgusting && !poopFlyBack) {
                             new PoopFlyThread().start();
-                            flyPoop = true;
-                            poopingTimeIsPassed2 = true;
+                            poopFly = true;
+                            editor.putBoolean("POOPFLY",poopFly);
+                            editor.apply();
+                            poopFlyTimeIsPassed = true;
                         }
-                        if (poopingNeedToDrawNow2 && flyPoop) {
-                            switch (poop2) {
+                        if (poopFlyNeedToDrawNow && poopFly) {
+                            switch (poopFlyTime) {
                                 case 1:
                                     if (birdBreath1 == bitmapDTSH1) fird = flyBitmapTDSH[4];else if (birdBreath1 == bitmapDH1) fird = flyBitmapDH[4];else if (birdBreath1 == bitmapDS1) fird = flyBitmapDS[4];else if (birdBreath1 == bitmapD1) fird = flyBitmapD[4];else if (birdBreath1 == bitmapH1) fird = flyBitmapH[4];else if (birdBreath1 == bitmapSmile1) fird = flyBitmapSmile[4];else if (birdBreath1 == bitmapSH1) fird = flyBitmapSH[4];else if (birdBreath1 == bitmapDSH1) fird = flyBitmapSDH[4];else if (birdBreath1 == bitmapS1) fird = flyBitmapS[4];else if (birdBreath1 == bitmapDTH1) fird = flyBitmapTDH[4];else if (birdBreath1 == bitmapDTS1) fird = flyBitmapTDS[4];else if (birdBreath1 == bitmapDT1) fird = flyBitmapTD[4];else if (birdBreath1 == bitmapTH1) fird = flyBitmapTH[4];else if (birdBreath1 == bitmapTSH1) fird = flyBitmapTSH[4];else if (birdBreath1 == bitmapTS1) fird = flyBitmapTS[4];else if (birdBreath1 == bitmapT1) fird = flyBitmapT[4];else if (birdBreath1 == bitmapUsual1) fird = flyBitmapUsual[4];
                                     break;
@@ -845,7 +882,10 @@ public class DrawThread extends Thread {
                                     break;
                                 case 6:
                                     disgusting = true;
-                                    flyPoop = false;
+                                    poopFly = false;
+                                    editor.putBoolean("DISGUSTING",disgusting);
+                                    editor.putBoolean("POOPFLY",poopFly);
+                                    editor.apply();
                                     break;
                             }
                         }
@@ -864,16 +904,20 @@ public class DrawThread extends Thread {
                             new PoopFlyBackThread().start();
                             isTouched = true;
                             disgusting = false;
-                            flyBackPoop = true;
+                            poopFlyBack = true;
+                            gettingFoin = true;
+                            editor.putBoolean("DISGUSTING",disgusting);
+                            editor.putBoolean("POOPFLYBACK",poopFlyBack);
+                            editor.apply();
                             lastTouchX = 0;
                             lastTouchY = 0;
                         }
-                        if (isTouched && !poopingTimeIsPassed3) {
+                        if (isTouched && !poopFlyBackTimeIsPassed) {
                             new PoopFlyBackThread().start();
-                            poopingTimeIsPassed3 = true;
+                            poopFlyBackTimeIsPassed = true;
                         }
-                        if (poopingNeedToDrawNow3 && flyBackPoop) {
-                            switch (poop3) {
+                        if (poopFlyBackNeedToDrawNow3 && poopFlyBack) {
+                            switch (poopFlyBackTime) {
                                 case 1:
                                     // Проверяем состояние и подбираем картинку
                                     if (birdBreath1 == bitmapDTSH1) fird = flyBitmapTDSH[2];else if (birdBreath1 == bitmapDH1) fird = flyBitmapDH[2];else if (birdBreath1 == bitmapDS1) fird = flyBitmapDS[2];else if (birdBreath1 == bitmapD1) fird = flyBitmapD[2];else if (birdBreath1 == bitmapH1) fird = flyBitmapH[2];else if (birdBreath1 == bitmapSmile1) fird = flyBitmapSmile[2];else if (birdBreath1 == bitmapSH1) fird = flyBitmapSH[2];else if (birdBreath1 == bitmapDSH1) fird = flyBitmapSDH[2];else if (birdBreath1 == bitmapS1) fird = flyBitmapS[2];else if (birdBreath1 == bitmapDTH1) fird = flyBitmapTDH[2];else if (birdBreath1 == bitmapDTS1) fird = flyBitmapTDS[2];else if (birdBreath1 == bitmapDT1) fird = flyBitmapTD[2];else if (birdBreath1 == bitmapTH1) fird = flyBitmapTH[2];else if (birdBreath1 == bitmapTSH1) fird = flyBitmapTSH[2];else if (birdBreath1 == bitmapTS1) fird = flyBitmapTS[2];else if (birdBreath1 == bitmapT1) fird = flyBitmapT[2];else if (birdBreath1 == bitmapUsual1) fird = flyBitmapUsual[2];
@@ -901,37 +945,39 @@ public class DrawThread extends Thread {
                                 case 6:
                                     // Возвращаемся к преждним настройкам
                                     fird = birdBreath1;
-                                    flyBackPoop = false;
+                                    disgusting = false;
+                                    poopFlyBack = false;
                                     isTouched = false;
-                                    pop = false;
-                                    po = false;
                                     pooping = false;
                                     eatScore = 0;
-                                    editor.putInt("EATSCORE",0);
-                                    editor.apply();
-                                    poop3 = 0;
-                                    poop2 = 1;
-                                    poop1 = 1;
-                                    m5 = 0;
+                                    poopFlyBackTime = 0;
+                                    poopFlyTime = 1;
+                                    poop = 1;
                                     disgust = 1;
                                     lastTouchX = 0;
                                     lastTouchY = 0;
-                                    poopingTimeIsPassed1 = false;
-                                    poopingTimeIsPassed2 = false;
-                                    poopingTimeIsPassed3 = false;
-                                    poopingNeedToDrawNow2 = false;
-                                    poopingNeedToDrawNow3 = false;
+                                    poopTimeIsPassed = false;
+                                    poopFlyTimeIsPassed = false;
+                                    poopFlyBackTimeIsPassed = false;
+                                    poopFlyNeedToDrawNow = false;
+                                    poopFlyBackNeedToDrawNow3 = false;
                                     disgustingTimeIsPassed = false;
                                     disgustingNeedToDrawNow = false;
                                     eatButtonBitmap = eatButtonBitmap2;
                                     sleepButtonBitmap = sleepButtonBitmap2;
                                     playButtonBitmap = playButtonBitmap2;
                                     washButtonBitmap = washButtonBitmap3;
+                                    editor.putBoolean("POOPFLYBACK",poopFlyBack);
+                                    editor.putBoolean("DISGUSTING",disgusting);
+                                    editor.putBoolean("POOPING",pooping);
+                                    editor.putInt("TIMEFORPOOP",timeForPoop);
+                                    editor.putInt("EATSCORE",0);
+                                    editor.apply();
                                     break;
                             }
                         }
                         // Кушать
-                        if (lastTouchX >= eatButtonLeft * canvas.getWidth() && lastTouchX <= (eatButtonLeft + ButtonWidth) * canvas.getWidth() && lastTouchY >= eatButtonTop * canvas.getHeight() && lastTouchY <= (eatButtonTop + ButtonHeight) * canvas.getHeight() && eatChecker && !playing && !sleeping && !laying && !flying && !flyingBack && !hitting && !washing && !pooping && !flyPoop && !disgusting && !flyBackPoop && !hungryButtonIsPressed) {
+                        if (lastTouchX >= eatButtonLeft * canvas.getWidth() && lastTouchX <= (eatButtonLeft + ButtonWidth) * canvas.getWidth() && lastTouchY >= eatButtonTop * canvas.getHeight() && lastTouchY <= (eatButtonTop + ButtonHeight) * canvas.getHeight() && eatChecker && !playing && !sleeping && !laying && !flying && !flyingBack && !hitting && !washing && !pooping && !poopFly && !disgusting && !poopFlyBack && !hungryButtonIsPressed) {
                             hungryButtonIsPressed = true;
                             gettingFoin = true;
                             lastTouchY = 0;
@@ -988,7 +1034,7 @@ public class DrawThread extends Thread {
                             }
                         }
                         // Радоваться
-                        if (lastTouchX >= playButtonLeft * canvas.getWidth() && lastTouchX <= (playButtonLeft + ButtonWidth) * canvas.getWidth() && lastTouchY >= playButtonTop * canvas.getHeight() && lastTouchY <= (playButtonTop + ButtonHeight) * canvas.getHeight() && playChecker && !playing && !eating && !sleeping && !hitting && !washing && !pooping && !flyPoop && !disgusting && !flyBackPoop && !happyButtonIsTouched) {
+                        if (lastTouchX >= playButtonLeft * canvas.getWidth() && lastTouchX <= (playButtonLeft + ButtonWidth) * canvas.getWidth() && lastTouchY >= playButtonTop * canvas.getHeight() && lastTouchY <= (playButtonTop + ButtonHeight) * canvas.getHeight() && playChecker && !playing && !eating && !sleeping && !hitting && !washing && !pooping && !poopFly && !disgusting && !poopFlyBack && !happyButtonIsTouched) {
                             happyButtonIsTouched = true;
                             gettingFoin = true;
                             isSinging = true;
@@ -1044,7 +1090,7 @@ public class DrawThread extends Thread {
                             }
                         }
                         // Спать
-                        if (lastTouchX >= sleepButtonLeft * canvas.getWidth() && lastTouchX <= (sleepButtonLeft + ButtonWidth) * canvas.getWidth() && lastTouchY >= sleepButtonTop * canvas.getHeight() && lastTouchY <= (sleepButtonTop + ButtonHeight) * canvas.getHeight() && !sleepFinished && sleepChecker && !playing && !eating && !hitting && !washing && !pooping && !flyPoop && !disgusting && !flyBackPoop && !sleepButtonIsPressed && !sleeping) {
+                        if (lastTouchX >= sleepButtonLeft * canvas.getWidth() && lastTouchX <= (sleepButtonLeft + ButtonWidth) * canvas.getWidth() && lastTouchY >= sleepButtonTop * canvas.getHeight() && lastTouchY <= (sleepButtonTop + ButtonHeight) * canvas.getHeight() && !sleepFinished && sleepChecker && !playing && !eating && !hitting && !washing && !pooping && !poopFly && !disgusting && !poopFlyBack && !sleepButtonIsPressed && !sleeping) {
                             sleepButtonIsPressed = true;
                             gettingFoin = true;
                             lastTouchX = 0;
@@ -1200,7 +1246,7 @@ public class DrawThread extends Thread {
                                 }
                         }
                         // Искупаться
-                        if (lastTouchX >= dirtButtonLeft * canvas.getWidth() && lastTouchX <= (dirtButtonLeft + ButtonWidth) * canvas.getWidth() && lastTouchY >= dirtButtonTop * canvas.getHeight() && lastTouchY <= (dirtButtonTop + ButtonHeight) * canvas.getHeight() && (dirtRight - dirtLeft <= dirtWidth / 2.) && !playing && !eating && !sleeping && !laying && !flying && !flyingBack && !hitting && !pooping && !flyPoop && !disgusting && !flyBackPoop && !washButtonIsPressed) {
+                        if (lastTouchX >= dirtButtonLeft * canvas.getWidth() && lastTouchX <= (dirtButtonLeft + ButtonWidth) * canvas.getWidth() && lastTouchY >= dirtButtonTop * canvas.getHeight() && lastTouchY <= (dirtButtonTop + ButtonHeight) * canvas.getHeight() && (dirtRight - dirtLeft <= dirtWidth / 2.) && !playing && !eating && !sleeping && !laying && !flying && !flyingBack && !hitting && !pooping && !poopFly && !disgusting && !poopFlyBack && !washButtonIsPressed) {
                             washButtonIsPressed = true;
                             gettingFoin = true;
                             isSinging = true;
@@ -1239,7 +1285,7 @@ public class DrawThread extends Thread {
                         }
 
                         // Встряхнуться
-                        if (lastTouchX >= (birdX * canvas.getWidth()) && lastTouchX <= (birdX + birdWidth) * (canvas.getWidth()) && lastTouchY >= (birdY * canvas.getHeight()) && lastTouchY <= (birdY + birdHeight) * (canvas.getHeight()) && !eating && !playing && !flying && !sleeping && !laying && !flyingBack && !washing && !pooping && !flyPoop && !disgusting && !flyBackPoop && !birdIsPunched) {
+                        if (lastTouchX >= (birdX * canvas.getWidth()) && lastTouchX <= (birdX + birdWidth) * (canvas.getWidth()) && lastTouchY >= (birdY * canvas.getHeight()) && lastTouchY <= (birdY + birdHeight) * (canvas.getHeight()) && !eating && !playing && !flying && !sleeping && !laying && !flyingBack && !washing && !pooping && !poopFly && !disgusting && !poopFlyBack && !birdIsPunched) {
                             birdIsPunched = true;
                             gettingFoin = true;
                             isSinging = true;
@@ -1248,7 +1294,7 @@ public class DrawThread extends Thread {
                             mediaPlayerHit.start();
                             isSinging = false;
                         }
-                        if (m6 == 1 && lastTouchX >= (birdX * canvas.getWidth()) && lastTouchX <= (birdX + birdWidth) * (canvas.getWidth()) && lastTouchY >= (birdY * canvas.getHeight()) && lastTouchY <= (birdY + birdHeight) * (canvas.getHeight()) && !eating && !playing && !flying && !sleeping && !laying && !flyingBack && !washing && !pooping && !flyPoop && !disgusting && !flyBackPoop) {
+                        if (m6 == 1 && lastTouchX >= (birdX * canvas.getWidth()) && lastTouchX <= (birdX + birdWidth) * (canvas.getWidth()) && lastTouchY >= (birdY * canvas.getHeight()) && lastTouchY <= (birdY + birdHeight) * (canvas.getHeight()) && !eating && !playing && !flying && !sleeping && !laying && !flyingBack && !washing && !pooping && !poopFly && !disgusting && !poopFlyBack) {
                             sendScreen();
                         }
                         if (!hitTimeIsPassed && birdIsPunched) {
@@ -1728,7 +1774,7 @@ public class DrawThread extends Thread {
         @Override
         public void run() {
             try {
-                if(playTimer>=0) {
+                if(playTimer> 0) {
                     sleep(1000);
                     checkPlayButton = true;
                     drawPlayButton = true;
@@ -1773,12 +1819,14 @@ public class DrawThread extends Thread {
                     }
             }
         }
-    class Minute extends Thread{
+    class Second extends Thread{
         @Override
         public void run() {
             try {
-                sleep(120000);
-                pop = true;
+                sleep(1000);
+                timeForPoop--;
+                editor.putInt("TIMEFORPOOP",timeForPoop);
+                editor.apply();
             }catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -1788,10 +1836,11 @@ public class DrawThread extends Thread {
         @Override
         public void run() {
             try {
-                if(poop1 <= 4) {
-                    sleep(100);
-                    poop1++;
-                    poopingTimeIsPassed1 = false;
+                if(poop < 4) {
+                    sleep(200);
+                    poop++;
+                    poopTimeIsPassed = false;
+                    poopNeedToDraw = true;
                 }
             }catch (InterruptedException e) {
                 e.printStackTrace();
@@ -1802,11 +1851,11 @@ public class DrawThread extends Thread {
         @Override
         public void run() {
             try {
-                if(poop2 < 6) {
+                if(poopFlyTime < 6) {
                     sleep(300);
-                    poopingTimeIsPassed2 = false;
-                    poopingNeedToDrawNow2 = true;
-                    poop2++;
+                    poopFlyTimeIsPassed = false;
+                    poopFlyNeedToDrawNow = true;
+                    poopFlyTime++;
                 }
             }catch (InterruptedException e) {
                 e.printStackTrace();
@@ -1817,11 +1866,11 @@ public class DrawThread extends Thread {
         @Override
         public void run() {
             try {
-                if(poop3 < 6) {
+                if(poopFlyBackTime < 6) {
                     sleep(350);
-                    poopingTimeIsPassed3 = false;
-                    poopingNeedToDrawNow3 = true;
-                    poop3++;
+                    poopFlyBackTimeIsPassed = false;
+                    poopFlyBackNeedToDrawNow3 = true;
+                    poopFlyBackTime++;
                 }
             }catch (InterruptedException e) {
                 e.printStackTrace();
