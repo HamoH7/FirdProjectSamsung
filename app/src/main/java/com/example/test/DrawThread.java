@@ -173,7 +173,6 @@ public class DrawThread extends Thread {
     private int eatDarkButtonBitmapId[] = {R.drawable.chervyak,R.drawable.mc1,R.drawable.mc2,R.drawable.mc3,R.drawable.mc4,R.drawable.mc5,R.drawable.mc6,R.drawable.mc7,R.drawable.mc8,R.drawable.mc9,R.drawable.mc10};
     private int playDarkButtonBitmapId[] = {R.drawable.petur,R.drawable.mp1,R.drawable.mp2,R.drawable.mp3,R.drawable.mp4,R.drawable.mp5,R.drawable.mp6,R.drawable.mp7,R.drawable.mp8,R.drawable.mp9,R.drawable.mp10,R.drawable.mp11,R.drawable.mp12,R.drawable.mp13,R.drawable.mp14,R.drawable.mp15};
     private int sleepDarkButtonBitmapId[] = {R.drawable.qnel, R.drawable.mq1, R.drawable.mq2, R.drawable.mq3, R.drawable.mq4, R.drawable.mq5, R.drawable.mq6, R.drawable.mq7, R.drawable.mq8, R.drawable.mq9,R.drawable.mq10,R.drawable.mq11,R.drawable.mq12,R.drawable.mq13,R.drawable.mq14,R.drawable.mq15,R.drawable.mq16,R.drawable.mq17,R.drawable.mq18,R.drawable.mq19,R.drawable.mq20,R.drawable.mq21,R.drawable.mq22,R.drawable.mq23,R.drawable.mq24,R.drawable.mq25,R.drawable.mq26,R.drawable.mq27,R.drawable.mq28,R.drawable.mq29,R.drawable.mq30,R.drawable.mq31,R.drawable.mq32,R.drawable.mq33,R.drawable.mq34,R.drawable.mq35,R.drawable.mq36,R.drawable.mq37,R.drawable.mq38,R.drawable.mq39,R.drawable.mq40,R.drawable.mq41,R.drawable.mq42,R.drawable.mq43,R.drawable.mq44,R.drawable.mq45,R.drawable.mq46,R.drawable.mq47,R.drawable.mq48,R.drawable.mq49,R.drawable.mq50,R.drawable.mq51,R.drawable.mq52,R.drawable.mq53,R.drawable.mq54,R.drawable.mq55,R.drawable.mq56,R.drawable.mq57,R.drawable.mq58,R.drawable.mq59,R.drawable.mq60};
-    private int poopBitmapId[] = {0,R.drawable.qaq1,R.drawable.qaq2,R.drawable.qaq3,R.drawable.qaq4};
     private int poopingBitmapUsualId[] = {0,R.drawable.qaqox1,R.drawable.qaqox2,R.drawable.qaqox3,R.drawable.qaqox4,R.drawable.qaqox5,R.drawable.qaqox6,R.drawable.qaqox7,R.drawable.qaqox8,R.drawable.qaqox9,R.drawable.qaqox10};
     private int poopingBitmapDHId[] = {0,R.drawable.p_d_h1,R.drawable.p_d_h2,R.drawable.p_d_h3,R.drawable.p_d_h4,R.drawable.p_d_h5,R.drawable.p_d_h6,R.drawable.p_d_h7,R.drawable.p_d_h8,R.drawable.p_d_h9,R.drawable.p_d_h10};
     private int poopingBitmapDSHId[] = {0,R.drawable.p_d_s_h1,R.drawable.p_d_s_h2,R.drawable.p_d_s_h3,R.drawable.p_d_s_h4,R.drawable.p_d_s_h5,R.drawable.p_d_s_h6,R.drawable.p_d_s_h7,R.drawable.p_d_s_h8,R.drawable.p_d_s_h9,R.drawable.p_d_s_h10};
@@ -191,7 +190,63 @@ public class DrawThread extends Thread {
     private int poopingBitmapTSId[] = {0,R.drawable.p_t_s1,R.drawable.p_t_s2,R.drawable.p_t_s3,R.drawable.p_t_s4,R.drawable.p_t_s5,R.drawable.p_t_s6,R.drawable.p_t_s7,R.drawable.p_t_s8,R.drawable.p_t_s9,R.drawable.p_t_s10};
     private int poopingBitmapTId[] = {0,R.drawable.p_t1,R.drawable.p_t2,R.drawable.p_t3,R.drawable.p_t4,R.drawable.p_t5,R.drawable.p_t6,R.drawable.p_t7,R.drawable.p_t8,R.drawable.p_t9,R.drawable.p_t10};
     private int getFoinBitmapId[] = {R.drawable.foin7,R.drawable.foin1,R.drawable.foin2,R.drawable.foin3,R.drawable.foin4,R.drawable.foin5,R.drawable.foin6,R.drawable.foin7};
+    private int poopBitmapId[] = {0,R.drawable.qaq1,R.drawable.qaq2,R.drawable.qaq3,R.drawable.qaq4};
     private int levelBitmapId[] = {0,R.drawable.level1,R.drawable.level2,R.drawable.level3,R.drawable.level4,R.drawable.level5,R.drawable.level6,R.drawable.level7,R.drawable.level8,R.drawable.level9,R.drawable.level10,R.drawable.level11,R.drawable.level12,R.drawable.level13,R.drawable.level14,R.drawable.level15,R.drawable.level16,R.drawable.level17,R.drawable.level18};
+    //private int playBitmapFireId[] = {0 ,R.drawable.xaxacox1_boc,R.drawable.xaxacox2_boc,R.drawable.xaxacox3_boc,R.drawable.xaxacox4_boc,R.drawable.xaxacox5_boc,R.drawable.xaxacox6_boc,R.drawable.xaxacox7_boc,R.drawable.xaxacox8_boc,R.drawable.xaxacox9_boc,R.drawable.xaxacox10_boc,R.drawable.xaxacox11_boc,R.drawable.xaxacox12_boc,R.drawable.xaxacox13_boc,R.drawable.xaxacox14_boc,R.drawable.xaxacox15_boc,R.drawable.xaxacox16_boc,R.drawable.xaxacox17_boc,R.drawable.xaxacox18_boc,R.drawable.xaxacox19_boc,R.drawable.xaxacox20_boc};
+    //private int playBitmapDFireId[] = {0,R.drawable.d_xaxacox1_boc,R.drawable.d_xaxacox2_boc,R.drawable.d_xaxacox3_boc,R.drawable.d_xaxacox4_boc,R.drawable.d_xaxacox5_boc,R.drawable.d_xaxacox6_boc,R.drawable.d_xaxacox7_boc,R.drawable.d_xaxacox8_boc,R.drawable.d_xaxacox9_boc,R.drawable.d_xaxacox10_boc,R.drawable.d_xaxacox11_boc,R.drawable.d_xaxacox12_boc,R.drawable.d_xaxacox13_boc,R.drawable.d_xaxacox14_boc,R.drawable.d_xaxacox15_boc,R.drawable.d_xaxacox16_boc,R.drawable.d_xaxacox17_boc,R.drawable.d_xaxacox18_boc,R.drawable.d_xaxacox19_boc,R.drawable.d_xaxacox20_boc};
+    //private int playBitmapTIFired[] = {0,R.drawable.xaxacox1_boc,R.drawable.xaxacox2_boc,R.drawable.xaxacox3_boc,R.drawable.xaxacox4_boc,R.drawable.xaxacox5_boc,R.drawable.xaxacox6_boc,R.drawable.xaxacox7_boc,R.drawable.xaxacox8_boc,R.drawable.xaxacox9_boc,R.drawable.xaxacox10_boc,R.drawable.xaxacox11_boc,R.drawable.xaxacox12_boc,R.drawable.xaxacox13_boc,R.drawable.xaxacox14_boc,R.drawable.xaxacox15_boc,R.drawable.xaxacox16_boc,R.drawable.xaxacox17_boc,R.drawable.xaxacox18_boc,R.drawable.t_xaxacox19_boc,R.drawable.t_xaxacox20_boc};
+    //private int playBitmapDTFireId[] = {0,R.drawable.d_xaxacox1_boc,R.drawable.d_xaxacox2_boc,R.drawable.d_xaxacox3_boc,R.drawable.d_xaxacox4_boc,R.drawable.d_xaxacox5_boc,R.drawable.d_xaxacox6_boc,R.drawable.d_xaxacox7_boc,R.drawable.d_xaxacox8_boc,R.drawable.d_xaxacox9_boc,R.drawable.d_xaxacox10_boc,R.drawable.d_xaxacox11_boc,R.drawable.d_xaxacox12_boc,R.drawable.d_xaxacox13_boc,R.drawable.d_xaxacox14_boc,R.drawable.d_xaxacox15_boc,R.drawable.d_xaxacox16_boc,R.drawable.d_xaxacox17_boc,R.drawable.d_xaxacox18_boc,R.drawable.d_t_xaxacox19_boc,R.drawable.d_t_xaxacox20_boc};
+    //private int flyBitmapUsualFireId[] = {0,R.drawable.trnox_cit1_boc,R.drawable.trnox_cit2_boc,R.drawable.trnox_cit3_boc,R.drawable.trnox_cit4_boc};
+    //private int flyBitmapDHFireId[] = {0,R.drawable.f_d_h1_boc,R.drawable.f_d_h2_boc,R.drawable.f_d_h3_boc,R.drawable.f_d_h4_boc};
+    //private int flyBitmapDFireId[] = {0,R.drawable.f_d1_boc,R.drawable.f_d2_boc,R.drawable.f_d3_boc,R.drawable.f_d4_boc};
+    //private int flyBitmapDSFireId[] = {0,R.drawable.f_d_s1_boc,R.drawable.f_d_s2_boc,R.drawable.f_d_s3_boc,R.drawable.f_d_s4_boc};
+    //private int flyBitmapHFireId[] = {0,R.drawable.f_h1_boc,R.drawable.f_h2_boc,R.drawable.f_h3_boc,R.drawable.f_h4_boc};
+    //private int flyBitmapSmileFireId[] = {0,R.drawable.f_hp1_boc,R.drawable.f_hp2_boc,R.drawable.f_hp3_boc,R.drawable.f_hp4_boc};
+    //private int flyBitmapSDHFireId[] = {0,R.drawable.f_s_d_h1_boc,R.drawable.f_s_d_h2_boc,R.drawable.f_s_d_h3_boc,R.drawable.f_s_d_h4_boc};
+    //private int flyBitmapSHFireId[] = {0,R.drawable.f_s_h1_boc,R.drawable.f_s_h2_boc,R.drawable.f_s_h3_boc,R.drawable.f_s_h4_boc};
+    //private int flyBitmapSFireId[] = {0,R.drawable.f_s1_boc,R.drawable.f_s2_boc,R.drawable.f_s3_boc,R.drawable.f_s4_boc};
+    //private int flyBitmapTDHFireId[] = {0,R.drawable.f_t_d_h1_boc,R.drawable.f_t_d_h2_boc,R.drawable.f_d_h3_boc,R.drawable.f_d_h4_boc};
+    //private int flyBitmapTDSHFireId[] = {0,R.drawable.f_t_d_s_h1_boc,R.drawable.f_t_d_s_h2_boc,R.drawable.f_s_d_h3_boc,R.drawable.f_s_d_h4_boc};
+    //private int flyBitmapTDSFireId[] = {0,R.drawable.f_t_d_s1_boc,R.drawable.f_t_d_s2_boc,R.drawable.f_d_s3_boc,R.drawable.f_d_s4_boc};
+    //private int flyBitmapTDFireId[] = {0,R.drawable.f_t_d1_boc,R.drawable.f_t_d2_boc,R.drawable.f_d3_boc,R.drawable.f_d4_boc};
+    //private int flyBitmapTHFireId[] = {0,R.drawable.f_t_h1_boc,R.drawable.f_t_h2_boc,R.drawable.f_h3_boc,R.drawable.f_h4_boc};
+    //private int flyBitmapTSHFireId[] = {0,R.drawable.f_t_s_h1_boc,R.drawable.f_t_s_h2_boc,R.drawable.f_s_h3_boc,R.drawable.f_s_h4_boc};
+    //private int flyBitmapTSFireId[] = {0,R.drawable.f_t_s1_boc,R.drawable.f_t_s2_boc,R.drawable.f_s3_boc,R.drawable.f_s4_boc};
+    //private int flyBitmapTFireId[] = {0,R.drawable.f_t1_boc,R.drawable.f_t2_boc,R.drawable.trnox_cit3_boc,R.drawable.trnox_cit4_boc};
+    //private int hitBitmapFireId[] = {0,R.drawable.tprtacox1_boc,R.drawable.tprtacox2_boc,R.drawable.tprtacox3_boc,R.drawable.tprtacox4_boc,R.drawable.tprtacox5_boc,R.drawable.tprtacox6_boc,R.drawable.tprtacox7_boc,R.drawable.tprtacox8_boc,R.drawable.tprtacox9_boc,R.drawable.tprtacox10_boc,R.drawable.tprtacox11_boc,R.drawable.tprtacox12_boc,R.drawable.tprtacox13_boc,R.drawable.tprtacox14_boc};
+    //private int hitBitmapDFireId[] = {0,R.drawable.ht_d1_boc,R.drawable.ht_d2_boc,R.drawable.ht_d3_boc,R.drawable.ht_d4_boc,R.drawable.ht_d5_boc,R.drawable.ht_d6_boc,R.drawable.ht_d7_boc,R.drawable.ht_d8_boc,R.drawable.ht_d9_boc,R.drawable.ht_d10_boc,R.drawable.ht_d11_boc,R.drawable.ht_d12_boc,R.drawable.ht_d13_boc,R.drawable.ht_d14_boc};
+    //private int hitBitmapHFireId[] = {0,R.drawable.ht_h1_boc,R.drawable.ht_h2_boc,R.drawable.ht_h3_boc,R.drawable.ht_h4_boc,R.drawable.ht_h5_boc,R.drawable.ht_h6_boc,R.drawable.ht_h7_boc,R.drawable.ht_h8_boc,R.drawable.ht_h9_boc,R.drawable.ht_h10_boc,R.drawable.ht_h11_boc,R.drawable.ht_h12_boc,R.drawable.ht_h13_boc,R.drawable.ht_h14_boc};
+    //private int hitBitmapDHFireId[] = {0,R.drawable.ht_d_h1_boc,R.drawable.ht_d_h2_boc,R.drawable.ht_d_h3_boc,R.drawable.ht_d_h4_boc,R.drawable.ht_d_h5_boc,R.drawable.ht_d_h6_boc,R.drawable.ht_d_h7_boc,R.drawable.ht_d_h8_boc,R.drawable.ht_d_h9_boc,R.drawable.ht_d_h10_boc,R.drawable.ht_d_h11_boc,R.drawable.ht_d_h12_boc,R.drawable.ht_d_h13_boc,R.drawable.ht_d_h14_boc};
+    //private int washBitmapFireId[] = {0,R.drawable.lvacvox1_boc,R.drawable.lvacvox2_boc,R.drawable.lvacvox3_boc,R.drawable.lvacvox4_boc,R.drawable.lvacvox5_boc,R.drawable.lvacvox6_boc,R.drawable.lvacvox7_boc,R.drawable.lvacvox8_boc,R.drawable.lvacvox9_boc,R.drawable.lvacvox10_boc,R.drawable.lvacvox11_boc,R.drawable.lvacvox12_boc,R.drawable.lvacvox13_boc,R.drawable.lvacvox14_boc,R.drawable.lvacvox15_boc,R.drawable.lvacvox16_boc,R.drawable.lvacvox17_boc,R.drawable.lvacvox18_boc,R.drawable.lvacvox19_boc,R.drawable.lvacvox20_boc,R.drawable.lvacvox21_boc,R.drawable.lvacvox22_boc,R.drawable.lvacvox23_boc,R.drawable.lvacvox24_boc,R.drawable.lvacvox25_boc,R.drawable.lvacvox26_boc,R.drawable.lvacvox27_boc,R.drawable.lvacvox28_boc,R.drawable.lvacvox29_boc,R.drawable.lvacvox30_boc,R.drawable.lvacvox31_boc,R.drawable.lvacvox32_boc,R.drawable.lvacvox33_boc,R.drawable.lvacvox34_boc,R.drawable.lvacvox35_boc,R.drawable.lvacvox36_boc,R.drawable.lvacvox37_boc,R.drawable.lvacvox38_boc,R.drawable.lvacvox39_boc,R.drawable.lvacvox40_boc,R.drawable.lvacvox41_boc,R.drawable.lvacvox42_boc,R.drawable.lvacvox43_boc,R.drawable.lvacvox44_boc,R.drawable.lvacvox45_boc,R.drawable.lvacvox46_boc,R.drawable.lvacvox47_boc,R.drawable.lvacvox48_boc};
+    //private int eatBitmapFireId[] = {0, R.drawable.utox1_boc,R.drawable.utox2_boc,R.drawable.utox3_boc,R.drawable.utox4_boc,R.drawable.utox5_boc,R.drawable.utox6_boc,R.drawable.utox7_boc, R.drawable.utox8_boc,R.drawable.utox9_boc, R.drawable.utox10_boc};
+    //private int eatBitmapDFireId[] = {0,R.drawable.e_d_1_boc,R.drawable.e_d_2_boc,R.drawable.e_d_3_boc,R.drawable.e_d_4_boc,R.drawable.e_d_5_boc,R.drawable.e_d_6_boc,R.drawable.e_d_7_boc,R.drawable.e_d_8_boc,R.drawable.e_d_9_boc,R.drawable.e_d_10_boc};
+    //private int eatBitmapDSFireId[] = {0,R.drawable.e_d_s_1_boc,R.drawable.e_d_s_2_boc,R.drawable.e_d_s_3_boc,R.drawable.e_d_s_4_boc,R.drawable.e_d_s_5_boc,R.drawable.e_d_s_6_boc,R.drawable.e_d_s_7_boc,R.drawable.e_d_s_8_boc,R.drawable.e_d_s_9_boc,R.drawable.e_d_s_10_boc};
+    //private int eatBitmapDTFireId[] = {0,R.drawable.e_d_t_1_boc,R.drawable.e_d_t_2_boc,R.drawable.e_d_t_3_boc,R.drawable.e_d_t_4_boc,R.drawable.e_d_t_5_boc,R.drawable.e_d_t_6_boc,R.drawable.e_d_t_7_boc,R.drawable.e_d_t_8_boc,R.drawable.e_d_t_9_boc,R.drawable.e_d_t_10_boc};
+    //private int eatBitmapDTSFireId[] = {0,R.drawable.e_d_t_s_1_boc,R.drawable.e_d_t_s_2_boc,R.drawable.e_d_t_s_3_boc,R.drawable.e_d_t_s_4_boc,R.drawable.e_d_t_s_5_boc,R.drawable.e_d_t_s_6_boc,R.drawable.e_d_t_s_7_boc,R.drawable.e_d_t_s_8_boc,R.drawable.e_d_t_s_9_boc,R.drawable.e_d_t_s_10_boc};
+    //private int eatBitmapSFireId[] = {0,R.drawable.e_s_1_boc,R.drawable.e_s_2_boc,R.drawable.e_s_3_boc,R.drawable.e_s_4_boc,R.drawable.e_s_5_boc,R.drawable.e_s_6_boc,R.drawable.e_s_7_boc,R.drawable.e_s_8_boc,R.drawable.e_s_9_boc,R.drawable.e_s_10_boc};
+    //private int eatBitmapTFireId[] = {0,R.drawable.e_t_1_boc,R.drawable.e_t_2_boc,R.drawable.e_t_3_boc,R.drawable.e_t_4_boc,R.drawable.e_t_5_boc,R.drawable.e_t_6_boc,R.drawable.e_t_7_boc,R.drawable.e_t_8_boc,R.drawable.e_t_9_boc,R.drawable.e_t_10_boc};
+    //private int eatBitmapTSFireId[] = {0,R.drawable.e_t_s_1_boc,R.drawable.e_t_s_2_boc,R.drawable.e_t_s_3_boc,R.drawable.e_t_s_4_boc,R.drawable.e_t_s_5_boc,R.drawable.e_t_s_6_boc,R.drawable.e_t_s_7_boc,R.drawable.e_t_s_8_boc,R.drawable.e_t_s_9_boc,R.drawable.e_t_s_10_boc};
+    //private int eatBitmapSmileFireId[] = {0,R.drawable.e_hp_1_boc,R.drawable.e_hp_2_boc,R.drawable.e_hp_3_boc,R.drawable.e_hp_4_boc,R.drawable.e_hp_5_boc,R.drawable.e_hp_6_boc,R.drawable.e_hp_7_boc,R.drawable.e_hp_8_boc,R.drawable.e_hp_9_boc,R.drawable.e_hp_10_boc};
+    //private int eatDarkButtonBitmapFireId[]={R.drawable.chervyak_boc,R.drawable.mc1_boc,R.drawable.mc2_boc,R.drawable.mc3_boc,R.drawable.mc4_boc,R.drawable.mc5_boc,R.drawable.mc6_boc,R.drawable.mc7_boc,R.drawable.mc8_boc,R.drawable.mc9_boc,R.drawable.mc10_boc};
+    //private int playDarkButtonBitmapFireId[] = {R.drawable.petur_boc,R.drawable.mp1_boc,R.drawable.mp2_boc,R.drawable.mp3_boc,R.drawable.mp4_boc,R.drawable.mp5_boc,R.drawable.mp6_boc,R.drawable.mp7_boc,R.drawable.mp8_boc,R.drawable.mp9_boc,R.drawable.mp10_boc,R.drawable.mp11_boc,R.drawable.mp12_boc,R.drawable.mp13_boc,R.drawable.mp14_boc,R.drawable.mp15_boc};
+    //private int sleepDarkButtonBitmapFireId[] = {R.drawable.qnel_boc, R.drawable.mq1_boc, R.drawable.mq2_boc, R.drawable.mq3_boc, R.drawable.mq4_boc, R.drawable.mq5_boc, R.drawable.mq6_boc, R.drawable.mq7_boc, R.drawable.mq8_boc, R.drawable.mq9_boc,R.drawable.mq10_boc,R.drawable.mq11_boc,R.drawable.mq12_boc,R.drawable.mq13_boc,R.drawable.mq14_boc,R.drawable.mq15_boc,R.drawable.mq16_boc,R.drawable.mq17_boc,R.drawable.mq18_boc,R.drawable.mq19_boc,R.drawable.mq20_boc,R.drawable.mq21_boc,R.drawable.mq22_boc,R.drawable.mq23_boc,R.drawable.mq24_boc,R.drawable.mq25_boc,R.drawable.mq26_boc,R.drawable.mq27_boc,R.drawable.mq28_boc,R.drawable.mq29_boc,R.drawable.mq30_boc,R.drawable.mq31_boc,R.drawable.mq32_boc,R.drawable.mq33_boc,R.drawable.mq34_boc,R.drawable.mq35_boc,R.drawable.mq36_boc,R.drawable.mq37_boc,R.drawable.mq38_boc,R.drawable.mq39_boc,R.drawable.mq40_boc,R.drawable.mq41_boc,R.drawable.mq42_boc,R.drawable.mq43_boc,R.drawable.mq44_boc,R.drawable.mq45_boc,R.drawable.mq46_boc,R.drawable.mq47_boc,R.drawable.mq48_boc,R.drawable.mq49_boc,R.drawable.mq50_boc,R.drawable.mq51_boc,R.drawable.mq52_boc,R.drawable.mq53_boc,R.drawable.mq54_boc,R.drawable.mq55_boc,R.drawable.mq56_boc,R.drawable.mq57_boc,R.drawable.mq58_boc,R.drawable.mq59_boc,R.drawable.mq60_boc};
+    //private int poopingBitmapUsualFireId[]={0,R.drawable.qaqox1_boc,R.drawable.qaqox2_boc,R.drawable.qaqox3_boc,R.drawable.qaqox4_boc,R.drawable.qaqox5_boc,R.drawable.qaqox6_boc,R.drawable.qaqox7_boc,R.drawable.qaqox8_boc,R.drawable.qaqox9_boc,R.drawable.qaqox10_boc};
+    //private int poopingBitmapDHFireId[] =  {0,R.drawable.p_d_h1_boc,R.drawable.p_d_h2_boc,R.drawable.p_d_h3_boc,R.drawable.p_d_h4_boc,R.drawable.p_d_h5_boc,R.drawable.p_d_h6_boc,R.drawable.p_d_h7_boc,R.drawable.p_d_h8_boc,R.drawable.p_d_h9_boc,R.drawable.p_d_h10_boc};
+    //private int poopingBitmapDSHFireId[] = {0,R.drawable.p_d_s_h1_boc,R.drawable.p_d_s_h2_boc,R.drawable.p_d_s_h3_boc,R.drawable.p_d_s_h4_boc,R.drawable.p_d_s_h5_boc,R.drawable.p_d_s_h6_boc,R.drawable.p_d_s_h7_boc,R.drawable.p_d_s_h8_boc,R.drawable.p_d_s_h9_boc,R.drawable.p_d_s_h10_boc};
+    //private int poopingBitmapDSFireId[] = {0,R.drawable.p_d_s1_boc,R.drawable.p_d_s2_boc,R.drawable.p_d_s3_boc,R.drawable.p_d_s4_boc,R.drawable.p_d_s5_boc,R.drawable.p_d_s6_boc,R.drawable.p_d_s7_boc,R.drawable.p_d_s8_boc,R.drawable.p_d_s9_boc,R.drawable.p_d_s10_boc};
+    //private int poopingBitmapDTHFireId[] = {0,R.drawable.p_d_t_h1_boc,R.drawable.p_d_t_h2_boc,R.drawable.p_d_t_h3_boc,R.drawable.p_d_t_h4_boc,R.drawable.p_d_t_h5_boc,R.drawable.p_d_t_h6_boc,R.drawable.p_d_t_h7_boc,R.drawable.p_d_t_h8_boc,R.drawable.p_d_t_h9_boc,R.drawable.p_d_t_h10_boc};
+    //private int poopingBitmapDTSHFireId[] = {0,R.drawable.p_d_t_s_h1_boc,R.drawable.p_d_t_s_h2_boc,R.drawable.p_d_t_s_h3_boc,R.drawable.p_d_t_s_h4_boc,R.drawable.p_d_t_s_h5_boc,R.drawable.p_d_t_s_h6_boc,R.drawable.p_d_t_s_h7_boc,R.drawable.p_d_t_s_h8_boc,R.drawable.p_d_t_s_h9_boc,R.drawable.p_d_t_s_h10_boc};
+    //private int poopingBitmapDTSFireId[] = {0,R.drawable.p_d_t_s1_boc,R.drawable.p_d_t_s2_boc,R.drawable.p_d_t_s3_boc,R.drawable.p_d_t_s4_boc,R.drawable.p_d_t_s5_boc,R.drawable.p_d_t_s6_boc,R.drawable.p_d_t_s7_boc,R.drawable.p_d_t_s8_boc,R.drawable.p_d_t_s9_boc,R.drawable.p_d_t_s10_boc};
+    //private int poopingBitmapDTFireId[] = {0,R.drawable.p_d_t1_boc,R.drawable.p_d_t2_boc,R.drawable.p_d_t3_boc,R.drawable.p_d_t4_boc,R.drawable.p_d_t5_boc,R.drawable.p_d_t6_boc,R.drawable.p_d_t7_boc,R.drawable.p_d_t8_boc,R.drawable.p_d_t9_boc,R.drawable.p_d_t10_boc};
+    //private int poopingBitmapDFireId[] = {0,R.drawable.p_d1_boc,R.drawable.p_d2_boc,R.drawable.p_d3_boc,R.drawable.p_d4_boc,R.drawable.p_d5_boc,R.drawable.p_d6_boc,R.drawable.p_d7_boc,R.drawable.p_d8_boc,R.drawable.p_d9_boc,R.drawable.p_d10_boc};
+    //private int poopingBitmapHSFireId[] = {0,R.drawable.p_h_s1_boc,R.drawable.p_h_s2_boc,R.drawable.p_h_s3_boc,R.drawable.p_h_s4_boc,R.drawable.p_h_s5_boc,R.drawable.p_h_s6_boc,R.drawable.p_h_s7_boc,R.drawable.p_h_s8_boc,R.drawable.p_h_s9_boc,R.drawable.p_h_s10_boc};
+    //private int poopingBitmapHFireId[] = {0,R.drawable.p_h1_boc,R.drawable.p_h2_boc,R.drawable.p_h3_boc,R.drawable.p_h4_boc,R.drawable.p_h5_boc,R.drawable.p_h6_boc,R.drawable.p_h7_boc,R.drawable.p_h8_boc,R.drawable.p_h9_boc,R.drawable.p_h10_boc};
+    //private int poopingBitmapSFireId[] = {0,R.drawable.p_s1_boc,R.drawable.p_s2_boc,R.drawable.p_s3_boc,R.drawable.p_s4_boc,R.drawable.p_s5_boc,R.drawable.p_s6_boc,R.drawable.p_s7_boc,R.drawable.p_s8_boc,R.drawable.p_s9_boc,R.drawable.p_s10_boc};
+    //private int poopingBitmapTHFireId[] = {0,R.drawable.p_t_h1_boc,R.drawable.p_t_h2_boc,R.drawable.p_t_h3_boc,R.drawable.p_t_h4_boc,R.drawable.p_t_h5_boc,R.drawable.p_t_h6_boc,R.drawable.p_t_h7_boc,R.drawable.p_t_h8_boc,R.drawable.p_t_h9_boc,R.drawable.p_t_h10_boc};
+    //private int poopingBitmapTHSFireId[] = {0,R.drawable.p_t_s_h1_boc,R.drawable.p_t_s_h2_boc,R.drawable.p_t_s_h3_boc,R.drawable.p_t_s_h4_boc,R.drawable.p_t_s_h5_boc,R.drawable.p_t_s_h6_boc,R.drawable.p_t_s_h7_boc,R.drawable.p_t_s_h8_boc,R.drawable.p_t_s_h9_boc,R.drawable.p_t_s_h10_boc};
+    //private int poopingBitmapTSFireId[] = {0,R.drawable.p_t_s1_boc,R.drawable.p_t_s2_boc,R.drawable.p_t_s3_boc,R.drawable.p_t_s4_boc,R.drawable.p_t_s5_boc,R.drawable.p_t_s6_boc,R.drawable.p_t_s7_boc,R.drawable.p_t_s8_boc,R.drawable.p_t_s9_boc,R.drawable.p_t_s10_boc};
+    //private int poopingBitmapTFireId[] = {0,R.drawable.p_t1_boc,R.drawable.p_t2_boc,R.drawable.p_t3_boc,R.drawable.p_t4_boc,R.drawable.p_t5_boc,R.drawable.p_t6_boc,R.drawable.p_t7_boc,R.drawable.p_t8_boc,R.drawable.p_t9_boc,R.drawable.p_t10_boc};
+
     public DrawThread(){}
     public DrawThread(Context context, SurfaceHolder surfaceHolder, MyDraw myDraw, int timePassed) {
         this.view = view;
@@ -292,6 +347,7 @@ public class DrawThread extends Thread {
         poopFlyBack = sharedPreferences.getBoolean("POOPFLYBACK",false);
         disgusting = sharedPreferences.getBoolean("DISGUSTING",false);
         timeForPoop = sharedPreferences.getInt("TIMEFORPOOP",60);
+        washing = sharedPreferences.getBoolean("WASHING",false);
         paintHappy.setColor(happyColor);
         paintSleep.setColor(tiredColor);
         paintHungry.setColor(hungryColor);
@@ -451,6 +507,12 @@ public class DrawThread extends Thread {
         screenshotBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.screenshot), canvas.getWidth() * 73 / 1050, canvas.getHeight() * 73 / 540, true);
         fird = bitmapSmile1;
         // Обновляем кнопки после выхода и входа
+        if(washing) {
+            washing = false;
+            dirtRight = dirtRight2;
+            editor.putFloat("DIRT",dirtRight);
+            editor.putBoolean("WASHING",false);
+        }
         if(flying || laying) {
             if (birdBreath1 == bitmapDTSH1 || birdBreath1 == bitmapDSH1) fird = sleepDSH1;else if (birdBreath1 == bitmapDTS1 || birdBreath1 == bitmapDS1) fird = sleepDS1;else if (birdBreath1 == bitmapDTH1 || birdBreath1 == bitmapDH1) fird = sleepDH1;else if (birdBreath1 == bitmapDT1 || birdBreath1 == bitmapD1) fird = sleepD1;else if (birdBreath1 == bitmapTSH1 || birdBreath1 == bitmapSH1) fird = sleepSH1;else if (birdBreath1 == bitmapTS1 || birdBreath1 == bitmapS1) fird = sleepS1;else if (birdBreath1 == bitmapTH1 || birdBreath1 == bitmapH1) fird = sleepH1;else if (birdBreath1 == bitmapT1 || birdBreath1 == bitmapUsual1) fird = sleepUsual1;else if (birdBreath1 == bitmapSmile1) fird = sleepSmile1;
             qun *= (sleepRight2 - sleepLeft)*timePassed;
@@ -1267,6 +1329,8 @@ public class DrawThread extends Thread {
                         if (!washingTimeIsPassed && washButtonIsPressed) {
                             new WashingThread().start();
                             washing = true;
+                            editor.putBoolean("WASHING",washing);
+                            editor.apply();
                             washingTimeIsPassed = true;
                         }
                         if (washingNeedToDrawNow && washing && wash <= 49) {
@@ -1286,6 +1350,8 @@ public class DrawThread extends Thread {
                                 birdY = (float) 232 / 540;
                                 lastTouchX = 0;
                                 lastTouchY = 0;
+                                editor.putBoolean("WASHING",washing);
+                                editor.apply();
                                 mediaPlayerWash.stop();
                                 mediaPlayerWash.prepare();
                             }
@@ -1398,7 +1464,9 @@ public class DrawThread extends Thread {
     }
 
     public void startShopActivity(){
-        context.startActivity(new Intent(((Activity) context), ShopSkin.class));
+        Intent intent = new Intent(((Activity) context), ShopSkin.class);
+        intent.putExtra("foin", foin + "");
+        context.startActivity(intent);
     }
     private void stateChanger(float stateRight, float stateLeft, float stateWeight, double stateChangeValue,int stateChecker) {
         if (stateRight - stateChangeValue * stateWeight >= stateLeft) {

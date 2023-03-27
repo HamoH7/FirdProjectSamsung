@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.AnimationDrawable;
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -16,6 +17,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
+import java.io.IOException;
 import java.util.Timer;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
