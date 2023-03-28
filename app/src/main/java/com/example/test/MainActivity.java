@@ -1,14 +1,9 @@
 package com.example.test;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-import androidx.fragment.app.Fragment;
 
-import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -19,22 +14,13 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.PersistableBundle;
-import android.preference.PreferenceManager;
 import android.view.Window;
 import android.view.WindowManager;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
     private int timePassed = 0;
@@ -79,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
             managerCompat.notify(1,builder.build());
         }
     }
+    public DrawThread drawThread;
+    public MyDraw myDraw;
     Timer timer = new Timer();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +79,8 @@ public class MainActivity extends AppCompatActivity {
         mediaPlayerHit = MediaPlayer.create(this, R.raw.hitsong);
         mediaPlayerWash = MediaPlayer.create(this, R.raw.washsong);
         mediaPlayerHappy = MediaPlayer.create(this, R.raw.happysong);
-        setContentView(new MyDraw(this, 0));
+        myDraw = new MyDraw(this,0);
+        setContentView(myDraw);
         //setContentView(R.layout.shopskin);
     }
     @Override
@@ -111,13 +100,17 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt("timePassed1",timePassed);
         editor.apply();
         mediaPlayer.start();
-        setContentView(new MyDraw(context, timePassedsp.getInt("timePassed1",0) - timePassedsp.getInt("timePassed2",timePassed)));
+        myDraw = new MyDraw(this,timePassedsp.getInt("timePassed1",0) - timePassedsp.getInt("timePassed2",timePassed));
+        setContentView(myDraw);
+        drawThread = myDraw.getDrawThread();
     }
    @Override
    protected void onPause() {
        super.onPause();
        saveTimePassed();
        mediaPlayer.stop();
+       drawThread = myDraw.getDrawThread();
+       drawThread.stopMediaPlayer();
        //mediaPlayerHappy.stop();
        //mediaPlayerHappy.release();
    }

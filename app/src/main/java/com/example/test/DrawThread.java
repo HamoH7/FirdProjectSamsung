@@ -61,7 +61,7 @@ public class DrawThread extends Thread {
     private double hungryChangeValue = (float)1/ 2000; // Sovi timeri hamar
     private double happyChangeValue = (float) 1 / 1900; // Uraxutyan timeri hamar
     private double sleepChangeValue = (float) 1 / 1800; // Qni timeri hamar
-    private double dirtyChangeValue = (float) 1 / 2100; // kextotutyan timeri hamar
+    private double dirtyChangeValue = (float) 1 / 21; // kextotutyan timeri hamar
     private double food = (float) 1 ;//food = (float) 1 / 10;
     private double smile = (float) 1 / 1;//smile = (float) 1 / 60;
     private double qun = (float) 1 / 40;//qun = (float) 1 / 40;
@@ -1451,7 +1451,41 @@ public class DrawThread extends Thread {
 
         }
     }
-
+    public  void stopMediaPlayer() {
+        if (mediaPlayerHappy != null) {
+            mediaPlayerHappy.stop();
+            mediaPlayerHappy.release();
+            try {
+                mediaPlayerHappy.prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            mediaPlayerHappy = null;
+        }
+        if(mediaPlayerWash != null) {
+            mediaPlayerWash.stop();
+            mediaPlayerWash.release();
+            try {
+                mediaPlayerWash.prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            mediaPlayerWash = null;
+        }
+        if(mediaPlayerHit != null) {
+            mediaPlayerHit.stop();
+            mediaPlayerHit.release();
+            try {
+                mediaPlayerHit.prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            mediaPlayerHit = null;
+        }
+    }
+    public MediaPlayer getMediaPlayerHappy() {
+        return mediaPlayerHappy;
+    }
     public void startShopActivity(){
         Intent intent = new Intent(((Activity) context), ShopSkin.class);
         intent.putExtra("foin", foin + "");

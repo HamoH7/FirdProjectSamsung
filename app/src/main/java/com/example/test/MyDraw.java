@@ -30,13 +30,15 @@ public class MyDraw extends SurfaceView implements SurfaceHolder.Callback{
         this.timepassed = timepassed;
         getHolder().addCallback(this);
     }
-    private DrawThread drawThread;
+    public DrawThread drawThread;
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder holder) {
         drawThread = new DrawThread(getContext(), getHolder(), this, timepassed);
         drawThread.start();
     }
-
+    public DrawThread getDrawThread(){
+        return drawThread;
+    }
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
