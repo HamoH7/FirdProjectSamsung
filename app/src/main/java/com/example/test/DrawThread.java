@@ -1439,8 +1439,7 @@ public class DrawThread extends Thread {
                        // }
                         // Рисуем птичку
                         canvas.drawBitmap(fird, (float) canvas.getWidth() * birdX, (float) canvas.getHeight() * birdY, paint);
-                        paintDirt.setTextSize(50);
-                        canvas.drawText(timePassed + "", 500, 500, paintDirt);
+
 
                     }
                 } catch (IOException ioException) {
