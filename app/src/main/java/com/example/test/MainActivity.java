@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private String[] notificationStrings = {"Your fird is dirty :(", "Your fird is hungry :(", "Your fird is tiered :(", "Your fird is sad :("};
     class Timer extends CountDownTimer {
         public Timer() {
-            super(5000, 1000);
+            super(3600000, 1000);
         }
         @Override
         public void onTick(long millisUntilFinished) {
