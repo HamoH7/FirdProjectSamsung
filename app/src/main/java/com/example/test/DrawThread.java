@@ -565,7 +565,6 @@ public class DrawThread extends Thread {
             //    hitBitmapDH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), hitBitmapDHFireId[i]),(int)(canvas.getWidth() * birdWidth),(int)(canvas.getHeight()*birdHeight),true);
             //}
             //for (int i = 1; i < 49; i++) washBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),washBitmapFireId[i]), canvas.getWidth() * 341 / 1050, canvas.getHeight() * 378 / 540, true);
-
         }
         foinBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),getFoinBitmapId[0]),  canvas.getWidth() * 137 / 1050, canvas.getHeight()* 134 / 540, true);
         shopButton = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.xanut),(int)(canvas.getWidth()*shopButtonWidth), (int)(canvas.getHeight()*shopButtonHeight),true);
