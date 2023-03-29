@@ -278,7 +278,7 @@ public class DrawThread extends Thread {
         mediaPlayerHit = MediaPlayer.create(context, R.raw.hitsong);
         mediaPlayerWash = MediaPlayer.create(context,R.raw.washsong);
         skinId = sharedPreferences.getInt("SKINID",0);
-        foin = sharedPreferences.getInt("FOIN", 0);
+        foin = sharedPreferences.getInt("FOIN", 9000);
         level = sharedPreferences.getInt("LEVEL", 1);
         levelColor = ResourcesCompat.getColor(context.getResources(),R.color.life,null);
         dirtColor = ResourcesCompat.getColor(context.getResources(),R.color.dirt,null);

@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         timePassedsp = getApplicationContext().getSharedPreferences("TIMEPASSED", MODE_PRIVATE);
         editor = timePassedsp.edit();
-        foin = timePassedsp.getInt("FOIN",0);
+        foin = timePassedsp.getInt("FOIN",9000);
         context = this;
         mediaPlayer = MediaPlayer.create(this, R.raw.songfon);
         mediaPlayerHit = MediaPlayer.create(this, R.raw.hitsong);
