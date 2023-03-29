@@ -102,12 +102,14 @@ public class ShopSkin extends AppCompatActivity {
             fird.setBackgroundResource(R.drawable.fird_selected);
             skinId = 0;
             editor.putInt("SKINID",skinId);
+            editor.apply();
         }
         if(!fireFirdChoosen && fireFirdBuyed) fireFird.setBackgroundResource(R.drawable.fire_fird_select);
         if(fireFirdChoosen && fireFirdBuyed) {
             fireFird.setBackgroundResource(R.drawable.fire_fird_selected);
             skinId = 1;
             editor.putInt("SKINID",skinId);
+            editor.apply();
         }
         if(!fireFirdBuyed) fireFird.setBackgroundResource(R.drawable.fire_fird_buy);
     }

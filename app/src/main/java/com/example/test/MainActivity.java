@@ -73,13 +73,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         arguments = getIntent().getExtras();
-        if(arguments != null) foin = Integer.parseInt(arguments.get("foin").toString());
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
         timePassedsp = getApplicationContext().getSharedPreferences("TIMEPASSED", MODE_PRIVATE);
         editor = timePassedsp.edit();
+        if(arguments != null) {
+            foin = Integer.parseInt(arguments.get("foin").toString());
+            skinId = Integer.parseInt(arguments.get("skinId").toString());
+            editor.putInt("SKINID",skinId);
+        }
         foin = timePassedsp.getInt("FOIN",9000);
+        editor.putInt("FOIN",foin);
+        editor.apply();
         context = this;
         mediaPlayer = MediaPlayer.create(this, R.raw.songfon);
         mediaPlayerHit = MediaPlayer.create(this, R.raw.hitsong);
@@ -93,30 +99,39 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        timePassedsp = getApplicationContext().getSharedPreferences("TIMEPASSED", MODE_PRIVATE);
+        editor = timePassedsp.edit();
         arguments = getIntent().getExtras();
         if(arguments != null) {
             foin = Integer.parseInt(arguments.get("foin").toString());
             skinId = Integer.parseInt(arguments.get("skinId").toString());
+            editor.putInt("FOIN",foin);
+            editor.putInt("SKINID",skinId);
+            editor.apply();
         }
-        editor.putInt("FOIN",foin);
-        editor.apply();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        timePassedsp = getApplicationContext().getSharedPreferences("TIMEPASSED", MODE_PRIVATE);
+        editor = timePassedsp.edit();
         arguments = getIntent().getExtras();
-        if(arguments != null) foin = Integer.parseInt(arguments.get("foin").toString());
+        if(arguments != null) {
+            foin = Integer.parseInt(arguments.get("foin").toString());
+            skinId = Integer.parseInt(arguments.get("skinId").toString());
+            editor.putInt("FOIN",foin);
+            editor.putInt("SKINID",skinId);
+            editor.apply();
+        }
         mediaPlayer = MediaPlayer.create(this, R.raw.songfon);
         mediaPlayerHit = MediaPlayer.create(this, R.raw.hitsong);
         mediaPlayerWash = MediaPlayer.create(this, R.raw.washsong);
         mediaPlayerHappy = MediaPlayer.create(this, R.raw.happysong);
-        timePassedsp = getApplicationContext().getSharedPreferences("TIMEPASSED", MODE_PRIVATE);
-        editor = timePassedsp.edit();
+        skinId = timePassedsp.getInt("SKINID",0);
         foin = timePassedsp.getInt("FOIN",0);
         currentDate = new Date();
         timeText = timeFormat.format(currentDate);
-        editor = timePassedsp.edit();
         timePassed = ((Integer.parseInt(timeText.charAt(0) + "")*10 + Integer.parseInt(timeText.charAt(1) + ""))*86400)+((Integer.parseInt(timeText.charAt(3) + ""))*10+(Integer.parseInt(timeText.charAt(4) + "")))*3600+((Integer.parseInt(timeText.charAt(6)+ ""))*10+
                 Integer.parseInt(timeText.charAt(7) + ""))*60+((Integer.parseInt(timeText.charAt(9)+""))*10+Integer.parseInt(timeText.charAt(10)+""));
         editor.putInt("timePassed1",timePassed);
