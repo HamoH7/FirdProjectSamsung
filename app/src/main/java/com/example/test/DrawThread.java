@@ -246,6 +246,7 @@ public class DrawThread extends Thread {
     private Bitmap loadScreen;
     private int skinId = 0;
     private boolean loadScreenLoaded;
+
     public DrawThread(){}
     public DrawThread(Context context, SurfaceHolder surfaceHolder, MyDraw myDraw, int timePassed, int foin, int skinId) {
         this.view = view;
@@ -261,6 +262,11 @@ public class DrawThread extends Thread {
         editor.putInt("FOIN",foin);
         editor.putInt("SKINID",skinId);
         editor.apply();
+
+        Canvas canvas = surfaceHolder.lockCanvas();
+        loadScreen = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.loading), canvas.getWidth(), canvas.getHeight(), true);
+        canvas.drawBitmap(loadScreen, 0, 0, paint);
+        surfaceHolder.unlockCanvasAndPost(canvas);
     }
 
     public void setTouch(int x, int y){
@@ -775,11 +781,12 @@ public class DrawThread extends Thread {
             Canvas canvas = surfaceHolder.lockCanvas();
             if (canvas != null) {
                 try {
+
                     if(loading) {
                         loading(canvas);
                     }
-                    if(!loading && !loaded)
-                        canvas.drawBitmap(loadScreen, 0, 0, paint);
+//                    if(!loading && !loaded)
+//                        canvas.drawBitmap(loadScreen, 0, 0, paint);
                     if(loaded) {
                         //lvlCheck = sharedPreferences.getBoolean("LVLCHECK",false);
                         paintBlack.setStrokeWidth((float) canvas.getWidth() / 540);
