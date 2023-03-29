@@ -41,16 +41,14 @@ public class DrawThread extends Thread {
     private float ButtonWidth = (float) 106/1050, ButtonHeight =(float) 101/540;
     private float birdX = (float) 419/1050, birdY = (float) 232/540;
     private float birdWidth = (float) 150 / 1050, birdHeight = (float) 172/540;
-    private float screenshotWidth = (float) 73 / 1050, screenshotHeight = (float) 73/540;
-    private float screenshotX = (float) 962/1050, screenshotY = (float) 461/540;
     private float hungryLeft =(float) 877. / 1050,hungryTop = (float)  92 / 540,hungryRight2 = (float) 1040 / 1050, hungryWidth = hungryRight2 - hungryLeft,hungryBottom = (float)  116 / 540;
     private float levelLeft = (float) 844 / 1050, levelTop = (float)  8 / 540, levelRight2 = (float)  1040 / 1050, levelBottom = (float)  42 / 540, levelRight3;
     private float dirtLeft = (float) 877 / 1050, dirtTop = (float)  55 / 540, dirtRight2 = (float)  1040 / 1050, dirtWidth = dirtRight2 - dirtLeft, dirtBottom = (float)  79 / 540;
     private float sleepLeft = (float) 877 / 1050, sleepTop = (float)  129 / 540, sleepRight2 = (float) 1040 / 1050, sleepWidth = sleepRight2 - sleepLeft, sleepBottom = (float)  153 / 540;
     private float happyLeft = (float) 877 / 1050, happyTop = (float)  166 / 540, happyRight2 = (float)  1040 / 1050, happyWidth = happyRight2 - happyLeft, happyBottom = (float)  190 / 540;
-    private float shopButtonLeft = (float)878/1050, shopButtonTop = (float) 462/540;
+    private float shopButtonLeft = (float)962/1050, shopButtonTop = (float) 461/540;
     private float shopButtonWidth = (float) 75/1050, shopButtonHeight = (float)75/540;
-    private float eatButtonLeft = (float) 19/1050, eatButtonTop = (float) 427/540;
+    private float eatButtonLeft = (float) 19/1050, eatButtonTop = (float) 424/540;
     private float playButtonLeft = (float)130/1050, playButtonTop = (float) 427/540;
     private float sleepButtonTop = (float) 427/540, dirtButtonLeft = (float)352/1050;
     private float dirtButtonTop = (float)427/540;
@@ -61,11 +59,11 @@ public class DrawThread extends Thread {
     private double hungryChangeValue = (float)1/ 2000; // Sovi timeri hamar
     private double happyChangeValue = (float) 1 / 1900; // Uraxutyan timeri hamar
     private double sleepChangeValue = (float) 1 / 1800; // Qni timeri hamar
-    private double dirtyChangeValue = (float) 1 / 21; // kextotutyan timeri hamar
-    private double food = (float) 1 ;//food = (float) 1 / 10;
-    private double smile = (float) 1 / 1;//smile = (float) 1 / 60;
-    private double qun = (float) 1 / 40;//qun = (float) 1 / 40;
-    private double lvl = (float) 1 / 10;
+    private double dirtyChangeValue = (float) 1 / 2100; // kextotutyan timeri hamar
+    private float food = (float) 1 ;//food = (float) 1 / 10;
+    private float smile = (float) 1 / 1;//smile = (float) 1 / 60;
+    private float qun = (float) 1 / 40;//qun = (float) 1 / 40;
+    private float lvl = (float) 1 / 10;
     private float hungryRight = 0, happyRight = 0, sleepRight = 0, dirtRight = 0, levelRight = 0;
     private int levelColor, dirtColor, hungryColor, tiredColor, happyColor;
     private boolean hungryButtonIsPressed = false, happyButtonIsTouched = false,sleepButtonIsPressed = false, birdIsPunched = false, washButtonIsPressed = false;
@@ -112,9 +110,7 @@ public class DrawThread extends Thread {
     // S = Sad
     // H = Hungry
     private Bitmap bitmapbg,bitmapkust, bitmapDirtIcon, bitmapHungryIcon, bitmapSleepIcon, bitmapHappyIcon, eatButtonBitmap,eatButtonBitmap2, eatButtonBitmapPoop, highScoreBitmap, scoreBitmap;
-    private Bitmap fird, bitmapDTSH1, bitmapDTSH2, bitmapDTS1, bitmapDTS2, bitmapDTH1, bitmapDTH2, bitmapDSH1, bitmapDSH2, bitmapTSH1, bitmapTSH2,
-            bitmapDH1, bitmapDH2, bitmapDS1, bitmapDS2, bitmapDT1, bitmapDT2, bitmapSH1, bitmapSH2, bitmapTH1,bitmapTH2,bitmapTS1,bitmapTS2
-            ,bitmapD1,bitmapD2,bitmapT1,bitmapT2,bitmapS1,bitmapS2,bitmapH1,bitmapH2,bitmapSmile1,bitmapSmile2,bitmapUsual1,bitmapUsual2, birdBreath1, birdBreath2;
+    private Bitmap fird, bitmapDTSH1, bitmapDTSH2, bitmapDTS1, bitmapDTS2, bitmapDTH1, bitmapDTH2, bitmapDSH1, bitmapDSH2, bitmapTSH1, bitmapTSH2, bitmapDH1, bitmapDH2, bitmapDS1, bitmapDS2, bitmapDT1, bitmapDT2, bitmapSH1, bitmapSH2, bitmapTH1, bitmapTH2, bitmapTS1, bitmapTS2, bitmapD1, bitmapD2, bitmapT1, bitmapT2, bitmapS1, bitmapS2, bitmapH1, bitmapH2, bitmapSmile1, bitmapSmile2, bitmapUsual1, bitmapUsual2, birdBreath1, birdBreath2;
     private Bitmap bitmapDarkbg,bitmapDarkkust;
     private Bitmap sleepDarkButtonBitmap[] = new Bitmap[61], eatDarkButtonBitmap[] = new Bitmap[11], playDarkButtonBitmap[] = new Bitmap[16],washDarkButtonBitmap;
     private Bitmap poopBitmap[] = new Bitmap[5];
@@ -135,8 +131,9 @@ public class DrawThread extends Thread {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private int timePassed;
-    private boolean loading = true;
+    private boolean loading = true, gettingLevel = false;
     private boolean lvlCheck = false;
+    private boolean secondTimeIsPassed = false;
     private MediaPlayer mediaPlayerHappy, mediaPlayerHit, mediaPlayerWash;
     private int playBitmapId[] = {0 ,R.drawable.xaxacox1,R.drawable.xaxacox2,R.drawable.xaxacox3,R.drawable.xaxacox4,R.drawable.xaxacox5,R.drawable.xaxacox6,R.drawable.xaxacox7,R.drawable.xaxacox8,R.drawable.xaxacox9,R.drawable.xaxacox10,R.drawable.xaxacox11,R.drawable.xaxacox12,R.drawable.xaxacox13,R.drawable.xaxacox14,R.drawable.xaxacox15,R.drawable.xaxacox16,R.drawable.xaxacox17,R.drawable.xaxacox18,R.drawable.xaxacox19,R.drawable.xaxacox20};
     private int playBitmapDId[] = {0,R.drawable.d_xaxacox1,R.drawable.d_xaxacox2,R.drawable.d_xaxacox3,R.drawable.d_xaxacox4,R.drawable.d_xaxacox5,R.drawable.d_xaxacox6,R.drawable.d_xaxacox7,R.drawable.d_xaxacox8,R.drawable.d_xaxacox9,R.drawable.d_xaxacox10,R.drawable.d_xaxacox11,R.drawable.d_xaxacox12,R.drawable.d_xaxacox13,R.drawable.d_xaxacox14,R.drawable.d_xaxacox15,R.drawable.d_xaxacox16,R.drawable.d_xaxacox17,R.drawable.d_xaxacox18,R.drawable.d_xaxacox19,R.drawable.d_xaxacox20};
@@ -194,10 +191,10 @@ public class DrawThread extends Thread {
     private int poopingBitmapTId[] = {0,R.drawable.p_t1,R.drawable.p_t2,R.drawable.p_t3,R.drawable.p_t4,R.drawable.p_t5,R.drawable.p_t6,R.drawable.p_t7,R.drawable.p_t8,R.drawable.p_t9,R.drawable.p_t10};
     private int getFoinBitmapId[] = {R.drawable.foin7,R.drawable.foin1,R.drawable.foin2,R.drawable.foin3,R.drawable.foin4,R.drawable.foin5,R.drawable.foin6,R.drawable.foin7};
     private int poopBitmapId[] = {0,R.drawable.qaq1,R.drawable.qaq2,R.drawable.qaq3,R.drawable.qaq4};
-    private int levelBitmapId[] = {0,R.drawable.level1,R.drawable.level2,R.drawable.level3,R.drawable.level4,R.drawable.level5,R.drawable.level6,R.drawable.level7,R.drawable.level8,R.drawable.level9,R.drawable.level10,R.drawable.level11,R.drawable.level12,R.drawable.level13,R.drawable.level14,R.drawable.level15,R.drawable.level16,R.drawable.level17,R.drawable.level18};
+    private int levelBitmapId[] = {0,R.drawable.level1,R.drawable.level2,R.drawable.level3,R.drawable.level4,R.drawable.level5,R.drawable.level6,R.drawable.level7,R.drawable.level8,R.drawable.level9,R.drawable.level10,R.drawable.level11,R.drawable.level12,R.drawable.level13,R.drawable.level14,R.drawable.level15,R.drawable.level16,R.drawable.level17,R.drawable.level18, R.drawable.level19, R.drawable.level20, R.drawable.level21, R.drawable.level22, R.drawable.level23, R.drawable.level24, R.drawable.level25, R.drawable.level26, R.drawable.level27, R.drawable.level28, R.drawable.level29, R.drawable.level30, R.drawable.level31, R.drawable.level32, R.drawable.level33, R.drawable.level34, R.drawable.level35, R.drawable.level36, R.drawable.level37, R.drawable.level38, R.drawable.level39, R.drawable.level40, R.drawable.level41, R.drawable.level42, R.drawable.level43, R.drawable.level44, R.drawable.level45, R.drawable.level46, R.drawable.level47, R.drawable.level48, R.drawable.level49, R.drawable.level50};
     //private int playBitmapFireId[] = {0 ,R.drawable.xaxacox1_boc,R.drawable.xaxacox2_boc,R.drawable.xaxacox3_boc,R.drawable.xaxacox4_boc,R.drawable.xaxacox5_boc,R.drawable.xaxacox6_boc,R.drawable.xaxacox7_boc,R.drawable.xaxacox8_boc,R.drawable.xaxacox9_boc,R.drawable.xaxacox10_boc,R.drawable.xaxacox11_boc,R.drawable.xaxacox12_boc,R.drawable.xaxacox13_boc,R.drawable.xaxacox14_boc,R.drawable.xaxacox15_boc,R.drawable.xaxacox16_boc,R.drawable.xaxacox17_boc,R.drawable.xaxacox18_boc,R.drawable.xaxacox19_boc,R.drawable.xaxacox20_boc};
     //private int playBitmapDFireId[] = {0,R.drawable.d_xaxacox1_boc,R.drawable.d_xaxacox2_boc,R.drawable.d_xaxacox3_boc,R.drawable.d_xaxacox4_boc,R.drawable.d_xaxacox5_boc,R.drawable.d_xaxacox6_boc,R.drawable.d_xaxacox7_boc,R.drawable.d_xaxacox8_boc,R.drawable.d_xaxacox9_boc,R.drawable.d_xaxacox10_boc,R.drawable.d_xaxacox11_boc,R.drawable.d_xaxacox12_boc,R.drawable.d_xaxacox13_boc,R.drawable.d_xaxacox14_boc,R.drawable.d_xaxacox15_boc,R.drawable.d_xaxacox16_boc,R.drawable.d_xaxacox17_boc,R.drawable.d_xaxacox18_boc,R.drawable.d_xaxacox19_boc,R.drawable.d_xaxacox20_boc};
-    //private int playBitmapTIFired[] = {0,R.drawable.xaxacox1_boc,R.drawable.xaxacox2_boc,R.drawable.xaxacox3_boc,R.drawable.xaxacox4_boc,R.drawable.xaxacox5_boc,R.drawable.xaxacox6_boc,R.drawable.xaxacox7_boc,R.drawable.xaxacox8_boc,R.drawable.xaxacox9_boc,R.drawable.xaxacox10_boc,R.drawable.xaxacox11_boc,R.drawable.xaxacox12_boc,R.drawable.xaxacox13_boc,R.drawable.xaxacox14_boc,R.drawable.xaxacox15_boc,R.drawable.xaxacox16_boc,R.drawable.xaxacox17_boc,R.drawable.xaxacox18_boc,R.drawable.t_xaxacox19_boc,R.drawable.t_xaxacox20_boc};
+    //private int playBitmapTFireId[] = {0,R.drawable.xaxacox1_boc,R.drawable.xaxacox2_boc,R.drawable.xaxacox3_boc,R.drawable.xaxacox4_boc,R.drawable.xaxacox5_boc,R.drawable.xaxacox6_boc,R.drawable.xaxacox7_boc,R.drawable.xaxacox8_boc,R.drawable.xaxacox9_boc,R.drawable.xaxacox10_boc,R.drawable.xaxacox11_boc,R.drawable.xaxacox12_boc,R.drawable.xaxacox13_boc,R.drawable.xaxacox14_boc,R.drawable.xaxacox15_boc,R.drawable.xaxacox16_boc,R.drawable.xaxacox17_boc,R.drawable.xaxacox18_boc,R.drawable.t_xaxacox19_boc,R.drawable.t_xaxacox20_boc};
     //private int playBitmapDTFireId[] = {0,R.drawable.d_xaxacox1_boc,R.drawable.d_xaxacox2_boc,R.drawable.d_xaxacox3_boc,R.drawable.d_xaxacox4_boc,R.drawable.d_xaxacox5_boc,R.drawable.d_xaxacox6_boc,R.drawable.d_xaxacox7_boc,R.drawable.d_xaxacox8_boc,R.drawable.d_xaxacox9_boc,R.drawable.d_xaxacox10_boc,R.drawable.d_xaxacox11_boc,R.drawable.d_xaxacox12_boc,R.drawable.d_xaxacox13_boc,R.drawable.d_xaxacox14_boc,R.drawable.d_xaxacox15_boc,R.drawable.d_xaxacox16_boc,R.drawable.d_xaxacox17_boc,R.drawable.d_xaxacox18_boc,R.drawable.d_t_xaxacox19_boc,R.drawable.d_t_xaxacox20_boc};
     //private int flyBitmapUsualFireId[] = {0,R.drawable.trnox_cit1_boc,R.drawable.trnox_cit2_boc,R.drawable.trnox_cit3_boc,R.drawable.trnox_cit4_boc};
     //private int flyBitmapDHFireId[] = {0,R.drawable.f_d_h1_boc,R.drawable.f_d_h2_boc,R.drawable.f_d_h3_boc,R.drawable.f_d_h4_boc};
@@ -222,17 +219,14 @@ public class DrawThread extends Thread {
     //private int hitBitmapDHFireId[] = {0,R.drawable.ht_d_h1_boc,R.drawable.ht_d_h2_boc,R.drawable.ht_d_h3_boc,R.drawable.ht_d_h4_boc,R.drawable.ht_d_h5_boc,R.drawable.ht_d_h6_boc,R.drawable.ht_d_h7_boc,R.drawable.ht_d_h8_boc,R.drawable.ht_d_h9_boc,R.drawable.ht_d_h10_boc,R.drawable.ht_d_h11_boc,R.drawable.ht_d_h12_boc,R.drawable.ht_d_h13_boc,R.drawable.ht_d_h14_boc};
     //private int washBitmapFireId[] = {0,R.drawable.lvacvox1_boc,R.drawable.lvacvox2_boc,R.drawable.lvacvox3_boc,R.drawable.lvacvox4_boc,R.drawable.lvacvox5_boc,R.drawable.lvacvox6_boc,R.drawable.lvacvox7_boc,R.drawable.lvacvox8_boc,R.drawable.lvacvox9_boc,R.drawable.lvacvox10_boc,R.drawable.lvacvox11_boc,R.drawable.lvacvox12_boc,R.drawable.lvacvox13_boc,R.drawable.lvacvox14_boc,R.drawable.lvacvox15_boc,R.drawable.lvacvox16_boc,R.drawable.lvacvox17_boc,R.drawable.lvacvox18_boc,R.drawable.lvacvox19_boc,R.drawable.lvacvox20_boc,R.drawable.lvacvox21_boc,R.drawable.lvacvox22_boc,R.drawable.lvacvox23_boc,R.drawable.lvacvox24_boc,R.drawable.lvacvox25_boc,R.drawable.lvacvox26_boc,R.drawable.lvacvox27_boc,R.drawable.lvacvox28_boc,R.drawable.lvacvox29_boc,R.drawable.lvacvox30_boc,R.drawable.lvacvox31_boc,R.drawable.lvacvox32_boc,R.drawable.lvacvox33_boc,R.drawable.lvacvox34_boc,R.drawable.lvacvox35_boc,R.drawable.lvacvox36_boc,R.drawable.lvacvox37_boc,R.drawable.lvacvox38_boc,R.drawable.lvacvox39_boc,R.drawable.lvacvox40_boc,R.drawable.lvacvox41_boc,R.drawable.lvacvox42_boc,R.drawable.lvacvox43_boc,R.drawable.lvacvox44_boc,R.drawable.lvacvox45_boc,R.drawable.lvacvox46_boc,R.drawable.lvacvox47_boc,R.drawable.lvacvox48_boc};
     //private int eatBitmapFireId[] = {0, R.drawable.utox1_boc,R.drawable.utox2_boc,R.drawable.utox3_boc,R.drawable.utox4_boc,R.drawable.utox5_boc,R.drawable.utox6_boc,R.drawable.utox7_boc, R.drawable.utox8_boc,R.drawable.utox9_boc, R.drawable.utox10_boc};
-    //private int eatBitmapDFireId[] = {0,R.drawable.e_d_1_boc,R.drawable.e_d_2_boc,R.drawable.e_d_3_boc,R.drawable.e_d_4_boc,R.drawable.e_d_5_boc,R.drawable.e_d_6_boc,R.drawable.e_d_7_boc,R.drawable.e_d_8_boc,R.drawable.e_d_9_boc,R.drawable.e_d_10_boc};
-    //private int eatBitmapDSFireId[] = {0,R.drawable.e_d_s_1_boc,R.drawable.e_d_s_2_boc,R.drawable.e_d_s_3_boc,R.drawable.e_d_s_4_boc,R.drawable.e_d_s_5_boc,R.drawable.e_d_s_6_boc,R.drawable.e_d_s_7_boc,R.drawable.e_d_s_8_boc,R.drawable.e_d_s_9_boc,R.drawable.e_d_s_10_boc};
-    //private int eatBitmapDTFireId[] = {0,R.drawable.e_d_t_1_boc,R.drawable.e_d_t_2_boc,R.drawable.e_d_t_3_boc,R.drawable.e_d_t_4_boc,R.drawable.e_d_t_5_boc,R.drawable.e_d_t_6_boc,R.drawable.e_d_t_7_boc,R.drawable.e_d_t_8_boc,R.drawable.e_d_t_9_boc,R.drawable.e_d_t_10_boc};
-    //private int eatBitmapDTSFireId[] = {0,R.drawable.e_d_t_s_1_boc,R.drawable.e_d_t_s_2_boc,R.drawable.e_d_t_s_3_boc,R.drawable.e_d_t_s_4_boc,R.drawable.e_d_t_s_5_boc,R.drawable.e_d_t_s_6_boc,R.drawable.e_d_t_s_7_boc,R.drawable.e_d_t_s_8_boc,R.drawable.e_d_t_s_9_boc,R.drawable.e_d_t_s_10_boc};
-    //private int eatBitmapSFireId[] = {0,R.drawable.e_s_1_boc,R.drawable.e_s_2_boc,R.drawable.e_s_3_boc,R.drawable.e_s_4_boc,R.drawable.e_s_5_boc,R.drawable.e_s_6_boc,R.drawable.e_s_7_boc,R.drawable.e_s_8_boc,R.drawable.e_s_9_boc,R.drawable.e_s_10_boc};
-    //private int eatBitmapTFireId[] = {0,R.drawable.e_t_1_boc,R.drawable.e_t_2_boc,R.drawable.e_t_3_boc,R.drawable.e_t_4_boc,R.drawable.e_t_5_boc,R.drawable.e_t_6_boc,R.drawable.e_t_7_boc,R.drawable.e_t_8_boc,R.drawable.e_t_9_boc,R.drawable.e_t_10_boc};
+    //private int eatBitmapDFireId[] = {0,R.drawable.e_d1_boc,R.drawable.e_d2_boc,R.drawable.e_d3_boc,R.drawable.e_d4_boc,R.drawable.e_d5_boc,R.drawable.e_d6_boc,R.drawable.e_d7_boc,R.drawable.e_d8_boc,R.drawable.e_d9_boc,R.drawable.e_d10_boc};
+    //private int eatBitmapDSFireId[] = {0,R.drawable.e_d_s1_boc,R.drawable.e_d_s2_boc,R.drawable.e_d_s3_boc,R.drawable.e_d_s4_boc,R.drawable.e_d_s5_boc,R.drawable.e_d_s6_boc,R.drawable.e_d_s7_boc,R.drawable.e_d_s8_boc,R.drawable.e_d_s9_boc,R.drawable.e_d_s10_boc};
+    //private int eatBitmapDTFireId[] = {0,R.drawable.e_d_t1_boc,R.drawable.e_d_t2_boc,R.drawable.e_d_t3_boc,R.drawable.e_d_t4_boc,R.drawable.e_d_t5_boc,R.drawable.e_d_t6_boc,R.drawable.e_d_t7_boc,R.drawable.e_d_t8_boc,R.drawable.e_d_t9_boc,R.drawable.e_d_t10_boc};
+    //private int eatBitmapDTSFireId[] = {0,R.drawable.e_d_t_s1_boc,R.drawable.e_d_t_s2_boc,R.drawable.e_d_t_s3_boc,R.drawable.e_d_t_s4_boc,R.drawable.e_d_t_s5_boc,R.drawable.e_d_t_s6_boc,R.drawable.e_d_t_s7_boc,R.drawable.e_d_t_s8_boc,R.drawable.e_d_t_s9_boc,R.drawable.e_d_t_s10_boc};
+    //private int eatBitmapSFireId[] = {0,R.drawable.e_s1_boc,R.drawable.e_s2_boc,R.drawable.e_s3_boc,R.drawable.e_s4_boc,R.drawable.e_s5_boc,R.drawable.e_s6_boc,R.drawable.e_s7_boc,R.drawable.e_s8_boc,R.drawable.e_s9_boc,R.drawable.e_s10_boc};
+    //private int eatBitmapTFireId[] = {0,R.drawable.e_t1_boc,R.drawable.e_t2_boc,R.drawable.e_t3_boc,R.drawable.e_t4_boc,R.drawable.e_t5_boc,R.drawable.e_t6_boc,R.drawable.e_t7_boc,R.drawable.e_t8_boc,R.drawable.e_t9_boc,R.drawable.e_t10_boc};
     //private int eatBitmapTSFireId[] = {0,R.drawable.e_t_s_1_boc,R.drawable.e_t_s_2_boc,R.drawable.e_t_s_3_boc,R.drawable.e_t_s_4_boc,R.drawable.e_t_s_5_boc,R.drawable.e_t_s_6_boc,R.drawable.e_t_s_7_boc,R.drawable.e_t_s_8_boc,R.drawable.e_t_s_9_boc,R.drawable.e_t_s_10_boc};
-    //private int eatBitmapSmileFireId[] = {0,R.drawable.e_hp_1_boc,R.drawable.e_hp_2_boc,R.drawable.e_hp_3_boc,R.drawable.e_hp_4_boc,R.drawable.e_hp_5_boc,R.drawable.e_hp_6_boc,R.drawable.e_hp_7_boc,R.drawable.e_hp_8_boc,R.drawable.e_hp_9_boc,R.drawable.e_hp_10_boc};
-    //private int eatDarkButtonBitmapFireId[]={R.drawable.chervyak_boc,R.drawable.mc1_boc,R.drawable.mc2_boc,R.drawable.mc3_boc,R.drawable.mc4_boc,R.drawable.mc5_boc,R.drawable.mc6_boc,R.drawable.mc7_boc,R.drawable.mc8_boc,R.drawable.mc9_boc,R.drawable.mc10_boc};
-    //private int playDarkButtonBitmapFireId[] = {R.drawable.petur_boc,R.drawable.mp1_boc,R.drawable.mp2_boc,R.drawable.mp3_boc,R.drawable.mp4_boc,R.drawable.mp5_boc,R.drawable.mp6_boc,R.drawable.mp7_boc,R.drawable.mp8_boc,R.drawable.mp9_boc,R.drawable.mp10_boc,R.drawable.mp11_boc,R.drawable.mp12_boc,R.drawable.mp13_boc,R.drawable.mp14_boc,R.drawable.mp15_boc};
-    //private int sleepDarkButtonBitmapFireId[] = {R.drawable.qnel_boc, R.drawable.mq1_boc, R.drawable.mq2_boc, R.drawable.mq3_boc, R.drawable.mq4_boc, R.drawable.mq5_boc, R.drawable.mq6_boc, R.drawable.mq7_boc, R.drawable.mq8_boc, R.drawable.mq9_boc,R.drawable.mq10_boc,R.drawable.mq11_boc,R.drawable.mq12_boc,R.drawable.mq13_boc,R.drawable.mq14_boc,R.drawable.mq15_boc,R.drawable.mq16_boc,R.drawable.mq17_boc,R.drawable.mq18_boc,R.drawable.mq19_boc,R.drawable.mq20_boc,R.drawable.mq21_boc,R.drawable.mq22_boc,R.drawable.mq23_boc,R.drawable.mq24_boc,R.drawable.mq25_boc,R.drawable.mq26_boc,R.drawable.mq27_boc,R.drawable.mq28_boc,R.drawable.mq29_boc,R.drawable.mq30_boc,R.drawable.mq31_boc,R.drawable.mq32_boc,R.drawable.mq33_boc,R.drawable.mq34_boc,R.drawable.mq35_boc,R.drawable.mq36_boc,R.drawable.mq37_boc,R.drawable.mq38_boc,R.drawable.mq39_boc,R.drawable.mq40_boc,R.drawable.mq41_boc,R.drawable.mq42_boc,R.drawable.mq43_boc,R.drawable.mq44_boc,R.drawable.mq45_boc,R.drawable.mq46_boc,R.drawable.mq47_boc,R.drawable.mq48_boc,R.drawable.mq49_boc,R.drawable.mq50_boc,R.drawable.mq51_boc,R.drawable.mq52_boc,R.drawable.mq53_boc,R.drawable.mq54_boc,R.drawable.mq55_boc,R.drawable.mq56_boc,R.drawable.mq57_boc,R.drawable.mq58_boc,R.drawable.mq59_boc,R.drawable.mq60_boc};
+    //private int eatBitmapSmileFireId[] = {0,R.drawable.e_hp1_boc,R.drawable.e_hp2_boc,R.drawable.e_hp3_boc,R.drawable.e_hp4_boc,R.drawable.e_hp5_boc,R.drawable.e_hp6_boc,R.drawable.e_hp7_boc,R.drawable.e_hp8_boc,R.drawable.e_hp9_boc,R.drawable.e_hp10_boc};
     //private int poopingBitmapUsualFireId[]={0,R.drawable.qaqox1_boc,R.drawable.qaqox2_boc,R.drawable.qaqox3_boc,R.drawable.qaqox4_boc,R.drawable.qaqox5_boc,R.drawable.qaqox6_boc,R.drawable.qaqox7_boc,R.drawable.qaqox8_boc,R.drawable.qaqox9_boc,R.drawable.qaqox10_boc};
     //private int poopingBitmapDHFireId[] =  {0,R.drawable.p_d_h1_boc,R.drawable.p_d_h2_boc,R.drawable.p_d_h3_boc,R.drawable.p_d_h4_boc,R.drawable.p_d_h5_boc,R.drawable.p_d_h6_boc,R.drawable.p_d_h7_boc,R.drawable.p_d_h8_boc,R.drawable.p_d_h9_boc,R.drawable.p_d_h10_boc};
     //private int poopingBitmapDSHFireId[] = {0,R.drawable.p_d_s_h1_boc,R.drawable.p_d_s_h2_boc,R.drawable.p_d_s_h3_boc,R.drawable.p_d_s_h4_boc,R.drawable.p_d_s_h5_boc,R.drawable.p_d_s_h6_boc,R.drawable.p_d_s_h7_boc,R.drawable.p_d_s_h8_boc,R.drawable.p_d_s_h9_boc,R.drawable.p_d_s_h10_boc};
@@ -250,63 +244,25 @@ public class DrawThread extends Thread {
     //private int poopingBitmapTSFireId[] = {0,R.drawable.p_t_s1_boc,R.drawable.p_t_s2_boc,R.drawable.p_t_s3_boc,R.drawable.p_t_s4_boc,R.drawable.p_t_s5_boc,R.drawable.p_t_s6_boc,R.drawable.p_t_s7_boc,R.drawable.p_t_s8_boc,R.drawable.p_t_s9_boc,R.drawable.p_t_s10_boc};
     //private int poopingBitmapTFireId[] = {0,R.drawable.p_t1_boc,R.drawable.p_t2_boc,R.drawable.p_t3_boc,R.drawable.p_t4_boc,R.drawable.p_t5_boc,R.drawable.p_t6_boc,R.drawable.p_t7_boc,R.drawable.p_t8_boc,R.drawable.p_t9_boc,R.drawable.p_t10_boc};
     private Bitmap loadScreen;
+    private int skinId = 0;
     private boolean loadScreenLoaded;
     public DrawThread(){}
-    public DrawThread(Context context, SurfaceHolder surfaceHolder, MyDraw myDraw, int timePassed) {
+    public DrawThread(Context context, SurfaceHolder surfaceHolder, MyDraw myDraw, int timePassed, int foin, int skinId) {
         this.view = view;
         this.timePassed = timePassed;
         this.surfaceHolder = surfaceHolder;
         this.context = context;
+        this.foin = foin;
+        this.skinId = skinId;
         this.res = context.getResources();
         lvlCheckTimePassed = timePassed;
+        sharedPreferences = ((Activity)context).getPreferences(Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        editor.putInt("FOIN",foin);
+        editor.putInt("SKINID",skinId);
+        editor.apply();
     }
 
-    private void takeScreenshot() {
-        try {
-            // image naming and path  to include sd card  appending name you choose for file
-            String mPath = Environment.getExternalStorageDirectory().toString() + "/DCIM/" +IMAGE_NAME;
-            Log.i("path",mPath);
-            // create bitmap screen capture
-            View v1 = ((Activity)context).getWindow().getDecorView().getRootView();
-            v1.setDrawingCacheEnabled(true);
-            bitmapScreen = Bitmap.createBitmap(v1.getDrawingCache());
-            v1.setDrawingCacheEnabled(false);
-            File imageFile = new File(mPath);
-            FileOutputStream outputStream = new FileOutputStream(imageFile);
-            int quality = 100;
-            bitmapScreen.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
-            outputStream.flush();
-            outputStream.close();
-            m6 = 1;
-        } catch (Throwable e) {
-            // Several error may come out with file handling or DOM
-            e.printStackTrace();
-        }
-    }
-    private void sendScreen(){
-        String mPath = Environment.getExternalStorageDirectory().toString() + "/DCIM/";
-        try {
-            File f=new File(mPath, IMAGE_NAME);
-            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
-            Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.setType("image/*");
-            sendIntent.putExtra(Intent.EXTRA_STREAM, getImageUri(context, b));
-            context.startActivity(Intent.createChooser(sendIntent," "));
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-    }
-    private Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        int rand = (int) (Math.random() * 10000);
-        String str = rand + "";
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, str, null);
-        return Uri.parse(path);
-    }
     public void setTouch(int x, int y){
         lastTouchX = x;
         lastTouchY = y;
@@ -321,8 +277,7 @@ public class DrawThread extends Thread {
         mediaPlayerHappy = MediaPlayer.create(context, R.raw.happysong);
         mediaPlayerHit = MediaPlayer.create(context, R.raw.hitsong);
         mediaPlayerWash = MediaPlayer.create(context,R.raw.washsong);
-        sharedPreferences = ((Activity)context).getPreferences(Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
+        skinId = sharedPreferences.getInt("SKINID",0);
         foin = sharedPreferences.getInt("FOIN", 0);
         level = sharedPreferences.getInt("LEVEL", 1);
         levelColor = ResourcesCompat.getColor(context.getResources(),R.color.life,null);
@@ -376,128 +331,248 @@ public class DrawThread extends Thread {
         bitmapDarkbg = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.background2), canvas.getWidth(), canvas.getHeight(), true);
         bitmapkust = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.kustik), canvas.getWidth() * 245 / 1050, canvas.getHeight() * 180 / 540, true);
         bitmapDarkkust = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.kustik2), canvas.getWidth() * 245 / 1050, canvas.getHeight() * 180 / 540, true);
-        bitmapDirtIcon = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.kextik), canvas.getWidth() * 60 / 1050, canvas.getHeight() * 51 / 540, true);
-        bitmapHungryIcon = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.tarelka), canvas.getWidth() * 46 / 1050, canvas.getHeight() * 33 / 540, true);
-        bitmapSleepIcon = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.zzz), canvas.getWidth() * 52 / 1050, canvas.getHeight() * 57 / 540, true);
-        bitmapHappyIcon = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.smilik), canvas.getWidth() * 34 / 1050, canvas.getHeight() * 35 / 540, true);
-        bitmapUsual1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sovorakan1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapUsual2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sovorakan2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapDTSH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_s_h_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapDTSH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_s_h_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapDTS1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_s_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapDTS2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_s_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapDTH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_h_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapDTH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_h_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapDSH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_s_h_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapDSH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_s_h_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapTSH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.t_s_h_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapTSH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.t_s_h_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapDH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_h_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapDH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_h_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapDS1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_s_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapDS2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_s_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapDT1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapDT2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapSH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.s_h_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapSH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.s_h_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapTH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.t_h_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapTH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.t_h_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapTS1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.t_s_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapTS2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.t_s_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapD1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.kextot1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapD2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.kextot2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapT1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.hognac1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapT2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.hognac2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapS1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.txur1) , (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapS2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.txur2) , (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sovac1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sovac2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapSmile1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.urax1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        bitmapSmile2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.urax2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
-        sleepUsual1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.qnac1), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepUsual2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.qnac2), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepDH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d_h1), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepDH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d_h2), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepDSH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d_s_h1), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepDSH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d_s_h2), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepDS1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d_s1), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepDS2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d_s2), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepD1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d1), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepD2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d2), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_h1), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_h2), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepSmile1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_hp1), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepSmile2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_hp2), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepSH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_s_h1), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepSH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_s_h2), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepS1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_s1), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
-        sleepS2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_s2), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+        bitmapDirtIcon = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.kextik), canvas.getWidth() * 60 / 1050, canvas.getHeight() * 51 / 540, true);
+        bitmapHungryIcon = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.tarelka), canvas.getWidth() * 46 / 1050, canvas.getHeight() * 33 / 540, true);
+        bitmapSleepIcon = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.zzz), canvas.getWidth() * 52 / 1050, canvas.getHeight() * 57 / 540, true);
+        bitmapHappyIcon = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.smilik), canvas.getWidth() * 34 / 1050, canvas.getHeight() * 35 / 540, true);
+        if(skinId == 0 || skinId == 1) {
+            bitmapUsual1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.sovorakan1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapUsual2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.sovorakan2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapDTSH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.d_t_s_h_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapDTSH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.d_t_s_h_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapDTS1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.d_t_s_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapDTS2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.d_t_s_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapDTH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.d_t_h_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapDTH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.d_t_h_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapDSH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.d_s_h_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapDSH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.d_s_h_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapTSH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.t_s_h_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapTSH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.t_s_h_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapDH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.d_h_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapDH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.d_h_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapDS1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.d_s_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapDS2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.d_s_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapDT1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.d_t_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapDT2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.d_t_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapSH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.s_h_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapSH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.s_h_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapTH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.t_h_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapTH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.t_h_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapTS1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.t_s_1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapTS2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.t_s_2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapD1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.kextot1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapD2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.kextot2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapT1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.hognac1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapT2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.hognac2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapS1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.txur1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapS2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.txur2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.sovac1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.sovac2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapSmile1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.urax1), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            bitmapSmile2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.urax2), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            sleepUsual1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.qnac1), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            sleepUsual2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.qnac2), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            sleepDH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.sl_d_h1), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            sleepDH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.sl_d_h2), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            sleepDSH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.sl_d_s_h1), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            sleepDSH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.sl_d_s_h2), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            sleepDS1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.sl_d_s1), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            sleepDS2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.sl_d_s2), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            sleepD1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.sl_d1), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            sleepD2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.sl_d2), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            sleepH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.sl_h1), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            sleepH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.sl_h2), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            sleepSmile1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.sl_hp1), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            sleepSmile2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.sl_hp2), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            sleepSH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.sl_s_h1), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            sleepSH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.sl_s_h2), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            sleepS1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.sl_s1), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            sleepS2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.sl_s2), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            for (int i = 1; i < 51; i++) {
+                levelBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,levelBitmapId[i]), canvas.getWidth() * 45 / 1050, canvas.getHeight() * 45 / 540, true);
+            }
+            for (int i = 1; i < 11; i++) {
+                eatBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+                eatBitmapSmile[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapSmileId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+                eatBitmapD[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapDId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+                eatBitmapDS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapDSId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+                eatBitmapDT[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapDTId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+                eatBitmapDTS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapDTSId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+                eatBitmapS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapSId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+                eatBitmapT[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapTId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+                eatBitmapTS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapTSId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+                poopingBitmapUsual[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapUsualId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+                poopingBitmapDTSH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDTSHId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+                poopingBitmapDSH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDSHId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+                poopingBitmapDTH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDTHId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+                poopingBitmapDTS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDTSId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+                poopingBitmapTHS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapTHSId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+                poopingBitmapDH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDHId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+                poopingBitmapDT[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDTId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+                poopingBitmapDS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDSId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+                poopingBitmapD[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+                poopingBitmapTH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapTHId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+                poopingBitmapHS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapHSId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+                poopingBitmapTS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapTSId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+                poopingBitmapT[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapTId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+                poopingBitmapH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapHId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+                poopingBitmapS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapSId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            }
+            for (int i = 1; i < 21; i++) {
+                playBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), playBitmapId[i]), canvas.getWidth() * 194 / 1050, canvas.getHeight() * 172 / 540, true);
+                playBitmapD[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), playBitmapDId[i]), canvas.getWidth() * 194 / 1050, canvas.getHeight() * 172 / 540, true);
+                playBitmapDT[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), playBitmapDTId[i]), canvas.getWidth() * 194 / 1050, canvas.getHeight() * 172 / 540, true);
+                playBitmapT[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), playBitmapTId[i]), canvas.getWidth() * 194 / 1050, canvas.getHeight() * 172 / 540, true);
+            }
+            for (int i = 1; i < 5; i++) {
+                flyBitmapSmile[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapSmileId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+                flyBitmapDH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapDHId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+                flyBitmapDS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapDSId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+                flyBitmapD[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapDId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+                flyBitmapH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapHId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+                flyBitmapSDH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapSDHId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+                flyBitmapSH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapSHId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+                flyBitmapS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapSId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+                flyBitmapTDH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTDHId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+                flyBitmapTDSH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTDSHId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+                flyBitmapTDS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTDSId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+                flyBitmapTD[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTDId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+                flyBitmapTH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTHId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+                flyBitmapTSH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTSHId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+                flyBitmapTS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTSId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+                flyBitmapT[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+                flyBitmapUsual[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapUsualId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+                poopBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), poopBitmapId[i]), canvas.getWidth() * 94 / 1050, canvas.getHeight() * 94 / 540, true);
+            }
+            for (int i = 1; i < 15; i++) {
+                hitBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), hitBitmapId[i]),(int)(canvas.getWidth() * birdWidth),(int)(canvas.getHeight()*birdHeight),true);
+                hitBitmapD[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), hitBitmapDId[i]),(int)(canvas.getWidth() * birdWidth),(int)(canvas.getHeight()*birdHeight),true);
+                hitBitmapH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), hitBitmapHId[i]),(int)(canvas.getWidth() * birdWidth),(int)(canvas.getHeight()*birdHeight),true);
+                hitBitmapDH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), hitBitmapDHId[i]),(int)(canvas.getWidth() * birdWidth),(int)(canvas.getHeight()*birdHeight),true);
+            }
+            for (int i = 1; i < 49; i++) washBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),washBitmapId[i]), canvas.getWidth() * 341 / 1050, canvas.getHeight() * 378 / 540, true);
+        }
+        if(skinId == 1) {
+            //bitmapUsual1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sovorakan1_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapUsual2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sovorakan2_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapDTSH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_s_h_1_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapDTSH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_s_h_2_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapDTS1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_s_1_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapDTS2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_s_2_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapDTH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_h_1_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapDTH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_h_2_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapDSH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_s_h_1_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapDSH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_s_h_2_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapTSH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.t_s_h_1_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapTSH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.t_s_h_2_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapDH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_h_1_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapDH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_h_2_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapDS1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_s_1_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapDS2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_s_2_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapDT1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_1_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapDT2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.d_t_2_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapSH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.s_h_1_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapSH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.s_h_2_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapTH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.t_h_1_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapTH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.t_h_2_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapTS1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.t_s_1_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapTS2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.t_s_2_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapD1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.kextot1_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapD2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.kextot2_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapT1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.hognac1_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapT2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.hognac2_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapS1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.txur1_boc) , (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapS2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.txur2_boc) , (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sovac1_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sovac2_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapSmile1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.urax1_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //bitmapSmile2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.urax2_boc), (int) (birdWidth * canvas.getWidth()), (int) (canvas.getHeight() * birdHeight), true);
+            //sleepUsual1= Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.qnac1_boc), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            //sleepUsual2= Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.qnac2_boc), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            //sleepDH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d_h1_boc), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            //sleepDH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d_h2_boc), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            //sleepDSH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d_s_h1_boc), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            //sleepDSH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d_s_h2_boc), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            //sleepDS1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d_s1_boc), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            //sleepDS2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d_s2_boc), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            //sleepD1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d1_boc), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            //sleepD2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_d2_boc), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            //sleepH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_h1_boc), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            //sleepH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_h2_boc), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            //sleepSmile1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_hp1_boc), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            //sleepSmile2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_hp2_boc), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            //sleepSH1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_s_h1_boc), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            //sleepSH2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_s_h2_boc), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            //sleepS1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_s1_boc), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            //sleepS2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.sl_s2_boc), canvas.getWidth() * 200 / 1050, canvas.getHeight() * 166 / 540, true);
+            //for (int i = 1; i < 11; i++) {
+            //    eatBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapFireId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+            //    eatBitmapSmile[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapSmileFireId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+            //    eatBitmapD[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapDFireId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+            //    eatBitmapDS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapDSFireId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+            //    eatBitmapDT[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapDTFireId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+            //    eatBitmapDTS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapDTSFireId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+            //    eatBitmapS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapSFireId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+            //    eatBitmapT[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapTFireId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+            //    eatBitmapTS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapTSFireId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
+            //    poopingBitmapUsual[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapUsualFireId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            //    poopingBitmapDTSH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDTSHFireId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            //    poopingBitmapDSH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDSHFireId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            //    poopingBitmapDTH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDTHFireId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            //    poopingBitmapDTS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDTSFireId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            //    poopingBitmapTHS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapTHSFireId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            //    poopingBitmapDH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDHFireId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            //    poopingBitmapDT[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDTFireId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            //    poopingBitmapDS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDSFireId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            //    poopingBitmapD[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDFireId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            //    poopingBitmapTH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapTHFireId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            //    poopingBitmapHS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapHSFireId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            //    poopingBitmapTS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapTSFireId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            //    poopingBitmapT[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapTFireId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            //    poopingBitmapH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapHFireId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            //    poopingBitmapS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapSFireId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
+            //}
+            //for (int i = 1; i < 21; i++) {
+            //    playBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), playBitmapFireId[i]), canvas.getWidth() * 194 / 1050, canvas.getHeight() * 172 / 540, true);
+            //    playBitmapD[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), playBitmapDFireId[i]), canvas.getWidth() * 194 / 1050, canvas.getHeight() * 172 / 540, true);
+            //    playBitmapDT[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), playBitmapDTFireId[i]), canvas.getWidth() * 194 / 1050, canvas.getHeight() * 172 / 540, true);
+            //    playBitmapT[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), playBitmapTFireId[i]), canvas.getWidth() * 194 / 1050, canvas.getHeight() * 172 / 540, true);
+            //}
+            //for (int i = 1; i < 5; i++) {
+            //    flyBitmapSmile[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapSmileFireId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            //    flyBitmapDH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapDHFireId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            //    flyBitmapDS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapDSFireId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            //    flyBitmapD[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapDFireId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            //    flyBitmapH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapHFireId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            //    flyBitmapSDH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapSDHFireId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            //    flyBitmapSH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapSHFireId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            //    flyBitmapS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapSFireId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            //    flyBitmapTDH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTDHFireId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            //    flyBitmapTDSH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTDSHFireId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            //    flyBitmapTDS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTDSFireId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            //    flyBitmapTD[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTDFireId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            //    flyBitmapTH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTHFireId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            //    flyBitmapTSH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTSHFireId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            //    flyBitmapTS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTSFireId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            //    flyBitmapT[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTFireId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            //    flyBitmapUsual[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapUsualFireId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
+            //    poopBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), poopBitmapId[i]), canvas.getWidth() * 94 / 1050, canvas.getHeight() * 94 / 540, true);
+            //}
+            //for (int i = 1; i < 15; i++) {
+            //    hitBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), hitBitmapFireId[i]),(int)(canvas.getWidth() * birdWidth),(int)(canvas.getHeight()*birdHeight),true);
+            //    hitBitmapD[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), hitBitmapDFireId[i]),(int)(canvas.getWidth() * birdWidth),(int)(canvas.getHeight()*birdHeight),true);
+            //    hitBitmapH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), hitBitmapHFireId[i]),(int)(canvas.getWidth() * birdWidth),(int)(canvas.getHeight()*birdHeight),true);
+            //    hitBitmapDH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), hitBitmapDHFireId[i]),(int)(canvas.getWidth() * birdWidth),(int)(canvas.getHeight()*birdHeight),true);
+            //}
+            //for (int i = 1; i < 49; i++) washBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),washBitmapFireId[i]), canvas.getWidth() * 341 / 1050, canvas.getHeight() * 378 / 540, true);
+
+        }
         foinBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),getFoinBitmapId[0]),  canvas.getWidth() * 137 / 1050, canvas.getHeight()* 134 / 540, true);
         shopButton = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.xanut),(int)(canvas.getWidth()*shopButtonWidth), (int)(canvas.getHeight()*shopButtonHeight),true);
         paintFoin.setTextSize((float) canvas.getWidth() * 20/1050);
-        for (int i = 1; i < 19; i++) {
+        for (int i = 1; i < 51; i++) {
             levelBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,levelBitmapId[i]), canvas.getWidth() * 45 / 1050, canvas.getHeight() * 45 / 540, true);
         }
-        for (int i = 1; i < 11; i++) {
-            eatBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
-            eatBitmapSmile[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapSmileId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
-            eatBitmapD[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapDId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
-            eatBitmapDS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapDSId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
-            eatBitmapDT[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapDTId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
-            eatBitmapDTS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapDTSId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
-            eatBitmapS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapSId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
-            eatBitmapT[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapTId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
-            eatBitmapTS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatBitmapTSId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * 283.5 / 540), true);
-            poopingBitmapUsual[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapUsualId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-            poopingBitmapDTSH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDTSHId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-            poopingBitmapDSH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDSHId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-            poopingBitmapDTH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDTHId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-            poopingBitmapDTS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDTSId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-            poopingBitmapTHS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapTHSId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-            poopingBitmapDH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDHId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-            poopingBitmapDT[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDTId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-            poopingBitmapDS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDSId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-            poopingBitmapD[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapDId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-            poopingBitmapTH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapTHId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-            poopingBitmapHS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapHSId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-            poopingBitmapTS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapTSId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-            poopingBitmapT[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapTId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-            poopingBitmapH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapHId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-            poopingBitmapS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources() ,poopingBitmapSId[i]), (int) (canvas.getWidth() * birdWidth), (int) (canvas.getHeight() * birdHeight), true);
-        }
-        for (int i = 1; i < 21; i++) {
-            playBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), playBitmapId[i]), canvas.getWidth() * 194 / 1050, canvas.getHeight() * 172 / 540, true);
-            playBitmapD[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), playBitmapDId[i]), canvas.getWidth() * 194 / 1050, canvas.getHeight() * 172 / 540, true);
-            playBitmapDT[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), playBitmapDTId[i]), canvas.getWidth() * 194 / 1050, canvas.getHeight() * 172 / 540, true);
-            playBitmapT[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), playBitmapTId[i]), canvas.getWidth() * 194 / 1050, canvas.getHeight() * 172 / 540, true);
-        }
-        for (int i = 1; i < 5; i++) {
-            flyBitmapSmile[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapSmileId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapDH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapDHId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapDS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapDSId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapD[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapDId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapHId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapSDH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapSDHId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapSH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapSHId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapSId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapTDH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTDHId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapTDSH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTDSHId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapTDS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTDSId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapTD[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTDId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapTH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTHId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapTSH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTSHId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapTS[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTSId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapT[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapTId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            flyBitmapUsual[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),flyBitmapUsualId[i]), canvas.getWidth() * 150 / 1050, canvas.getHeight() * 179 / 540, true);
-            poopBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), poopBitmapId[i]), canvas.getWidth() * 94 / 1050, canvas.getHeight() * 94 / 540, true);
-        }
-        for (int i = 1; i < 15; i++) {
-            hitBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), hitBitmapId[i]),(int)(canvas.getWidth() * birdWidth),(int)(canvas.getHeight()*birdHeight),true);
-            hitBitmapD[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), hitBitmapDId[i]),(int)(canvas.getWidth() * birdWidth),(int)(canvas.getHeight()*birdHeight),true);
-            hitBitmapH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), hitBitmapHId[i]),(int)(canvas.getWidth() * birdWidth),(int)(canvas.getHeight()*birdHeight),true);
-            hitBitmapDH[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), hitBitmapDHId[i]),(int)(canvas.getWidth() * birdWidth),(int)(canvas.getHeight()*birdHeight),true);
-        }
-        for (int i = 1; i < 49; i++) washBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),washBitmapId[i]), canvas.getWidth() * 341 / 1050, canvas.getHeight() * 378 / 540, true);
         for (int i = 0; i < 8; i++) getFoinBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),getFoinBitmapId[i]),  canvas.getWidth() * 137 / 1050, canvas.getHeight()* 134 / 540, true);
         for (int i = 0; i < 11; i++) eatDarkButtonBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), eatDarkButtonBitmapId[i]),(int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
         for (int i = 0; i < 16; i++) playDarkButtonBitmap[i] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),playDarkButtonBitmapId[i]), (int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
@@ -512,7 +587,6 @@ public class DrawThread extends Thread {
         playButtonBitmapPoop = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.xaxalu_knopkaa),(int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
         washButtonBitmapPoop = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.lvacvelu_knopkaa),(int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
         sleepButtonBitmapPoop = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.qnelu_knopkaa),(int)(canvas.getWidth()*ButtonWidth), (int)(canvas.getHeight()*ButtonHeight),true);
-        screenshotBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.screenshot), canvas.getWidth() * 73 / 1050, canvas.getHeight() * 73 / 540, true);
         fird = bitmapSmile1;
         // Обновляем кнопки после выхода и входа
         if(washing) {
@@ -683,7 +757,6 @@ public class DrawThread extends Thread {
         changeStateAfterStart(sleepRight,sleepLeft, sleepWidth,sleepChangeValue,3);
         changeStateAfterStart(happyRight,happyLeft, happyWidth,happyChangeValue,4);
 
-        new Second().start();
         if(timeForPoop - timePassed > 0) {
             timeForPoop -= timePassed;
         } else timeForPoop = 0;
@@ -695,7 +768,6 @@ public class DrawThread extends Thread {
         editor.putInt("TIMEFORPOOP",timeForPoop);
         editor.apply();
         loaded = true;
-        loading = false;
     }
 
     @Override
@@ -807,6 +879,10 @@ public class DrawThread extends Thread {
                         if (m == 0) {
                             m = 1;
                             fird = birdBreath1;
+                        }
+                        if(!secondTimeIsPassed) {
+                            new Second().start();
+                            secondTimeIsPassed = true;
                         }
                         // Таймер дыхания
 
@@ -1380,9 +1456,6 @@ public class DrawThread extends Thread {
                             mediaPlayerHit.start();
                             isSinging = false;
                         }
-                        if (m6 == 1 && lastTouchX >= (birdX * canvas.getWidth()) && lastTouchX <= (birdX + birdWidth) * (canvas.getWidth()) && lastTouchY >= (birdY * canvas.getHeight()) && lastTouchY <= (birdY + birdHeight) * (canvas.getHeight()) && !eating && !playing && !flying && !sleeping && !laying && !flyingBack && !washing && !pooping && !poopFly && !disgusting && !poopFlyBack) {
-                            sendScreen();
-                        }
                         if (!hitTimeIsPassed && birdIsPunched) {
                             new HitThread().start();
                             hitting = true;
@@ -1402,18 +1475,6 @@ public class DrawThread extends Thread {
                                 mediaPlayerHit.prepare();
                             }
                         }
-                        // скриншот
-                        if (lastTouchX >= (screenshotX * canvas.getWidth()) && lastTouchX <= (screenshotX + screenshotWidth) * (canvas.getWidth()) && lastTouchY >= (screenshotY * canvas.getHeight()) && lastTouchY <= (screenshotY + screenshotHeight) * (canvas.getHeight()) && m6 == 0) {
-                            takeScreenshot();
-                            lastTouchY = 0;
-                            lastTouchX = 0;
-                        }
-                        if (lastTouchX >= (screenshotX * canvas.getWidth()) && lastTouchX <= (screenshotX + screenshotWidth) * (canvas.getWidth()) && lastTouchY >= (screenshotY * canvas.getHeight()) && lastTouchY <= (screenshotY + screenshotHeight) * (canvas.getHeight()) && m6 == 1) {
-                            sendScreen();
-                            lastTouchY = 0;
-                            lastTouchX = 0;
-                        }
-                        canvas.drawBitmap(screenshotBitmap, (float) canvas.getWidth() * screenshotX, (float) canvas.getHeight() * screenshotY, paint);
                         //  Магазин
                         if (lastTouchX >= (shopButtonLeft* canvas.getWidth()) && lastTouchX <= (shopButtonLeft + shopButtonWidth)* (canvas.getWidth()) && lastTouchY >= (shopButtonTop* canvas.getHeight()) && lastTouchY <= (shopButtonTop + shopButtonHeight)*(canvas.getHeight())) {
                             startShopActivity();
@@ -1423,24 +1484,44 @@ public class DrawThread extends Thread {
                         canvas.drawBitmap(shopButton, (float) canvas.getWidth() * shopButtonLeft, (float) canvas.getHeight() * shopButtonTop, paint);
 
                         //lvl+
-                       // if(lvlCheckTime == 0 && fird == bitmapSmile1) {
-                       //     gettingFoin = true;
-                       //     lvlCheckTime = 60;
-                       //     editor.putInt("LVLCHECKTIME",lvlCheckTime);
-                       //     lvlCheck =  true;
-                       //     editor.apply();
-                       // }
-                       // if(lvlCheck) {
-                       //     lvl = lvl * (levelRight2 - levelLeft);
-                       //     if(levelRight + lvl > levelRight2) {
-//
-                       //     }
-//
-                       // }
+                        if(lvlCheckTime <= 0 && birdBreath1 == bitmapSmile1 && !gettingLevel) {
+                            lvlCheckTime = 60;
+                            gettingLevel = true;
+                            lvlCheck =  true;
+                            editor.putInt("LVLCHECKTIME",lvlCheckTime);
+                            editor.apply();
+                        }
+                        if(lvlCheck) {
+                            if(m1 == 1) {
+                                lvl *= (levelRight2 - levelLeft);
+                                levelRight3 = Math.min(levelRight + lvl, levelRight2);
+                                m1 = 0;
+                                lvl /= (levelRight2 - levelLeft);
+                            }
+                            if(levelRight > levelRight2) {
+                                 levelRight = levelLeft;
+                                 level++;
+                                 lvlCheck = false;
+                                gettingLevel = false;
+                                 editor.putInt("LEVEL",level);
+                                editor.apply();
+                                m1 = 1;
+                            }
+                            if(levelRight <= levelRight3) {
+                                levelRight+=(float)(1. / (canvas.getWidth()));
+                                editor.putFloat("LEVELRIGHT",levelRight);
+                                editor.apply();
+                            }
+                            else {
+                                lvlCheck = false;
+                                gettingLevel =false;
+                                m1 = 1;
+                            }
+                        }
                         // Рисуем птичку
                         canvas.drawBitmap(fird, (float) canvas.getWidth() * birdX, (float) canvas.getHeight() * birdY, paint);
-
-
+                        paint.setTextSize(100);
+                        canvas.drawText(skinId + "",500,500,paint);
                     }
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
@@ -1455,36 +1536,18 @@ public class DrawThread extends Thread {
         if (mediaPlayerHappy != null) {
             mediaPlayerHappy.stop();
             mediaPlayerHappy.release();
-            try {
-                mediaPlayerHappy.prepare();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
             mediaPlayerHappy = null;
         }
         if(mediaPlayerWash != null) {
             mediaPlayerWash.stop();
             mediaPlayerWash.release();
-            try {
-                mediaPlayerWash.prepare();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
             mediaPlayerWash = null;
         }
         if(mediaPlayerHit != null) {
             mediaPlayerHit.stop();
             mediaPlayerHit.release();
-            try {
-                mediaPlayerHit.prepare();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
             mediaPlayerHit = null;
         }
-    }
-    public MediaPlayer getMediaPlayerHappy() {
-        return mediaPlayerHappy;
     }
     public void startShopActivity(){
         Intent intent = new Intent(((Activity) context), ShopSkin.class);
@@ -1610,23 +1673,6 @@ public class DrawThread extends Thread {
             birdBreath2 = bitmapSmile2;
         }
     }
-    public void setFoinTime(int foinTime){
-        this.foinTime = foinTime;
-    }public int getFoinTime(){
-        return foinTime;
-    }
-    public boolean getGetFoinTimeIsPassed(){
-        return getFoinTimeIsPassed;
-    }
-    public void setGetFoinTimeIsPassed(boolean getFoinTimeIsPassed) {
-        this.getFoinTimeIsPassed = getFoinTimeIsPassed;
-    }
-    public boolean getGetFoinNeedToDrawNow(){
-        return getFoinTimeIsPassed;
-    }
-    public void setGetFoinNeedToDrawNow(boolean getFoinNeedToDrawNow) {
-        this.getFoinNeedToDrawNow = getFoinNeedToDrawNow;
-    }
     class DirtTimerThread extends  Thread{
         @Override
         public void run() {
@@ -1664,19 +1710,6 @@ public class DrawThread extends Thread {
                 e.printStackTrace();
             }
 
-        }
-    }
-    class LevelTimerThread extends Thread{
-        @Override
-        public void run() {
-            try {
-                sleep(1000);
-                lvlCheckTime--;
-                editor.putInt("LVLCHECKTIME",lvlCheckTime);
-                editor.apply();
-            }catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
     }
     class HappyTimerThread extends  Thread{
@@ -1909,6 +1942,9 @@ public class DrawThread extends Thread {
             try {
                 sleep(1000);
                 timeForPoop--;
+                lvlCheckTime--;
+                secondTimeIsPassed = false;
+                editor.putInt("LVLCHECKTIME",lvlCheckTime);
                 editor.putInt("TIMEFORPOOP",timeForPoop);
                 editor.apply();
             }catch (InterruptedException e) {

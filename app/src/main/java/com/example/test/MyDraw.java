@@ -24,16 +24,18 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class MyDraw extends SurfaceView implements SurfaceHolder.Callback{
-    private final int timepassed;
-    public MyDraw(Context context, int timepassed) {
+    private final int timepassed, foin, skinId;
+    public MyDraw(Context context, int timepassed, int foin, int skinId) {
         super(context);
+        this.foin = foin;
         this.timepassed = timepassed;
+        this.skinId = skinId;
         getHolder().addCallback(this);
     }
     public DrawThread drawThread;
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder holder) {
-        drawThread = new DrawThread(getContext(), getHolder(), this, timepassed);
+        drawThread = new DrawThread(getContext(), getHolder(), this, timepassed, foin,skinId);
         drawThread.start();
     }
     public DrawThread getDrawThread(){

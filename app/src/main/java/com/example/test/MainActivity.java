@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-    private int timePassed = 0;
+    private int timePassed = 0, foin, skinId;
     private Date currentDate;
     private Context context;
     private SharedPreferences timePassedsp;
@@ -32,9 +32,10 @@ public class MainActivity extends AppCompatActivity {
     private String timeText;
     private MediaPlayer mediaPlayer, mediaPlayerWash, mediaPlayerHit, mediaPlayerHappy;
     private String[] notificationStrings = {"Your fird is dirty :(", "Your fird is hungry :(", "Your fird is tiered :(", "Your fird is sad :("};
+    private Bundle arguments;
     class Timer extends CountDownTimer {
         public Timer() {
-            super(3600000, 1000);
+            super(1000000, 1000);
         }
         @Override
         public void onTick(long millisUntilFinished) {
@@ -71,27 +72,48 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        arguments = getIntent().getExtras();
+        if(arguments != null) foin = Integer.parseInt(arguments.get("foin").toString());
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
+        timePassedsp = getApplicationContext().getSharedPreferences("TIMEPASSED", MODE_PRIVATE);
+        editor = timePassedsp.edit();
+        foin = timePassedsp.getInt("FOIN",0);
         context = this;
         mediaPlayer = MediaPlayer.create(this, R.raw.songfon);
         mediaPlayerHit = MediaPlayer.create(this, R.raw.hitsong);
         mediaPlayerWash = MediaPlayer.create(this, R.raw.washsong);
         mediaPlayerHappy = MediaPlayer.create(this, R.raw.happysong);
-        myDraw = new MyDraw(this,0);
+        myDraw = new MyDraw(this,0, foin,skinId);
         setContentView(myDraw);
         //setContentView(R.layout.shopskin);
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        arguments = getIntent().getExtras();
+        if(arguments != null) {
+            foin = Integer.parseInt(arguments.get("foin").toString());
+            skinId = Integer.parseInt(arguments.get("skinId").toString());
+        }
+        editor.putInt("FOIN",foin);
+        editor.apply();
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
+        arguments = getIntent().getExtras();
+        if(arguments != null) foin = Integer.parseInt(arguments.get("foin").toString());
         mediaPlayer = MediaPlayer.create(this, R.raw.songfon);
         mediaPlayerHit = MediaPlayer.create(this, R.raw.hitsong);
         mediaPlayerWash = MediaPlayer.create(this, R.raw.washsong);
         mediaPlayerHappy = MediaPlayer.create(this, R.raw.happysong);
         timePassedsp = getApplicationContext().getSharedPreferences("TIMEPASSED", MODE_PRIVATE);
         editor = timePassedsp.edit();
+        foin = timePassedsp.getInt("FOIN",0);
         currentDate = new Date();
         timeText = timeFormat.format(currentDate);
         editor = timePassedsp.edit();
@@ -100,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt("timePassed1",timePassed);
         editor.apply();
         mediaPlayer.start();
-        myDraw = new MyDraw(this,timePassedsp.getInt("timePassed1",0) - timePassedsp.getInt("timePassed2",timePassed));
+        myDraw = new MyDraw(this,timePassedsp.getInt("timePassed1",0) - timePassedsp.getInt("timePassed2",timePassed), foin,skinId);
         setContentView(myDraw);
         drawThread = myDraw.getDrawThread();
     }
@@ -120,38 +142,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
         timer.start();
     }
-    private void releaseMediaPlayerHappy() {
-        try {
-                mediaPlayerHappy.stop();
-                mediaPlayerHappy.prepare();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    private void releaseMediaPlayerWash() {
-        try {
-            if (mediaPlayerWash != null) {
-                if (mediaPlayerWash.isPlaying())
-                    mediaPlayerWash.stop();
-                mediaPlayerWash.release();
-                mediaPlayerWash = null;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    private void releaseMediaPlayerHit() {
-        try {
-            if (mediaPlayerHit != null) {
-                if (mediaPlayerHit.isPlaying())
-                    mediaPlayerHit.stop();
-                mediaPlayerHit.release();
-                mediaPlayerHit = null;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
     public void saveTimePassed() {
         currentDate = new Date();
         timeText = timeFormat.format(currentDate);
