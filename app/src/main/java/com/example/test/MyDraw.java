@@ -16,6 +16,7 @@ import android.view.SurfaceView;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import java.io.IOException;
 import java.util.Timer;
@@ -25,9 +26,11 @@ import java.util.concurrent.TimeUnit;
 
 public class MyDraw extends SurfaceView implements SurfaceHolder.Callback{
     private final int timepassed, foin, skinId;
-    public MyDraw(Context context, int timepassed, int foin, int skinId) {
+    private final String  timeText;
+    public MyDraw(Context context, int timepassed, int foin, int skinId, String timeText) {
         super(context);
         this.foin = foin;
+        this.timeText = timeText;
         this.timepassed = timepassed;
         this.skinId = skinId;
         getHolder().addCallback(this);
@@ -35,7 +38,7 @@ public class MyDraw extends SurfaceView implements SurfaceHolder.Callback{
     public DrawThread drawThread;
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder holder) {
-        drawThread = new DrawThread(getContext(), getHolder(), this, timepassed, foin,skinId);
+        drawThread = new DrawThread(getContext(), getHolder(),  timepassed, foin,skinId,timeText);
         drawThread.start();
     }
     public DrawThread getDrawThread(){

@@ -1,5 +1,6 @@
 package com.example.test;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -10,6 +11,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private Context context;
     private SharedPreferences timePassedsp;
     private SharedPreferences.Editor editor;
-    private final DateFormat timeFormat = new SimpleDateFormat("DD:HH:mm:ss",Locale.getDefault());
-    private String timeText;
+    private final DateFormat timeFormat = new SimpleDateFormat("dd:HH:mm:ss",Locale.getDefault());
+    private String timeText = "";
     private MediaPlayer mediaPlayer, mediaPlayerWash, mediaPlayerHit, mediaPlayerHappy;
     private String[] notificationStrings = {"Your fird is dirty :(", "Your fird is hungry :(", "Your fird is tiered :(", "Your fird is sad :("};
     private Bundle arguments;
@@ -68,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public DrawThread drawThread;
     public MyDraw myDraw;
+    public int orentation = 0;
     Timer timer = new Timer();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         timePassedsp = getApplicationContext().getSharedPreferences("TIMEPASSED", MODE_PRIVATE);
         editor = timePassedsp.edit();
         if(arguments != null) {
-            foin = Integer.parseInt(arguments.get("foin").toString());
+            if(timePassedsp.getInt("FOIN",9000) != Integer.parseInt(arguments.get("foin").toString())) foin = Integer.parseInt(arguments.get("foin").toString());
             skinId = Integer.parseInt(arguments.get("skinId").toString());
             editor.putInt("SKINID",skinId);
         }
@@ -91,7 +94,9 @@ public class MainActivity extends AppCompatActivity {
         mediaPlayerHit = MediaPlayer.create(this, R.raw.hitsong);
         mediaPlayerWash = MediaPlayer.create(this, R.raw.washsong);
         mediaPlayerHappy = MediaPlayer.create(this, R.raw.happysong);
-        myDraw = new MyDraw(this,0, foin,skinId);
+
+        if(timePassedsp.getInt("timePassed1",timePassed)-timePassedsp.getInt("timePassed2",timePassed) <= 0) myDraw = new MyDraw(this,10000, foin,skinId,timeText);
+        else myDraw = new MyDraw(this,timePassedsp.getInt("timePassed1",timePassed)-timePassedsp.getInt("timePassed2",timePassed), foin,skinId,timeText);
         setContentView(myDraw);
         //setContentView(R.layout.shopskin);
     }
@@ -99,16 +104,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        timePassedsp = getApplicationContext().getSharedPreferences("TIMEPASSED", MODE_PRIVATE);
-        editor = timePassedsp.edit();
-        arguments = getIntent().getExtras();
-        if(arguments != null) {
-            foin = Integer.parseInt(arguments.get("foin").toString());
-            skinId = Integer.parseInt(arguments.get("skinId").toString());
-            editor.putInt("FOIN",foin);
-            editor.putInt("SKINID",skinId);
-            editor.apply();
-        }
     }
 
     @Override
@@ -118,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         editor = timePassedsp.edit();
         arguments = getIntent().getExtras();
         if(arguments != null) {
-            foin = Integer.parseInt(arguments.get("foin").toString());
+            if(timePassedsp.getInt("FOIN",9000) != Integer.parseInt(arguments.get("foin").toString())) foin = Integer.parseInt(arguments.get("foin").toString());
             skinId = Integer.parseInt(arguments.get("skinId").toString());
             editor.putInt("FOIN",foin);
             editor.putInt("SKINID",skinId);
@@ -137,11 +132,24 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt("timePassed1",timePassed);
         editor.apply();
         mediaPlayer.start();
-        myDraw = new MyDraw(this,timePassedsp.getInt("timePassed1",0) - timePassedsp.getInt("timePassed2",timePassed), foin,skinId);
+        if(timePassedsp.getInt("timePassed1",timePassed)-timePassedsp.getInt("timePassed2",timePassed) <= 0) myDraw = new MyDraw(this,10000, foin,skinId,timeText);
+        else myDraw = new MyDraw(this,timePassedsp.getInt("timePassed1",timePassed)-timePassedsp.getInt("timePassed2",timePassed), foin,skinId,timeText);
         setContentView(myDraw);
         drawThread = myDraw.getDrawThread();
     }
-   @Override
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            orentation = Configuration.ORIENTATION_LANDSCAPE;
+        }
+        if(newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            orentation = Configuration.ORIENTATION_PORTRAIT;
+        }
+    }
+
+    @Override
    protected void onPause() {
        super.onPause();
        saveTimePassed();

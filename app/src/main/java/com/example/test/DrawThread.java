@@ -246,20 +246,20 @@ public class DrawThread extends Thread {
     private Bitmap loadScreen;
     private int skinId = 0;
     private boolean loadScreenLoaded;
-
+    private String timeText;
     public DrawThread(){}
-    public DrawThread(Context context, SurfaceHolder surfaceHolder, MyDraw myDraw, int timePassed, int foin, int skinId) {
+    public DrawThread(Context context, SurfaceHolder surfaceHolder, int timePassed, int foin, int skinId, String timeText) {
         this.view = view;
         this.timePassed = timePassed;
         this.surfaceHolder = surfaceHolder;
         this.context = context;
         this.foin = foin;
+        this.timeText = timeText;
         this.skinId = skinId;
         this.res = context.getResources();
         lvlCheckTimePassed = timePassed;
         sharedPreferences = ((Activity)context).getPreferences(Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        editor.putInt("FOIN",foin);
         editor.putInt("SKINID",skinId);
         editor.apply();
 
@@ -283,7 +283,11 @@ public class DrawThread extends Thread {
         mediaPlayerHit = MediaPlayer.create(context, R.raw.hitsong);
         mediaPlayerWash = MediaPlayer.create(context,R.raw.washsong);
         skinId = sharedPreferences.getInt("SKINID",0);
-        foin = sharedPreferences.getInt("FOIN", 9000);
+        if(sharedPreferences.getInt("FOIN",9000) >= foin && sharedPreferences.getInt("FOIN",9000)- foin != 5000) {
+            foin = sharedPreferences.getInt("FOIN", 9000);
+            editor.putInt("FOIN",foin);
+            editor.apply();
+        }
         level = sharedPreferences.getInt("LEVEL", 1);
         levelColor = ResourcesCompat.getColor(context.getResources(),R.color.life,null);
         dirtColor = ResourcesCompat.getColor(context.getResources(),R.color.dirt,null);
@@ -1228,7 +1232,7 @@ public class DrawThread extends Thread {
                                 fird = playBitmapD[play];
                             else if (birdBreath1 == bitmapT1 || birdBreath1 == bitmapTH1 || birdBreath1 == bitmapTS1 || birdBreath1 == bitmapTSH1)
                                 fird = playBitmapT[play];
-                            else if (birdBreath1 == bitmapUsual1 || birdBreath1 == bitmapH1 || birdBreath1 == bitmapS1 || birdBreath1 == bitmapSmile1)
+                            else if (birdBreath1 == bitmapUsual1 || birdBreath1 == bitmapH1 || birdBreath1 == bitmapS1 || birdBreath1 == bitmapSmile1 || birdBreath1 == bitmapSH1)
                                 fird = playBitmap[play];
                             if (play == 20) {
                                 // Возвращаемся к преждним настройкам
@@ -1451,7 +1455,6 @@ public class DrawThread extends Thread {
                         // Встряхнуться
                         if (lastTouchX >= (birdX * canvas.getWidth()) && lastTouchX <= (birdX + birdWidth) * (canvas.getWidth()) && lastTouchY >= (birdY * canvas.getHeight()) && lastTouchY <= (birdY + birdHeight) * (canvas.getHeight()) && !eating && !playing && !flying && !sleeping && !laying && !flyingBack && !washing && !pooping && !poopFly && !disgusting && !poopFlyBack && !birdIsPunched) {
                             birdIsPunched = true;
-                            gettingFoin = true;
                             isSinging = true;
                         }
                         if (isSinging && birdIsPunched) {
@@ -1507,6 +1510,7 @@ public class DrawThread extends Thread {
                                  level++;
                                  lvlCheck = false;
                                 gettingLevel = false;
+                                gettingFoin = true;
                                  editor.putInt("LEVEL",level);
                                 editor.apply();
                                 m1 = 1;
